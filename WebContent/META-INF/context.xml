@@ -1,0 +1,14 @@
+<Context>
+
+	<!-- Contexte Local -->
+	<Resource name="jdbc/annoncesRESTdb" auth="Container"
+	type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://localhost:3306/annoncesrest" username="root"
+	password="Toyota84" maxTotal="100" maxIdle="30" maxWaitMillis="10000" />
+</Context>
+
+	<!-- Contexte Distant -->
+<!-- 	<Resource name="jdbc/annoncesRESTdb" auth="Container" -->
+<!-- 		type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver" -->
+<!-- 		url="jdbc:mysql://localhost:3306/oliweb_annoncesrest" username="oliweb_annoncesnc" -->
+<!-- 		password="je@n-p@ul84" maxActive="100" maxIdle="30" maxWait="10000" /> -->

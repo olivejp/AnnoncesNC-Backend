@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="newAccountuser">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="newAccountuser.war">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/WebContent/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="newAccountuser" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jackson-jaxrs-1.9.2" />
+          <element id="library" level="project" name="jersey-servlet-1.18" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="newAccountuser/web/Web" />
+    </root>
+  </artifact>
+</component>
