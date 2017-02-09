@@ -9,7 +9,12 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.oliweb.DB.Contract.UtilisateurContract.*;
+
 public class UtilisateurDAO {
+
+    private Connection dbConn;
+
     private Integer idutilisateur;
     private String nomUtilisateur;
     private String prenomUtilisateur;
@@ -18,20 +23,10 @@ public class UtilisateurDAO {
     private Timestamp dateCreationUtilisateur;
     private String adminUtilisateur;
 
-    public static final String TABLE_NAME = "utilisateur";
-    public static final String COL_ID_UTILISATEUR = "idutilisateur";
-    public static final String COL_TELEPHONE_UTILISATEUR = "telephoneUtilisateur";
-    public static final String COL_EMAIL_UTILISATEUR = "emailUtilisateur";
-    public static final String COL_DATE_CREATION_UTILISATEUR = "dateCreationUtilisateur";
-    public static final String COL_PASSWORD_UTILISATEUR = "passwordUtilisateur";
-    public static final String COL_DATE_LAST_CONNEXION = "dateLastConnexion";
-    public static final String COL_ADMIN_UTILISATEUR = "adminUtilisateur";
-    public static final String COL_STATUT_UTILISATEUR = "statutUtilisateur";
-    public static final String COL_SALT_UTILISATEUR = "saltUtilisateur";
-
-    public UtilisateurDAO(Integer idutilisateur, String nomUtilisateur, String prenomUtilisateur,
+    public UtilisateurDAO(Connection connection, Integer idutilisateur, String nomUtilisateur, String prenomUtilisateur,
                           Integer telephoneUtilisateur, String emailUtilisateur, Timestamp dateCreationUtilisateur, String adminUtilisateur) {
         super();
+        dbConn = connection;
         this.idutilisateur = idutilisateur;
         this.nomUtilisateur = nomUtilisateur;
         this.prenomUtilisateur = prenomUtilisateur;
@@ -41,8 +36,9 @@ public class UtilisateurDAO {
         this.adminUtilisateur = adminUtilisateur;
     }
 
-    public UtilisateurDAO() {
+    public UtilisateurDAO(Connection connection) {
         super();
+        dbConn = connection;
     }
 
     public Integer getIdutilisateur() {
@@ -101,10 +97,8 @@ public class UtilisateurDAO {
         this.adminUtilisateur = adminUtilisateur;
     }
 
-    public static boolean checkLogin(String email, String pwd) {
+    public boolean checkLogin(String email, String pwd) {
         boolean isUserAvailable = false;
-        Connection dbConn = MyConnection.getInstance();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_EMAIL_UTILISATEUR + " = '" + email
@@ -120,10 +114,8 @@ public class UtilisateurDAO {
         return isUserAvailable;
     }
 
-    public static boolean checkAdmin(String email, String pwd) throws Exception {
+    public boolean checkAdmin(String email, String pwd) throws Exception {
         boolean isUserAvailable = false;
-        Connection dbConn = MyConnection.getInstance();
-
         Statement stmt = dbConn.createStatement();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_EMAIL_UTILISATEUR + " = '" + email
                 + "' AND " + COL_PASSWORD_UTILISATEUR + "=" + "'" + pwd + "' AND " + COL_ADMIN_UTILISATEUR + "='O'"
@@ -137,16 +129,13 @@ public class UtilisateurDAO {
         return isUserAvailable;
     }
 
-    public static boolean checkAdmin(Integer idUser) {
+    public boolean checkAdmin(Integer idUser) {
         boolean isAdmin = false;
-        Connection dbConn = MyConnection.getInstance();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUser)
                     + " AND " + COL_ADMIN_UTILISATEUR + "='O'"
                     + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-            ;
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 isAdmin = true;
@@ -158,10 +147,8 @@ public class UtilisateurDAO {
         return isAdmin;
     }
 
-    public static UtilisateurDTO getById(Integer idUtilisateur) {
-        Connection dbConn = MyConnection.getInstance();
+    public UtilisateurDTO getById(Integer idUtilisateur) {
         UtilisateurDTO utilisateur = new UtilisateurDTO();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT " + COL_ID_UTILISATEUR + ", "
@@ -170,7 +157,6 @@ public class UtilisateurDAO {
                     + " FROM " + TABLE_NAME
                     + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUtilisateur)
                     + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-            ;
 
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
@@ -183,34 +169,24 @@ public class UtilisateurDAO {
             e.printStackTrace();
         }
         return utilisateur;
-
     }
 
-    public static void updateDateLastConnexion(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    public void updateDateLastConnexion(Integer idUser) {
         try {
             Statement stmt = dbConn.createStatement();
-
             String dateAsString = new SimpleDateFormat("yyyyMMdd").format(new Date());
             String update = "UPDATE " + TABLE_NAME + " SET " + COL_DATE_LAST_CONNEXION + " = " + dateAsString + " WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(idUser);
-            int records = stmt.executeUpdate(update);
+            stmt.executeUpdate(update);
             stmt.close();
-
-            //When record is successfully inserted
-            if (records != 0) {
-                TransactionDAO.insert(dbConn, update);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean update(UtilisateurDTO user) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean update(UtilisateurDTO user) {
         int retour = 0;
         try {
             Statement stmt = dbConn.createStatement();
-
             String update = "UPDATE " + TABLE_NAME
                     + " SET " + COL_EMAIL_UTILISATEUR + " = '" + user.getEmailUTI()
                     + "' , " + COL_TELEPHONE_UTILISATEUR + " = " + user.getTelephoneUTI()
@@ -218,19 +194,14 @@ public class UtilisateurDAO {
             System.out.println(update);
             retour = stmt.executeUpdate(update);
             stmt.close();
-
-            // When record is successfully inserted
-            if (retour != 0) {
-                TransactionDAO.insert(dbConn, update);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return retour != 0;
     }
 
-    public static boolean existById(Integer id) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean existById(Integer id) {
+
         boolean exist = false;
 
         try {
@@ -250,15 +221,12 @@ public class UtilisateurDAO {
         return exist;
     }
 
-    public static boolean existByEmail(String email) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean existByEmail(String email) {
         boolean exist = false;
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COL_EMAIL_UTILISATEUR + " = '" + email + "' "
                     + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-            ;
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
                 if (rs.getInt(1) >= 1) {
@@ -272,15 +240,14 @@ public class UtilisateurDAO {
         return exist;
     }
 
-    public static UtilisateurDTO getByEmail(String email) {
-        Connection dbConn = MyConnection.getInstance();
+    public UtilisateurDTO getByEmail(String email) {
         UtilisateurDTO utilisateur = new UtilisateurDTO();
         Statement stmt;
         String query;
         ResultSet results;
 
         try {
-            stmt = (Statement) dbConn.createStatement();
+            stmt = dbConn.createStatement();
             query = "SELECT " + COL_ID_UTILISATEUR + ", "
                     + COL_EMAIL_UTILISATEUR + ", "
                     + COL_TELEPHONE_UTILISATEUR + " "
@@ -301,12 +268,9 @@ public class UtilisateurDAO {
         return utilisateur;
     }
 
-    public static int insert(String email, String pwd, Integer telephone) {
+    public int insert(String email, String pwd, Integer telephone) {
         int insertStatus = -1;
         if (!existByEmail(email)) {
-
-            Connection dbConn = MyConnection.getInstance();
-
             try {
                 Statement stmt = dbConn.createStatement();
                 String query = "INSERT INTO " + TABLE_NAME
@@ -323,7 +287,6 @@ public class UtilisateurDAO {
                 //When record is successfully inserted
                 if (records != 0) {
                     insertStatus = 1;
-                    TransactionDAO.insert(dbConn, query);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -336,14 +299,14 @@ public class UtilisateurDAO {
         return insertStatus;
     }
 
-    public static String getPasswordByEmail(String email) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
+    public String getPasswordByEmail(String email) throws Exception {
+
         Statement stmt;
         String query;
         ResultSet results;
         String password = null;
 
-        stmt = (Statement) dbConn.createStatement();
+        stmt = dbConn.createStatement();
         query = "SELECT " + COL_PASSWORD_UTILISATEUR
                 + " FROM " + TABLE_NAME
                 + " WHERE " + COL_EMAIL_UTILISATEUR + "='" + email + "'";
@@ -357,8 +320,8 @@ public class UtilisateurDAO {
         return password;
     }
 
-    public static String getPasswordByIdUser(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    public String getPasswordByIdUser(Integer idUser) {
+
         Statement stmt;
         String query;
         ResultSet results;
@@ -381,8 +344,8 @@ public class UtilisateurDAO {
         return password;
     }
 
-    public static boolean changePassword(Integer idUser, String newPassword) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean changePassword(Integer idUser, String newPassword) {
+
         Statement stmt;
         String update;
         int retour;
@@ -394,12 +357,7 @@ public class UtilisateurDAO {
 
             retour = stmt.executeUpdate(update);
 
-            if (retour != 0) {
-                updateStatus = true;
-                TransactionDAO.insert(dbConn, update); // On ins�re la transaction
-            } else {
-                updateStatus = false;
-            }
+            updateStatus = retour != 0;
 
             stmt.close();
         } catch (Exception e) {
@@ -408,26 +366,21 @@ public class UtilisateurDAO {
         return updateStatus;
     }
 
-    public static boolean unregisterUser(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean unregisterUser(Integer idUser) {
+
         Statement stmt;
         String update;
-        int retour = 0;
+        int retour;
         boolean updateStatus = false;
 
         // On supprime d'abord les annonces de l'utilisateur
-        if (AnnonceDAO.devalideByIdUser(idUser)) {
+        AnnonceDAO annonceDAO = new AnnonceDAO(dbConn);
+        if (annonceDAO.devalideByIdUser(idUser)) {
             try {
                 stmt = dbConn.createStatement();
                 update = "UPDATE " + TABLE_NAME + " SET " + COL_STATUT_UTILISATEUR + " = '" + enumStatutUtilisateur.UNREGISTRED.valeur() + "' WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(idUser);
                 retour = stmt.executeUpdate(update);
-                System.out.println("Retour = " + String.valueOf(retour) + update);
-                if (retour != 0) {
-                    updateStatus = true;
-                    TransactionDAO.insert(dbConn, update); // On ins�re la transaction
-                } else {
-                    updateStatus = false;
-                }
+                updateStatus = retour != 0;
                 stmt.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -436,8 +389,7 @@ public class UtilisateurDAO {
         return updateStatus;
     }
 
-    public static Integer getNbUser() {
-        Connection dbConn = MyConnection.getInstance();
+    public Integer getNbUser() {
         Statement stmt;
         ResultSet results;
         String query;
@@ -447,7 +399,6 @@ public class UtilisateurDAO {
             stmt = dbConn.createStatement();
             query = "SELECT COUNT(*) FROM " + TABLE_NAME
                     + " WHERE " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-            ;
 
             results = stmt.executeQuery(query);
             if (results.next()) {
@@ -460,28 +411,21 @@ public class UtilisateurDAO {
         return nb_user;
     }
 
-    public static boolean deleteById(Integer idUser) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean deleteById(Integer idUser) throws Exception {
         Statement stmt = dbConn.createStatement();
         int retour = 0;
         boolean deleteStatus = false;
 
         // On supprime d'abord les annonces de l'utilisateur
-        if (AnnonceDAO.deleteByIdUser(idUser)) {
+        AnnonceDAO annonceDAO = new AnnonceDAO(dbConn);
+        if (annonceDAO.deleteByIdUser(idUser)) {
             String delete = "DELETE FROM " + TABLE_NAME
                     + " WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(idUser);
             retour = stmt.executeUpdate(delete);
 
-            if (retour != 0) {
-                deleteStatus = true;
-                TransactionDAO.insert(dbConn, delete); // On ins�re la transaction
-            } else {
-                deleteStatus = false;
-            }
-
+            deleteStatus = retour != 0;
             stmt.close();
         }
-
         return deleteStatus;
     }
 }

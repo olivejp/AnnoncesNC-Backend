@@ -1,9 +1,9 @@
 package com.oliweb.DB.DTO;
 
 public class UtilisateurDTO {
-	protected Integer idUTI;
-    protected String emailUTI;
-    protected Integer telephoneUTI;
+    private Integer idUTI;
+    private String emailUTI;
+    private Integer telephoneUTI;
     
     public UtilisateurDTO(Integer idUTI, String emailUTI, Integer telephoneUTI) {
         this.idUTI = idUTI;

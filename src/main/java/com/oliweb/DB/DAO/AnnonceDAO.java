@@ -1,14 +1,14 @@
 package com.oliweb.DB.DAO;
 
+import com.oliweb.DB.Contract.PhotoContract;
 import com.oliweb.DB.DTO.AnnonceDTO;
 import com.oliweb.DB.utility.ConstantsDB;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import static com.oliweb.DB.Contract.AnnonceContract.*;
 
 
 public class AnnonceDAO {
@@ -21,91 +21,10 @@ public class AnnonceDAO {
     private Timestamp datePublicationAnnonce;
     private Integer prixAnnonce;
 
-    public static final String TABLE_NAME = "annonce";
-    public static final String COL_ID_ANNONCE = "idannonce";
-    public static final String COL_ID_UTILISATEUR = "utilisateur_idutilisateur";
-    public static final String COL_ID_CATEGORY = "categorie_idcategorie";
-    public static final String COL_TITRE_ANNONCE = "titreAnnonce";
-    public static final String COL_DESCRIPTION_ANNONCE = "descriptionAnnonce";
-    public static final String COL_DATE_PUBLICATION = "datePublicationAnnonce";
-    public static final String COL_PRIX_ANNONCE = "prixAnnonce";
-    public static final String COL_STATUT_ANNONCE = "statutAnnonce";
+    private Connection dbConn;
 
-
-    @Deprecated
-    public static ArrayList<AnnonceDTO> searchByKeyword(String keyword) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
-        ArrayList<AnnonceDTO> myList = new ArrayList<AnnonceDTO>();
-        Statement stmt = dbConn.createStatement();
-
-        // Le String keyword peut �tre compos� de plusieurs mots. On va le d�couper (split) pour faire une recherche sur tous ces mots.
-        String[] keys = keyword.split(" ");
-        for (int i = 0; i < keys.length; i++) {
-            String query = "SELECT " + COL_ID_ANNONCE + ", "
-                    + COL_TITRE_ANNONCE + ", "
-                    + COL_DESCRIPTION_ANNONCE + ", "
-                    + COL_DATE_PUBLICATION + ", "
-                    + COL_PRIX_ANNONCE + ", "
-                    + COL_ID_CATEGORY + ", "
-                    + COL_ID_UTILISATEUR + ""
-                    + " FROM " + TABLE_NAME
-                    + " WHERE (" + COL_DESCRIPTION_ANNONCE + " LIKE '%" + keys[i] + "%'"
-                    + " OR " + COL_TITRE_ANNONCE + " LIKE '%" + keys[i] + "%') "
-                    + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
-                    + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
-            ResultSet rs = stmt.executeQuery(query);
-
-//			logger.info("searchByKeyword : Query=" + query);
-
-            while (rs.next()) {
-                // Ajout de l'annonce dans la liste
-                myList.add(transfertAnnonce(rs));
-            }
-        }
-
-        stmt.close();
-
-        // On retourne la liste d'annonce que l'on vient de cr�er.
-        return myList;
-    }
-
-    @Deprecated
-    public static ArrayList<AnnonceDAO> listByIdCategory(Integer idcategorie) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
-        ArrayList<AnnonceDAO> myList = new ArrayList<AnnonceDAO>();
-
-        // On va récupérer toutes les annonces pour la catégorie demandée
-        Statement stmt = dbConn.createStatement();
-        String query = "SELECT " + COL_ID_ANNONCE + ", " + COL_TITRE_ANNONCE + ", " + COL_DESCRIPTION_ANNONCE + ", " + COL_DATE_PUBLICATION + ", " + COL_PRIX_ANNONCE + ", " + COL_ID_CATEGORY + ", " + COL_ID_UTILISATEUR + ""
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_ID_CATEGORY + " = " + String.valueOf(idcategorie)
-                + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
-                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
-
-//		logger.info("listByIdCategory : Query=" + query);
-
-        ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()) {
-            // Création d'une nouvelle annonce
-            AnnonceDAO annonceDAO = new AnnonceDAO();
-
-            // Renseignement des champs de l'annonce
-            annonceDAO.setIdannonce(rs.getInt(COL_ID_ANNONCE));
-            annonceDAO.setTitreAnnonce(rs.getString(COL_TITRE_ANNONCE));
-            annonceDAO.setDescriptionAnnonce(rs.getString(COL_DESCRIPTION_ANNONCE));
-            annonceDAO.setDatePublicationAnnonce(rs.getTimestamp(COL_DATE_PUBLICATION));
-            annonceDAO.setPrixAnnonce(rs.getInt(COL_PRIX_ANNONCE));
-            annonceDAO.setCategorie_idcategorie(rs.getInt(COL_ID_CATEGORY));
-            annonceDAO.setUtilisateur_idutilisateur(rs.getInt(COL_ID_UTILISATEUR));
-
-            // Ajout de l'annonce dans la liste
-            myList.add(annonceDAO);
-        }
-
-        stmt.close();
-
-        // On retourne la liste d'annonce que l'on vient de créer.
-        return myList;
+    public AnnonceDAO(Connection dbConn) {
+        this.dbConn = dbConn;
     }
 
     public Integer getIdannonce() {
@@ -164,13 +83,11 @@ public class AnnonceDAO {
         this.prixAnnonce = prixAnnonce;
     }
 
-    public static AnnonceDTO getById(Integer idAnnonce) {
-        Connection dbConn = MyConnection.getInstance();
+    public AnnonceDTO getById(Integer idAnnonce) {
+
         AnnonceDTO retour = null;
         try {
             Statement stmt = dbConn.createStatement();
-
-
             String query = "SELECT " + COL_ID_ANNONCE + ", "
                     + COL_TITRE_ANNONCE + ", "
                     + COL_DESCRIPTION_ANNONCE + ", "
@@ -187,21 +104,18 @@ public class AnnonceDAO {
             }
 
             stmt.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return retour;
     }
 
-    public static ArrayList<AnnonceDTO> searchByKeywordWithPage(String keyword, Integer page) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> searchByKeywordWithPage(String keyword, Integer page) throws Exception {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
         Statement stmt = dbConn.createStatement();
-
         // Le String keyword peut être composé de plusieurs mots. On va le découper (split) pour faire une recherche sur tous ces mots.
         String[] keys = keyword.split(" ");
-        for (int i = 0; i < keys.length; i++) {
+        for (String key : keys) {
             String query = "SELECT " + COL_ID_ANNONCE + ", "
                     + COL_TITRE_ANNONCE + ", "
                     + COL_DESCRIPTION_ANNONCE + ", "
@@ -210,8 +124,8 @@ public class AnnonceDAO {
                     + COL_ID_CATEGORY + ", "
                     + COL_ID_UTILISATEUR + ""
                     + " FROM " + TABLE_NAME
-                    + " WHERE (" + COL_DESCRIPTION_ANNONCE + " LIKE '%" + keys[i] + "%'"
-                    + " OR " + COL_TITRE_ANNONCE + " LIKE '%" + keys[i] + "%') "
+                    + " WHERE (" + COL_DESCRIPTION_ANNONCE + " LIKE '%" + key + "%'"
+                    + " OR " + COL_TITRE_ANNONCE + " LIKE '%" + key + "%') "
                     + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
                     + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
                     + " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
@@ -229,10 +143,8 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static ArrayList<AnnonceDTO> getByIdCategory(Integer idCategory) {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> getByIdCategory(Integer idCategory) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
@@ -256,10 +168,8 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static ArrayList<AnnonceDTO> getByIdUser(Integer idUser, Integer page) {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> getByIdUser(Integer idUser, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
@@ -281,10 +191,8 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static ArrayList<AnnonceDTO> getByIdCategoryWithPage(Integer idCategory, Integer page) {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> getByIdCategoryWithPage(Integer idCategory, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
@@ -307,10 +215,8 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static ArrayList<AnnonceDTO> getListAnnonce(Integer page) {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> getListAnnonce(Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
@@ -333,7 +239,7 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static AnnonceDTO transfertAnnonce(ResultSet rs) {
+    private AnnonceDTO transfertAnnonce(ResultSet rs) {
         // Création d'une nouvelle annonce
         AnnonceDTO annonce = new AnnonceDTO();
 
@@ -346,19 +252,22 @@ public class AnnonceDAO {
             // On formate la date Timestamp en String
             String dateAsText = new SimpleDateFormat("yyyyMMddHHmm").format(rs.getTimestamp(COL_DATE_PUBLICATION));
 
+            CategorieDAO categorieDAO = new CategorieDAO(dbConn);
+            UtilisateurDAO utilisateurDAO = new UtilisateurDAO(dbConn);
+            PhotoDAO photoDAO = new PhotoDAO(dbConn);
+
             annonce.setDatePublished(Long.valueOf(dateAsText));
             annonce.setPriceANO(rs.getInt(COL_PRIX_ANNONCE));
-            annonce.setCategorieANO(CategorieDAO.getById(rs.getInt(COL_ID_CATEGORY)));
-            annonce.setOwnerANO(UtilisateurDAO.getById(rs.getInt(COL_ID_UTILISATEUR)));
-            annonce.setPhotos(PhotoDAO.getByIdAnnonce(annonce.getIdANO()));
+            annonce.setCategorieANO(categorieDAO.getById(rs.getInt(COL_ID_CATEGORY)));
+            annonce.setOwnerANO(utilisateurDAO.getById(rs.getInt(COL_ID_UTILISATEUR)));
+            annonce.setPhotos(photoDAO.getByIdAnnonce(annonce.getIdANO()));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return annonce;
     }
 
-    public static int getMaxId(Integer idCategorie, Integer idUtilisateur) {
-        Connection dbConn = MyConnection.getInstance();
+    public int getMaxId(Integer idCategorie, Integer idUtilisateur) {
         String query;
         int retour = -1;
 
@@ -381,8 +290,7 @@ public class AnnonceDAO {
         return retour;
     }
 
-    public static boolean update(AnnonceDTO annonce) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean update(AnnonceDTO annonce) {
         boolean insertStatus = false;
         int records;
         String query;
@@ -399,12 +307,7 @@ public class AnnonceDAO {
             records = stmt.executeUpdate(query);
 
             // When record is successfully inserted
-            if (records != 0) {
-                insertStatus = true;
-                TransactionDAO.insert(dbConn, query); // On insére la transaction
-            } else {
-                insertStatus = false;
-            }
+            insertStatus = records != 0;
             stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -412,13 +315,11 @@ public class AnnonceDAO {
         return insertStatus;
     }
 
-    public static boolean insert(AnnonceDTO annonce) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean insert(AnnonceDTO annonce) {
         boolean insertStatus = false;
-        int records;
+        int newId;
         String query;
         try {
-            Statement stmt = dbConn.createStatement();
             query = "INSERT INTO " + TABLE_NAME + " (" + COL_TITRE_ANNONCE + ", "
                     + COL_DESCRIPTION_ANNONCE + ", "
                     + COL_PRIX_ANNONCE + ", "
@@ -435,15 +336,16 @@ public class AnnonceDAO {
                     "CURRENT_TIME(), '" +
                     enumStatutAnnonce.VALID.valeur() + "')";
 
-            records = stmt.executeUpdate(query);
+            PreparedStatement stmt = dbConn.prepareStatement(query,
+                    Statement.RETURN_GENERATED_KEYS);
 
-            // When record is successfully inserted
-            if (records != 0) {
+            if (stmt.executeUpdate() != 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                rs.next();
+                newId = rs.getInt(1);
                 insertStatus = true;
                 // On met à jour l'ID de l'annonce qu'on vient de créer.
-                annonce.setIdANO(getMaxId(annonce.getCategorieANO().getIdCAT(), annonce.getOwnerANO().getIdUTI()));
-
-                TransactionDAO.insert(dbConn, query); // On insère la transaction
+                annonce.setIdANO(newId);
             } else {
                 insertStatus = false;
             }
@@ -454,10 +356,8 @@ public class AnnonceDAO {
         return insertStatus;
     }
 
-    public static boolean exist(Integer idAnnonce) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean exist(Integer idAnnonce) {
         boolean existStatus = false;
-
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " =" + String.valueOf(idAnnonce);
@@ -474,8 +374,7 @@ public class AnnonceDAO {
         return existStatus;
     }
 
-    public static boolean deleteByIdUser(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    boolean deleteByIdUser(Integer idUser) {
         boolean deleteStatus = false;
         int records;
         String delete;
@@ -487,22 +386,13 @@ public class AnnonceDAO {
             select = "SELECT " + COL_ID_ANNONCE + " FROM " + TABLE_NAME + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUser);
             ResultSet rs = stmt.executeQuery(select);
             while (rs.next()) {
-                PhotoDAO.deleteByIdAnnonce(rs.getInt(COL_ID_ANNONCE));
+                PhotoDAO photoDAO = new PhotoDAO(dbConn);
+                photoDAO.deleteByIdAnnonce(rs.getInt(COL_ID_ANNONCE));
             }
-
             // On finit par supprimer l'annonce elle m�me
             delete = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUser);
-
-//		logger.info("deleteByIdUser : Query=" + delete);
-
             records = stmt.executeUpdate(delete);
-
-            if (records != 0) {
-                deleteStatus = true;
-                TransactionDAO.insert(dbConn, delete); // On ins�re la transaction
-            } else {
-                deleteStatus = false;
-            }
+            deleteStatus = records != 0;
             stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -510,8 +400,8 @@ public class AnnonceDAO {
         return deleteStatus;
     }
 
-    public static boolean devalideByIdUser(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    boolean devalideByIdUser(Integer idUser) {
+
         String NB_LIGNES = "NB_LIGNES";
         boolean updateStatus = false;
         int records, nb_lignes;
@@ -528,12 +418,7 @@ public class AnnonceDAO {
                     update = "UPDATE " + TABLE_NAME + " SET " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.UNREGISTRED.valeur() + "' WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUser);
                     records = stmt.executeUpdate(update);
 
-                    if (records != 0) {
-                        updateStatus = true;
-                        TransactionDAO.insert(dbConn, update); // On ins�re la transaction
-                    } else {
-                        updateStatus = false;
-                    }
+                    updateStatus = records != 0;
                 } else {
                     updateStatus = true;
                 }
@@ -545,29 +430,23 @@ public class AnnonceDAO {
         return updateStatus;
     }
 
-    public static boolean delete(Integer idAnnonce) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean delete(Integer idAnnonce) {
         boolean deleteStatus = false;
         int records;
         String query;
-
         try {
             Statement stmt = dbConn.createStatement();
 
             // Suppression de toutes les photos attachées
-            PhotoDAO.deleteByIdAnnonce(idAnnonce);
+            PhotoDAO photoDAO = new PhotoDAO(dbConn);
+            photoDAO.deleteByIdAnnonce(idAnnonce);
 
             query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
 
             records = stmt.executeUpdate(query);
 
             //When record is successfully deleted
-            if (records != 0) {
-                deleteStatus = true;
-                TransactionDAO.insert(dbConn, query); // On insère la transaction
-            } else {
-                deleteStatus = false;
-            }
+            deleteStatus = records != 0;
             stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -575,8 +454,7 @@ public class AnnonceDAO {
         return deleteStatus;
     }
 
-    public static Integer numberAnnonceByIdUser(Integer idUser) {
-        Connection dbConn = MyConnection.getInstance();
+    public Integer numberAnnonceByIdUser(Integer idUser) {
         Integer retour = 0;
         try {
             Statement stmt = dbConn.createStatement();
@@ -593,10 +471,8 @@ public class AnnonceDAO {
         return retour;
     }
 
-    public static ArrayList<AnnonceDTO> getMultiParam(Integer idCat, String keyword, Integer minPrice, Integer maxPrice, boolean photo, Integer page) {
-        Connection dbConn = MyConnection.getInstance();
+    public ArrayList<AnnonceDTO> getMultiParam(Integer idCat, String keyword, Integer minPrice, Integer maxPrice, boolean photo, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
-
         ArrayList<String> conditions = new ArrayList<>();
 
         // On va récupérer toutes les annonces pour la catégorie demandée
@@ -643,7 +519,7 @@ public class AnnonceDAO {
 
             // Si on en veut uniquement les annonces avec photo
             if (photo) {
-                conditions.add(COL_ID_ANNONCE + " IN (SELECT " + PhotoDAO.COL_ID_ANNONCE + " FROM " + PhotoDAO.TABLE_NAME + ")");
+                conditions.add(COL_ID_ANNONCE + " IN (SELECT " + PhotoContract.COL_ID_ANNONCE + " FROM " + PhotoContract.TABLE_NAME + ")");
             }
 
             // Concaténation de toutes les conditions
@@ -675,8 +551,7 @@ public class AnnonceDAO {
         return myList;
     }
 
-    public static Integer getNbAnnonce() {
-        Connection dbConn = MyConnection.getInstance();
+    public Integer getNbAnnonce() {
         Statement stmt;
         ResultSet results;
         String query;
@@ -691,7 +566,7 @@ public class AnnonceDAO {
                 nb_annonce = results.getInt(1);
             }
             stmt.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return nb_annonce;

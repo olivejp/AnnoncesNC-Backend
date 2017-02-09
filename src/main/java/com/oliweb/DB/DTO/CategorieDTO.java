@@ -1,10 +1,10 @@
 package com.oliweb.DB.DTO;
 
 public class CategorieDTO {
-	protected Integer idCAT;
-	protected String nameCAT;
-	protected String couleurCAT;
-	protected int nbAnnonceCAT;
+    private Integer idCAT;
+    private String nameCAT;
+    private String couleurCAT;
+    private int nbAnnonceCAT;
     
     public CategorieDTO(Integer p_idCat, String p_nameCat, String p_couleurCat, int p_nbAnnonceCAT) {
         idCAT = p_idCat;

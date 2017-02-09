@@ -10,59 +10,56 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import static com.oliweb.DB.Contract.PhotoContract.*;
+
 public class PhotoDAO {
-	private Integer idPhoto;
-	private String nomPhoto;
-	private String idAnnonce;
+    private Integer idPhoto;
+    private String nomPhoto;
+    private String idAnnonce;
 
-	public static final String TABLE_NAME = "photo";
-	public static final String COL_ID_PHOTO = "idPhoto";
-	public static final String COL_NOM_PHOTO = "nomPhoto";
-	public static final String COL_ID_ANNONCE = "annonce_idannonce";
-	public static final String COL_ID_UTILISATEUR = "utilisateur_idutilisateur";
-	public static final String COL_ID_CATEGORIE = "categorie_idcategorie";
+    private Connection dbConn;
 
+    public PhotoDAO(Connection dbConn) {
+        this.dbConn = dbConn;
+    }
 
-	public Integer getIdPhoto() {
-		return idPhoto;
-	}
-	public void setIdPhoto(Integer idPhoto) {
-		this.idPhoto = idPhoto;
-	}
-	public String getNomPhoto() {
-		return nomPhoto;
-	}
-	public void setNomPhoto(String nomPhoto) {
-		this.nomPhoto = nomPhoto;
-	}
-	public String getIdAnnonce() {
-		return idAnnonce;
-	}
-	public void setIdAnnonce(String idAnnonce) {
-		this.idAnnonce = idAnnonce;
-	}
+    public Integer getIdPhoto() {
+        return idPhoto;
+    }
 
-	/**
-	 * 
-	 * @param rs
-	 * @return
-	 * @throws Exception
-	 */
-	public static PhotoDTO transfertPhoto(ResultSet rs) throws Exception{
-		// Cr�ation d'une nouvelle photo
-		PhotoDTO photo = new PhotoDTO();
+    public void setIdPhoto(Integer idPhoto) {
+        this.idPhoto = idPhoto;
+    }
 
-		// Renseignement des champs de l'annonce
-		photo.setIdPhoto(rs.getInt(COL_ID_PHOTO));
-		photo.setIdAnnoncePhoto(rs.getInt(COL_ID_ANNONCE));
-		photo.setNamePhoto(rs.getString(COL_NOM_PHOTO));
-		return photo;
-	}
+    public String getNomPhoto() {
+        return nomPhoto;
+    }
 
-	public static boolean existByAnnonceAndName(Integer idAnnonce, Integer idPhoto, String namePhoto) {
-		Connection dbConn = MyConnection.getInstance();
-		boolean existStatus = false;
-		try {
+    public void setNomPhoto(String nomPhoto) {
+        this.nomPhoto = nomPhoto;
+    }
+
+    public String getIdAnnonce() {
+        return idAnnonce;
+    }
+
+    public void setIdAnnonce(String idAnnonce) {
+        this.idAnnonce = idAnnonce;
+    }
+
+    private PhotoDTO transfertPhoto(ResultSet rs) throws Exception {
+        PhotoDTO photo = new PhotoDTO();
+
+        // Renseignement des champs de l'annonce
+        photo.setIdPhoto(rs.getInt(COL_ID_PHOTO));
+        photo.setIdAnnoncePhoto(rs.getInt(COL_ID_ANNONCE));
+        photo.setNamePhoto(rs.getString(COL_NOM_PHOTO));
+        return photo;
+    }
+
+    public boolean existByAnnonceAndName(Integer idAnnonce, Integer idPhoto, String namePhoto) {
+        boolean existStatus = false;
+        try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE "
                     + COL_ID_PHOTO + "=" + String.valueOf(idPhoto) + " AND "
@@ -75,17 +72,16 @@ public class PhotoDAO {
                 }
             }
             stmt.close();
-        }catch (Exception e){
-		    e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-		return existStatus;
-	}
+        return existStatus;
+    }
 
 
-	public static boolean existWithDifferentName(Integer idAnnonce, Integer idPhoto, String namePhoto) {
-		Connection dbConn = MyConnection.getInstance();
-		boolean existStatus = false;
-		try {
+    public boolean existWithDifferentName(Integer idAnnonce, Integer idPhoto, String namePhoto) {
+        boolean existStatus = false;
+        try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE "
                     + COL_ID_PHOTO + "=" + String.valueOf(idPhoto) + " AND "
@@ -98,35 +94,34 @@ public class PhotoDAO {
                 }
             }
             stmt.close();
-        }catch (Exception e){
-		    e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-		return existStatus;
-	}
+        return existStatus;
+    }
 
-	public static boolean exist(Integer idAnnonce, Integer idPhoto) throws Exception {
-		Connection dbConn = MyConnection.getInstance();
-		boolean existStatus = false;
-		Statement stmt = dbConn.createStatement();
-		String query = "SELECT COUNT(*) FROM " + TABLE_NAME 
-				+ " WHERE " + COL_ID_PHOTO + " =" + String.valueOf(idPhoto)
-				+ " AND " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
-		ResultSet rs = stmt.executeQuery(query);
-		if (rs.next()){
-			if (rs.getInt(1) >= 1){
-				existStatus = true;
-			}
-		}
-		stmt.close();
-		return existStatus;
-	}
+    public boolean exist(Integer idAnnonce, Integer idPhoto) throws Exception {
+        Connection dbConn = MyConnection.getInstance();
+        boolean existStatus = false;
+        Statement stmt = dbConn.createStatement();
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME
+                + " WHERE " + COL_ID_PHOTO + " =" + String.valueOf(idPhoto)
+                + " AND " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
+        ResultSet rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            if (rs.getInt(1) >= 1) {
+                existStatus = true;
+            }
+        }
+        stmt.close();
+        return existStatus;
+    }
 
-	public static boolean update(PhotoDTO photo) {
-		Connection dbConn = MyConnection.getInstance();
-		boolean updateStatus = false;
-		int records;
-		String query;
-		try {
+    public boolean update(PhotoDTO photo) {
+        boolean updateStatus = false;
+        int records;
+        String query;
+        try {
             Statement stmt = dbConn.createStatement();
             query = "UPDATE " + TABLE_NAME + " SET "
                     + COL_NOM_PHOTO + " = '" + photo.getNamePhoto() + "'"
@@ -134,107 +129,96 @@ public class PhotoDAO {
                     + " AND " + COL_ID_ANNONCE + " = " + String.valueOf(photo.getIdAnnoncePhoto());
             records = stmt.executeUpdate(query);
 
-            // When record is successfully inserted
-            if (records != 0) {
-                updateStatus = true;
-                TransactionDAO.insert(dbConn, query); // On insère la transaction
-            } else {
-                updateStatus = false;
-            }
+            updateStatus = records != 0;
             stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e){
-		    e.printStackTrace();
+        return updateStatus;
+    }
+
+    public PhotoDTO getById(Integer idPhoto) throws Exception {
+        Statement stmt = dbConn.createStatement();
+        PhotoDTO retour = null;
+
+        String query = "SELECT " + COL_ID_PHOTO + ", "
+                + COL_NOM_PHOTO + ", "
+                + COL_ID_ANNONCE
+                + " FROM " + TABLE_NAME
+                + " WHERE " + COL_ID_PHOTO + " = " + String.valueOf(idPhoto);
+        ResultSet rs = stmt.executeQuery(query);
+
+        if (rs.next()) {
+            retour = transfertPhoto(rs);
         }
-		return updateStatus;
-	}
 
-	public static PhotoDTO getById(Integer idPhoto) throws Exception{
-		Connection dbConn = MyConnection.getInstance();
-		Statement stmt = (Statement) dbConn.createStatement();
-		PhotoDTO retour = null;
+        stmt.close();
+        return retour;
+    }
 
-		String query = "SELECT " + COL_ID_PHOTO + ", " 
-				+ COL_NOM_PHOTO + ", " 
-				+ COL_ID_ANNONCE 
-				+ " FROM " + TABLE_NAME
-				+ " WHERE " + COL_ID_PHOTO + " = " + String.valueOf(idPhoto);
-		ResultSet rs = stmt.executeQuery(query);
+    public PhotoDTO getById(Integer idAnnonce, Integer idPhoto) {
+        PhotoDTO retour = null;
+        try {
+            Statement stmt = dbConn.createStatement();
+            String query = "SELECT " + COL_ID_PHOTO + ", "
+                    + COL_NOM_PHOTO + ", "
+                    + COL_ID_ANNONCE
+                    + " FROM " + TABLE_NAME
+                    + " WHERE " + COL_ID_PHOTO + " = " + String.valueOf(idPhoto)
+                    + " AND " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
+            ResultSet rs = stmt.executeQuery(query);
 
-		if (rs.next()){
-			retour = transfertPhoto(rs);
-		}
+            if (rs.next()) {
+                retour = transfertPhoto(rs);
+            }
 
-		stmt.close();
-		return retour;
-	}
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retour;
+    }
 
-	public static PhotoDTO getById(Integer idAnnonce, Integer idPhoto){
-		Connection dbConn = MyConnection.getInstance();
-		PhotoDTO retour = null;
-		try {
-			Statement stmt = dbConn.createStatement();
-			String query = "SELECT " + COL_ID_PHOTO + ", "
-					+ COL_NOM_PHOTO + ", "
-					+ COL_ID_ANNONCE
-					+ " FROM " + TABLE_NAME
-					+ " WHERE " + COL_ID_PHOTO + " = " + String.valueOf(idPhoto)
-					+ " AND " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
-			ResultSet rs = stmt.executeQuery(query);
+    public int getMaxId() throws Exception {
+        String query;
+        int retour = -1;
 
-			if (rs.next()) {
-				retour = transfertPhoto(rs);
-			}
+        Statement stmt = dbConn.createStatement();
 
-			stmt.close();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		return retour;
-	}
+        query = "SELECT MAX(" + COL_ID_PHOTO + ") AS MAXID FROM " + TABLE_NAME;
+        ResultSet rs;
+        rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            retour = rs.getInt("MAXID");
+        }
+        stmt.close();
+        return retour;
+    }
 
-	public static int getMaxId() throws Exception{
-		Connection dbConn = MyConnection.getInstance();
-		String query;
-		int retour = -1;
+    private int getMaxIdByAnnonce(Integer idAnnonce) throws Exception {
+        Connection dbConn = MyConnection.getInstance();
+        String query;
+        int retour = -1;
 
-		Statement stmt = dbConn.createStatement();
+        Statement stmt = dbConn.createStatement();
 
-		query = "Select MAX(" + COL_ID_PHOTO + ") as MAXID from " + TABLE_NAME;
-		ResultSet rs;
-		rs = stmt.executeQuery(query);
-		if (rs.next()){
-			retour = rs.getInt("MAXID");
-		}
-		stmt.close();
-		return retour;
-	}
+        query = "Select MAX(" + COL_ID_PHOTO + ") as MAXID from " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + idAnnonce;
+        ResultSet rs;
+        rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            retour = rs.getInt("MAXID");
+        }
+        stmt.close();
+        return retour;
+    }
 
-	public static int getMaxIdByAnnonce(Integer idAnnonce) throws Exception{
-		Connection dbConn = MyConnection.getInstance();
-		String query;
-		int retour = -1;
+    public int insert(PhotoDTO photo) {
+        int retour = 0;
+        int records;
+        Statement stmt;
+        Integer idAnnonce = photo.getIdAnnoncePhoto();
 
-		Statement stmt = dbConn.createStatement();
-
-		query = "Select MAX(" + COL_ID_PHOTO + ") as MAXID from " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + idAnnonce;
-		ResultSet rs;
-		rs = stmt.executeQuery(query);
-		if (rs.next()){
-			retour = rs.getInt("MAXID");
-		}
-		stmt.close();
-		return retour;
-	}
-
-	public static int insert(PhotoDTO photo){
-		int retour = 0;
-		Connection dbConn = MyConnection.getInstance();
-		int records;
-		Statement stmt;
-		Integer idAnnonce = photo.getIdAnnoncePhoto();
-
-		try {
+        try {
             stmt = dbConn.createStatement();
             String query = "INSERT INTO " + TABLE_NAME + " ("
                     + COL_NOM_PHOTO + ", "
@@ -247,31 +231,28 @@ public class PhotoDAO {
 
             //When record is successfully inserted
             if (records > 0) {
-                TransactionDAO.insert(dbConn, query); // On ins�re la transaction
                 retour = getMaxIdByAnnonce(idAnnonce);
             }
-        }catch (Exception e){
-		    e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-		return retour;
-	}
+        return retour;
+    }
 
-	public static boolean deleteRealFile(String realFilePath){
-		// On va supprimer la photo bitmap dans le r�pertoire d'upload.
-		String basename = FilenameUtils.getName(realFilePath);
-		String diretory_to_delete = ConstantsDB.directory_image + basename;
-		System.out.println(diretory_to_delete);
-		File file = new File(diretory_to_delete);
-		return file.delete();
-	}
+    private boolean deleteRealFile(String realFilePath) {
+        // On va supprimer la photo bitmap dans le r�pertoire d'upload.
+        String basename = FilenameUtils.getName(realFilePath);
+        String diretory_to_delete = ConstantsDB.directory_image + basename;
+        File file = new File(diretory_to_delete);
+        return file.delete();
+    }
 
-	public static boolean delete(Integer idAnnonce, Integer idPhoto){
-		Connection dbConn = MyConnection.getInstance();
-		boolean deleteStatus = false;
-		int records;
-		String delete, query, where, nom_photo = null;
+    public boolean delete(Integer idAnnonce, Integer idPhoto) {
+        boolean deleteStatus = false;
+        int records;
+        String delete, query, where, nom_photo = null;
 
-		try {
+        try {
             Statement stmt = dbConn.createStatement();
             where = " WHERE " + COL_ID_PHOTO + " = " + String.valueOf(idPhoto) + " AND " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
             query = "SELECT " + COL_NOM_PHOTO + " FROM " + TABLE_NAME + where;
@@ -286,26 +267,24 @@ public class PhotoDAO {
             if (records != 0) {
                 deleteStatus = true;
                 deleteRealFile(nom_photo); // On tente de supprimer réellement la photo
-                TransactionDAO.insert(dbConn, delete); // On insère la transaction
             } else {
                 deleteStatus = false;
             }
             stmt.close();
-        }catch (Exception e){
-		    e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-		return deleteStatus;
-	}
+        return deleteStatus;
+    }
 
-	public static boolean deleteByIdAnnonce(Integer idAnnonce) {
-		Connection dbConn = MyConnection.getInstance();
-		boolean deleteStatus = false;
-		String query1, query2;
+    public boolean deleteByIdAnnonce(Integer idAnnonce) {
+        boolean deleteStatus = false;
+        String query1, query2;
 
-		// On lance la requ�te pour supprimer les donn�es. Mais la m�thode doit quand m�me nous renvoyer true meme si elle n'a rien supprim�.
-		// Donc on va lire le nombre de photos pour cette annonce et s'il n'en reste aucune alors on renvoie true, sinon false;
+        // On lance la requ�te pour supprimer les donn�es. Mais la m�thode doit quand m�me nous renvoyer true meme si elle n'a rien supprim�.
+        // Donc on va lire le nombre de photos pour cette annonce et s'il n'en reste aucune alors on renvoie true, sinon false;
         try {
-            Statement stmt = (Statement) dbConn.createStatement();
+            Statement stmt = dbConn.createStatement();
 
             query1 = "SELECT " + COL_ID_PHOTO + ", " + COL_NOM_PHOTO + " FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
             ResultSet rs = stmt.executeQuery(query1);
@@ -323,39 +302,27 @@ public class PhotoDAO {
 
             //When record is successfully inserted
             if (rs.next()) {
-                if (rs.getInt(1) == 0) {
-                    deleteStatus = true;
-                } else {
-                    deleteStatus = false;
-                }
+                deleteStatus = rs.getInt(1) == 0;
             }
             stmt.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-		return deleteStatus;
-	}
+        return deleteStatus;
+    }
 
-	/**
-	 * 
-	 * @param idAnnonce
-	 * @return
-	 * @throws Exception
-	 */
-	public static ArrayList<PhotoDTO> getByIdAnnonce(Integer idAnnonce) throws Exception {
-		Connection dbConn = MyConnection.getInstance();
-		ArrayList<PhotoDTO> photosDTO = new ArrayList<PhotoDTO>();
-		String query;
+    ArrayList<PhotoDTO> getByIdAnnonce(Integer idAnnonce) throws Exception {
+        ArrayList<PhotoDTO> photosDTO = new ArrayList<>();
+        String query;
 
-		Statement stmt = (Statement) dbConn.createStatement();
-		query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
-		ResultSet rs = stmt.executeQuery(query);
-		while (rs.next()){
-			// Cr�ation d'une nouvelle annonce
-			photosDTO.add(new PhotoDTO(rs.getInt(COL_ID_PHOTO), rs.getString(COL_NOM_PHOTO), rs.getInt(COL_ID_ANNONCE)));
-		}
-		stmt.close();
-		return photosDTO;
-	}
+        Statement stmt = dbConn.createStatement();
+        query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            photosDTO.add(new PhotoDTO(rs.getInt(COL_ID_PHOTO), rs.getString(COL_NOM_PHOTO), rs.getInt(COL_ID_ANNONCE)));
+        }
+        stmt.close();
+        return photosDTO;
+    }
 
 }

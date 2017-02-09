@@ -1,14 +1,14 @@
 package com.oliweb.DB.DTO;
 
 public class MessageDTO {
-	protected Integer idMessage;
-	protected UtilisateurDTO sender;
-	protected UtilisateurDTO receiver;
-	protected String message;
-	protected Long dateMessage;
-	
-	public MessageDTO(Integer idMessage, UtilisateurDTO sender, UtilisateurDTO receiver, String message, Long dateMessage) {
-		super();
+    private Integer idMessage;
+    private UtilisateurDTO sender;
+    private UtilisateurDTO receiver;
+    private String message;
+    private Long dateMessage;
+
+    public MessageDTO(Integer idMessage, UtilisateurDTO sender, UtilisateurDTO receiver, String message, Long dateMessage) {
+        super();
 		this.idMessage = idMessage;
 		this.sender = sender;
 		this.receiver = receiver;

@@ -1,9 +1,9 @@
 package com.oliweb.DB.DTO;
 
 public class PhotoDTO {
-	protected Integer idPhoto;
-	protected String namePhoto;
-	protected Integer idAnnoncePhoto;
+	private Integer idPhoto;
+	private String namePhoto;
+	private Integer idAnnoncePhoto;
 
 	public PhotoDTO(Integer idPhoto, String namePhoto, Integer idAnnoncePhoto) {
 		this.idPhoto = idPhoto;

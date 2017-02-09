@@ -4,6 +4,7 @@ package com.oliweb.restservice;
 import com.google.gson.Gson;
 import com.oliweb.DB.DAO.AnnonceDAO;
 import com.oliweb.DB.DAO.MessageDAO;
+import com.oliweb.DB.DAO.MyConnection;
 import com.oliweb.DB.DAO.UtilisateurDAO;
 import com.oliweb.DB.DTO.AnnonceDTO;
 import com.oliweb.DB.DTO.UtilisateurDTO;
@@ -23,6 +24,9 @@ import java.util.ArrayList;
 public class Utilisateur {
 
     private static Gson gson = new Gson();
+    private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
+    private UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
+    private MessageDAO messageDAO = new MessageDAO(MyConnection.getInstance());
 
     @GET
     @Path("{idUser}/annonces")
@@ -30,7 +34,7 @@ public class Utilisateur {
     public String listAnnonceByUser(@PathParam("idUser") Integer idUser,
                                     @QueryParam("page") Integer page) {
         ReturnClass rs = new ReturnClass("listAnnonceByUser", false, null, null);
-        ArrayList<AnnonceDTO> myList = AnnonceDAO.getByIdUser(idUser, page);
+        ArrayList<AnnonceDTO> myList = annonceDAO.getByIdUser(idUser, page);
         if (myList != null) {
             rs.setStatus(true);
             if (!myList.isEmpty()) {
@@ -47,13 +51,12 @@ public class Utilisateur {
                              @QueryParam("emailUser") String emailUser,
                              @QueryParam("telephoneUser") Integer telephoneUser){
         ReturnClass rs = new ReturnClass("updateUser", false, null, null);
-
-        if (UtilisateurDAO.existById(idUser)) {
-            UtilisateurDTO user = UtilisateurDAO.getById(idUser);
+        if (utilisateurDAO.existById(idUser)) {
+            UtilisateurDTO user = utilisateurDAO.getById(idUser);
             user.setEmailUTI(emailUser);
             user.setTelephoneUTI(telephoneUser);
 
-            if (UtilisateurDAO.update(user)) {
+            if (utilisateurDAO.update(user)) {
                 rs.setStatus(true);
             } else {
                 rs.setMsg("L'utilisateur n'a pas pu être mis à jour dans la BD");
@@ -72,7 +75,8 @@ public class Utilisateur {
         String decryptedPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
 
         if (Utility.isNotNull(email) && Utility.isNotNull(decryptedPwd)) {
-            result = UtilisateurDAO.insert(email, decryptedPwd, telephone);
+            UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
+            result = utilisateurDAO.insert(email, decryptedPwd, telephone);
         } else {
             result = -4;
         }
@@ -98,8 +102,8 @@ public class Utilisateur {
     @Produces(MediaType.APPLICATION_JSON)
     public String unregister(@PathParam("idUser") Integer idUser){
         ReturnClass rs = new ReturnClass("unregister", false, null, null);
-        if (UtilisateurDAO.existById(idUser)) {
-            if (UtilisateurDAO.unregisterUser(idUser)) {
+        if (utilisateurDAO.existById(idUser)) {
+            if (utilisateurDAO.unregisterUser(idUser)) {
                 rs.setStatus(true);
             } else {
                 rs.setMsg("L'utilisateur n'a pas pu être supprimé");
@@ -115,7 +119,7 @@ public class Utilisateur {
     public String getnbuser() {
         ReturnClass rs = new ReturnClass("getnbuser", false, null, null);
         rs.setStatus(true);
-        rs.setMsg(String.valueOf(UtilisateurDAO.getNbUser()));
+        rs.setMsg(String.valueOf(utilisateurDAO.getNbUser()));
         return gson.toJson(rs);
     }
 
@@ -138,10 +142,10 @@ public class Utilisateur {
             newDecryptedPwd = Crypto.desDecryptIt(newEncryptedPwd);
         }
 
-        if (UtilisateurDAO.existById(idUser)) {
+        if (utilisateurDAO.existById(idUser)) {
             // Vérification que l'ancien password est le même que celui qu'on a renvoyé
-            if (UtilisateurDAO.getPasswordByIdUser(idUser).equals(oldDecryptedPwd)) {
-                if (UtilisateurDAO.changePassword(idUser, newDecryptedPwd)) {
+            if (utilisateurDAO.getPasswordByIdUser(idUser).equals(oldDecryptedPwd)) {
+                if (utilisateurDAO.changePassword(idUser, newDecryptedPwd)) {
                     rs.setStatus(true);
                 } else {
                     rs.setMsg("Le mot de passe n'a pas pu être changé.");
@@ -158,23 +162,23 @@ public class Utilisateur {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public static String doLogin(@QueryParam("email") String email,
-                                 @QueryParam("password") String encryptedPwd) {
+    public String doLogin(@QueryParam("email") String email,
+                          @QueryParam("password") String encryptedPwd) {
         boolean result;
         ReturnClass rs = new ReturnClass("doLogin", false, null, null);
 
         // On décrypte le mot de passe
         String decryptPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
 
-        result = Utility.isNotNull(email) && Utility.isNotNull(decryptPwd) && UtilisateurDAO.checkLogin(email, decryptPwd);
+        result = Utility.isNotNull(email) && Utility.isNotNull(decryptPwd) && utilisateurDAO.checkLogin(email, decryptPwd);
 
         if (result) {
-            UtilisateurDTO utilisateur = UtilisateurDAO.getByEmail(email);
+            UtilisateurDTO utilisateur = utilisateurDAO.getByEmail(email);
             rs.setStatus(true);
             rs.setMsg(gson.toJson(utilisateur));
 
             // Mise à jour de la date de dernière connexion de l'utilisateur
-            UtilisateurDAO.updateDateLastConnexion(utilisateur.getIdUTI());
+            utilisateurDAO.updateDateLastConnexion(utilisateur.getIdUTI());
         } else {
             rs.setMsg("Email ou Mot de passe incorrect");
         }
@@ -187,12 +191,12 @@ public class Utilisateur {
     public String lostpassword(@QueryParam("email") String email){
         ReturnClass rs = new ReturnClass("lostpassword", false, null, null);
 
-        if (UtilisateurDAO.existByEmail(email)) {
-            UtilisateurDTO user = UtilisateurDAO.getByEmail(email);
+        if (utilisateurDAO.existByEmail(email)) {
+            UtilisateurDTO user = utilisateurDAO.getByEmail(email);
 
             rs.setStatus(true);
             String newPassword = SessionIdentifierGenerator.nextSessionId();
-            UtilisateurDAO.changePassword(user.getIdUTI(), newPassword);
+            utilisateurDAO.changePassword(user.getIdUTI(), newPassword);
             PropertiesMail propertiesMail = new PropertiesMail(Constants.email_from, Constants.smtp_host, Constants.smtp_port, Constants.email_username, Constants.email_password);
 
             SendMail.executeTLS(propertiesMail, email, "Application " + Constants.APPLI_NAME + " - Mot de passe perdu", "Voici votre mot de passe : " + newPassword);
@@ -208,7 +212,7 @@ public class Utilisateur {
     @Produces(MediaType.APPLICATION_JSON)
     public String listMessages(@PathParam("idUser") Integer idUser) {
         ReturnClass rs = new ReturnClass("listMessages", false, null, null);
-        rs.setMsg(gson.toJson(MessageDAO.listByIdSender(idUser)));
+        rs.setMsg(gson.toJson(messageDAO.listByIdSender(idUser)));
         return gson.toJson(rs);
     }
 }

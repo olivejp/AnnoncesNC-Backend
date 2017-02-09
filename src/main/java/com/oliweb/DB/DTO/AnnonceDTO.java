@@ -3,15 +3,15 @@ package com.oliweb.DB.DTO;
 import java.util.ArrayList;
 
 public class AnnonceDTO {
-    protected Integer idANO;               // Identifiant
-    protected CategorieDTO categorieANO;   // Une annonce appartient a une catégorie
-    protected UtilisateurDTO ownerANO;     // Une annonce est rédigée par une personne
-    protected Integer priceANO;            // L'annonce a un prix
-    protected String descriptionANO;       // Description de l'annonce
-    protected String titreANO;             // Titre de l'annonce
-    protected boolean publishedANO;        // True si l'annonce est publiée sinon False
-    protected Long datePublished;          // La date de la parution
-    protected ArrayList<PhotoDTO> photos;  // Les photos de l'annonce
+    private Integer idANO;               // Identifiant
+    private CategorieDTO categorieANO;   // Une annonce appartient a une catégorie
+    private UtilisateurDTO ownerANO;     // Une annonce est rédigée par une personne
+    private Integer priceANO;            // L'annonce a un prix
+    private String descriptionANO;       // Description de l'annonce
+    private String titreANO;             // Titre de l'annonce
+    private boolean publishedANO;        // True si l'annonce est publiée sinon False
+    private Long datePublished;          // La date de la parution
+    private ArrayList<PhotoDTO> photos;  // Les photos de l'annonce
     
     /* Constructeur */
     public AnnonceDTO(Integer idANO, CategorieDTO categorieANO, UtilisateurDTO ownerANO, Integer priceANO, String descriptionANO, String titreANO, boolean publishedANO, Long datePublished, ArrayList<PhotoDTO> listPhoto) {

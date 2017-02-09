@@ -16,8 +16,8 @@ import java.sql.Statement;
 
 @Path("/services")
 public class Service {
-
     private static Gson gson = new Gson();
+    private UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
 
     @POST
     @Path("/checkconnection")
@@ -32,12 +32,10 @@ public class Service {
     @Produces(MediaType.APPLICATION_JSON)
     public String SendSms(@QueryParam("to") String to, @QueryParam("from") String from, @QueryParam("body") String body) {
         String tag = "sendsms";
-        boolean retour = false;
         String message;
-        ReturnClass rs = new ReturnClass(tag, false, null, null);
-        message = SendSms.send(from, to, body, retour);
+        ReturnClass rs = new ReturnClass(tag, true, null, null);
+        message = SendSms.send(from, to, body);
         rs.setMsg(message);
-        rs.setStatus(retour);
         return gson.toJson(rs);
     }
 
@@ -48,7 +46,7 @@ public class Service {
         String retour = null;
         String tag = "doSql";
         try {
-            if (UtilisateurDAO.checkAdmin(email, password)){
+            if (utilisateurDAO.checkAdmin(email, password)) {
                 Connection dbConn = MyConnection.getInstance();
                 Statement stmt = dbConn.createStatement();
                 stmt.executeUpdate(query);

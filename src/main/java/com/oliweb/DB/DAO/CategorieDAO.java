@@ -1,11 +1,14 @@
 package com.oliweb.DB.DAO;
 
+import com.oliweb.DB.Contract.AnnonceContract;
 import com.oliweb.DB.DTO.CategorieDTO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import static com.oliweb.DB.Contract.CategorieContract.*;
 
 
 public class CategorieDAO {
@@ -15,11 +18,11 @@ public class CategorieDAO {
     private String couleurCategorie;
     private Integer versionCategorie;
 
-    public static final String TABLE_NAME = "categorie";
-    public static final String COL_ID_CATEGORIE = "idcategorie";
-    public static final String COL_NOM_CATEGORIE = "nomCategorie";
-    public static final String COL_COULEUR_CATEGORIE = "couleurCategorie";
+    private Connection dbConn;
 
+    public CategorieDAO(Connection dbConn) {
+        this.dbConn = dbConn;
+    }
 
     public Integer getIdCategorie() {
         return idCategorie;
@@ -53,10 +56,9 @@ public class CategorieDAO {
         this.versionCategorie = versionCategorie;
     }
 
-    public static ArrayList<CategorieDTO> getCompleteList() {
+    public ArrayList<CategorieDTO> getCompleteList() {
         ArrayList<CategorieDTO> myList = new ArrayList<>();
 
-        Connection dbConn = MyConnection.getInstance();
         try {
             if (!dbConn.isClosed()) {
                 Statement stmt = dbConn.createStatement();
@@ -76,9 +78,8 @@ public class CategorieDAO {
                 rs.close();
 
                 // On lance une deuxi�me requ�te pour r�cup�rer le nombre d 'annonce par cat�gorie
-                query = null;
                 for (CategorieDTO categorie : myList) {
-                    query = "SELECT count(" + AnnonceDAO.COL_ID_ANNONCE + ") FROM " + AnnonceDAO.TABLE_NAME + " WHERE " + AnnonceDAO.COL_ID_CATEGORY + " = " + String.valueOf(categorie.getIdCAT());
+                    query = "SELECT count(" + AnnonceContract.COL_ID_ANNONCE + ") FROM " + AnnonceContract.TABLE_NAME + " WHERE " + AnnonceContract.COL_ID_CATEGORY + " = " + String.valueOf(categorie.getIdCAT());
                     rs2 = stmt.executeQuery(query);
                     if (rs2.next()) {
                         categorie.setNbAnnonceCAT(rs2.getInt(1));
@@ -93,12 +94,12 @@ public class CategorieDAO {
         return myList;
     }
 
-    public static CategorieDTO getById(Integer idCategorie) {
-        Connection dbConn = MyConnection.getInstance();
+    public CategorieDTO getById(Integer idCategorie) {
+
         CategorieDTO categorie = new CategorieDTO();
 
         try {
-            Statement stmt = (Statement) dbConn.createStatement();
+            Statement stmt = dbConn.createStatement();
             String query = "SELECT " + COL_ID_CATEGORIE + ", "
                     + COL_NOM_CATEGORIE + ", "
                     + COL_COULEUR_CATEGORIE
@@ -118,8 +119,7 @@ public class CategorieDAO {
         return categorie;
     }
 
-    public static boolean existById(Integer id) {
-        Connection dbConn = MyConnection.getInstance();
+    public boolean existById(Integer id) {
         boolean exist = false;
         try {
             Statement stmt = dbConn.createStatement();
@@ -138,11 +138,11 @@ public class CategorieDAO {
     }
 
     // @SuppressWarnings("unused")
-    public static CategorieDTO getByName(String nameCategorie) throws Exception {
-        Connection dbConn = MyConnection.getInstance();
+    public CategorieDTO getByName(String nameCategorie) throws Exception {
+
         CategorieDTO categorie = new CategorieDTO();
 
-        Statement stmt = (Statement) dbConn.createStatement();
+        Statement stmt = dbConn.createStatement();
         String query = "SELECT " + COL_ID_CATEGORIE + ", " + COL_NOM_CATEGORIE + " "
                 + " FROM " + TABLE_NAME
                 + " WHERE " + COL_NOM_CATEGORIE + " ='" + nameCategorie + "'";
@@ -152,7 +152,6 @@ public class CategorieDAO {
             categorie.setIdCAT(results.getInt(COL_ID_CATEGORIE));
             categorie.setNameCAT(results.getString(COL_NOM_CATEGORIE));
         }
-        //System.out.println(records);
         stmt.close();
         return categorie;
     }

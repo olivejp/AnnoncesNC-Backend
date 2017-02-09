@@ -3,6 +3,7 @@ package com.oliweb.restservice;
 
 import com.google.gson.Gson;
 import com.oliweb.DB.DAO.AnnonceDAO;
+import com.oliweb.DB.DAO.MyConnection;
 import com.oliweb.DB.DAO.PhotoDAO;
 import com.oliweb.DB.DTO.PhotoDTO;
 import com.oliweb.DB.utility.ConstantsDB;
@@ -17,12 +18,14 @@ import javax.ws.rs.core.MediaType;
 public class Photo {
 
     private static Gson gson = new Gson();
+    private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
+    private PhotoDAO photoDAO = new PhotoDAO(MyConnection.getInstance());
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String dopostphoto(@QueryParam("idAnnonce") Integer idAnnonce,
                               @QueryParam("idPhoto") Integer idPhoto,
-                              @QueryParam("nomPhoto") String nomPhoto){
+                              @QueryParam("nomPhoto") String nomPhoto) {
         PhotoDTO photoDTO;
         ReturnClass rs = new ReturnClass("dopostphoto", false, null, null);
 
@@ -30,10 +33,10 @@ public class Photo {
         String newName = FilenameUtils.getName(nomPhoto);
 
         // Vérification que l'annonce existe bien
-        if (AnnonceDAO.exist(idAnnonce)) {
+        if (annonceDAO.exist(idAnnonce)) {
 
             // Vérification si la photo existe déjà
-            photoDTO = PhotoDAO.getById(idAnnonce, idPhoto);
+            photoDTO = photoDAO.getById(idAnnonce, idPhoto);
             if (photoDTO != null) {
                 // La photo existe déjà, on va vérifier si elle a changé de nom ou pas
                 String presentName = FilenameUtils.getName(photoDTO.getNamePhoto());
@@ -41,7 +44,7 @@ public class Photo {
                     // La photo existe mais ne porte pas le même nom qu'auparavant
                     // On va mettre à jour notre photo
                     photoDTO.setNamePhoto(ConstantsDB.upload_directory + newName);
-                    if (PhotoDAO.update(photoDTO)) {
+                    if (photoDAO.update(photoDTO)) {
                         rs.setStatus(true);
                         rs.setId(photoDTO.getIdPhoto());
                         rs.setMsg(nomPhoto);
@@ -58,7 +61,7 @@ public class Photo {
                 photoDTO = new PhotoDTO();
                 photoDTO.setNamePhoto(ConstantsDB.upload_directory + newName);
                 photoDTO.setIdAnnoncePhoto(idAnnonce);
-                Integer newId = PhotoDAO.insert(photoDTO);
+                Integer newId = photoDAO.insert(photoDTO);
                 if (newId != 0) {
                     photoDTO.setIdPhoto(newId);
                     rs.setStatus(true);
@@ -77,18 +80,18 @@ public class Photo {
     @GET
     @Path("/photoExist")
     @Produces(MediaType.APPLICATION_JSON)
-    public String photoExist(@QueryParam("idAnnonce") Integer idAnnonce, @QueryParam("idPhoto") Integer idPhoto, @QueryParam("namePhoto") String namePhoto) {
+    public String photoExist(@QueryParam("idAnnonce") Integer idAnnonce,
+                             @QueryParam("idPhoto") Integer idPhoto,
+                             @QueryParam("namePhoto") String namePhoto) {
         ReturnClass rs = new ReturnClass("photoexist", false, null, null);
-        boolean exist;
-
-        exist = PhotoDAO.existByAnnonceAndName(idAnnonce, idPhoto, namePhoto);
-        if (exist) {
-            rs.setStatus(exist);
+        if (photoDAO.existByAnnonceAndName(idAnnonce, idPhoto, namePhoto)) {
+            rs.setStatus(true);
             rs.setMsg(Constants.same_name);
         } else {
-            exist = PhotoDAO.existWithDifferentName(idAnnonce, idPhoto, namePhoto);
-            rs.setStatus(exist);
-            rs.setMsg(Constants.different_name);
+            if (photoDAO.existWithDifferentName(idAnnonce, idPhoto, namePhoto)) {
+                rs.setStatus(true);
+                rs.setMsg(Constants.different_name);
+            }
         }
         return gson.toJson(rs);
     }

@@ -7,11 +7,6 @@ import java.util.Properties;
 
 public class SendMail {
 
-	/**
-	 * @param to
-	 * @param object
-	 * @param text
-	 */
 	public static void executeTLS(final PropertiesMail propertiesMail, String to, String object, String text) {
 
 		Properties props = new Properties();
@@ -46,13 +41,6 @@ public class SendMail {
 		}
 	}
 
-
-
-	/**
-	 * @param to
-	 * @param object
-	 * @param text
-	 */
 	public static void executeSSL(final PropertiesMail propertiesMail, String to, String object, String text) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
