@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DAO/AnnonceDAO.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DAO/MessageDAO.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DAO/MyConnection.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DAO/TransactionDAO.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DAO/UtilisateurDAO.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/DB/DTO/AnnonceDTO.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/utility/Constants.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/oliweb/utility/Utility.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/TransactionDAO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/AnnonceDTO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java" charset="UTF-8" />
   </component>
 </project>
