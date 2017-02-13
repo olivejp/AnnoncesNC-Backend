@@ -67,7 +67,9 @@ public class Utilisateur {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String doregister(@QueryParam("email") String email, @QueryParam("password") String encryptedPwd, @QueryParam("telephone") Integer telephone) {
+    public String doregister(@QueryParam("email") String email,
+                             @QueryParam("password") String encryptedPwd,
+                             @QueryParam("telephone") Integer telephone) {
         int result;
         ReturnClass rs = new ReturnClass("doregister", false, null, null);
 

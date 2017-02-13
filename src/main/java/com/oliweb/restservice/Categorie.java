@@ -37,7 +37,8 @@ public class Categorie {
     @GET
     @Path("{idCategory}/annonces")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAnnonceByCategoryWithPage(@PathParam("idCategory") Integer idCategory, @QueryParam("page") Integer page) {
+    public String listAnnonceByCategoryWithPage(@PathParam("idCategory") Integer idCategory,
+                                                @QueryParam("page") Integer page) {
         ReturnClass rs = new ReturnClass("listAnnonceByCategoryWithPage", false, null, null);
         ArrayList<AnnonceDTO> myList;
 

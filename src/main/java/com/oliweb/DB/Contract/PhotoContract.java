@@ -5,6 +5,11 @@ public class PhotoContract {
     public static final String COL_ID_PHOTO = "idPhoto";
     public static final String COL_NOM_PHOTO = "nomPhoto";
     public static final String COL_ID_ANNONCE = "annonce_idannonce";
-    public static final String COL_ID_UTILISATEUR = "utilisateur_idutilisateur";
-    public static final String COL_ID_CATEGORIE = "categorie_idcategorie";
+
+    public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+            COL_ID_PHOTO + " INTEGER NOT NULL AUTO_INCREMENT," +
+            COL_ID_ANNONCE + " INTEGER NULL," +
+            COL_NOM_PHOTO + " VARCHAR(400) NULL," +
+            "  PRIMARY KEY(" + COL_ID_PHOTO + "));";
+
 }
