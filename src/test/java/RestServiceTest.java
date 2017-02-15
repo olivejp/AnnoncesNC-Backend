@@ -24,6 +24,7 @@ public class RestServiceTest {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
+
     @Mock
     Connection connection;
     private ArrayList<PhotoDTO> listPhoto;

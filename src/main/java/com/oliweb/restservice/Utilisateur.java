@@ -8,10 +8,10 @@ import com.oliweb.DB.DAO.MyConnection;
 import com.oliweb.DB.DAO.UtilisateurDAO;
 import com.oliweb.DB.DTO.AnnonceDTO;
 import com.oliweb.DB.DTO.UtilisateurDTO;
+import com.oliweb.DB.utility.Properties;
 import com.oliweb.DB.utility.ReturnClass;
 import com.oliweb.S_MAIL.PropertiesMail;
 import com.oliweb.S_MAIL.SendMail;
-import com.oliweb.utility.Constants;
 import com.oliweb.utility.Crypto;
 import com.oliweb.utility.SessionIdentifierGenerator;
 import com.oliweb.utility.Utility;
@@ -19,6 +19,8 @@ import com.oliweb.utility.Utility;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+
+import static com.oliweb.DB.utility.Properties.*;
 
 @Path("/utilisateurs")
 public class Utilisateur {
@@ -199,9 +201,16 @@ public class Utilisateur {
             rs.setStatus(true);
             String newPassword = SessionIdentifierGenerator.nextSessionId();
             utilisateurDAO.changePassword(user.getIdUTI(), newPassword);
-            PropertiesMail propertiesMail = new PropertiesMail(Constants.email_from, Constants.smtp_host, Constants.smtp_port, Constants.email_username, Constants.email_password);
 
-            SendMail.executeTLS(propertiesMail, email, "Application " + Constants.APPLI_NAME + " - Mot de passe perdu", "Voici votre mot de passe : " + newPassword);
+            String emailFrom = Properties.getProperty(EMAIL_FROM);
+            String smtpHost = Properties.getProperty(SMTP_HOST);
+            String smtp_port = Properties.getProperty(SMTP_PORT);
+            String emailUsername = Properties.getProperty(EMAIL_USERNAME);
+            String emailPassword = Properties.getProperty(EMAIL_PASS);
+
+            PropertiesMail propertiesMail = new PropertiesMail(emailFrom, smtpHost, smtp_port, emailUsername, emailPassword);
+
+            SendMail.executeTLS(propertiesMail, email, "Application " + Properties.getProperty(APPLI_NAME) + " - Mot de passe perdu", "Voici votre mot de passe : " + newPassword);
 
         } else {
             rs.setMsg("Email inconnu dans la base de données");

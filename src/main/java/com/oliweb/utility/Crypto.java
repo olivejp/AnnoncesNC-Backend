@@ -1,16 +1,22 @@
 package com.oliweb.utility;
 
+import com.oliweb.DB.utility.Properties;
+
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Crypto {
+	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	public static String desEncryptIt(String value) {
 		try {
-			DESKeySpec keySpec = new DESKeySpec(Constants.cryptoPass.getBytes("UTF8"));
+			DESKeySpec keySpec = new DESKeySpec(Properties.getProperty(Properties.CRYPTO_PASS).getBytes("UTF8"));
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
 			SecretKey key = keyFactory.generateSecret(keySpec);
 
@@ -19,18 +25,17 @@ public class Crypto {
 			Cipher cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 
-			String encrypedValue = Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
-			return encrypedValue;
+			return Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
 
 		} catch (InvalidKeyException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return value;
 	}
 
 	public static String desDecryptIt(String value) {
 		try {
-			DESKeySpec keySpec = new DESKeySpec(Constants.cryptoPass.getBytes("UTF8"));
+			DESKeySpec keySpec = new DESKeySpec(Properties.getProperty(Properties.CRYPTO_PASS).getBytes("UTF8"));
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
 			SecretKey key = keyFactory.generateSecret(keySpec);
 
@@ -40,11 +45,10 @@ public class Crypto {
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			byte[] decrypedValueBytes = (cipher.doFinal(encrypedPwdBytes));
 
-			String decrypedValue = new String(decrypedValueBytes);
-			return decrypedValue;
+			return new String(decrypedValueBytes);
 
 		} catch (InvalidKeyException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return value;
 	}

@@ -7,6 +7,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Utility {
 
@@ -30,12 +32,8 @@ public class Utility {
 	public static final String UTILISATEUR_NOM = "nomUtilisateur";
 	public static final String UTILISATEUR_TEL = "telephoneUtilisateur";
 	public static final String UTILISATEUR_EMAIL = "emailUtilisateur";
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	/**
-	 * M?thode pour enlever les accents d'une chaine de caract?re
-	 * @param s
-	 * @return
-	 */
 	public static String sansAccent(String s) {
 		final String accents = "?????????????????????????????????????????????????"; // A compl?ter...
 		final String letters = "AAAAAAaaaaaaEEEEeeeeIIIIOOOOOUUUUYiiiiooooouuuuyy"; // A compl?ter...
@@ -53,26 +51,19 @@ public class Utility {
 		return buffer==null ? s : buffer.toString();
 	}
 
-	/**
-	 * Null check Method
-	 * 
-	 * @param txt
-	 * @return
-	 */
 	public static boolean isNotNull(String txt) {
-		// System.out.println("Inside isNotNull");
-		return txt != null && txt.trim().length() >= 0 ? true : false;
-	}
+        return txt != null && txt.trim().length() >= 0;
+    }
 
 
-	public static JSONObject constructSimpleJSON(String tag, boolean status) {
-		JSONObject obj = new JSONObject();
+    private static JSONObject constructSimpleJSON(String tag, boolean status) {
+        JSONObject obj = new JSONObject();
 		try {
 			obj.put(TAG, tag);
 			obj.put(STATUS, status);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 		return obj;
 	}
 
@@ -84,19 +75,11 @@ public class Utility {
 			String response = gson.toJson(myList);
 			obj.put(LISTE_CATEGORIE, response);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 		return obj.toString();
 	}
 
-	/**
-	 * Method to construct JSON
-	 * 
-	 * @param tag
-	 * @param status
-	 * @return
-	 */
 	public static String constructUtilisateurJSON(String tag, boolean status, UtilisateurDTO utilisateur) {
 		JSONObject obj = constructSimpleJSON(tag, status);
 		try {
@@ -104,43 +87,28 @@ public class Utility {
 			obj.put(EMAIL_UTILISATEUR, utilisateur.getEmailUTI());
 			obj.put(TELEPHONE_UTILISATEUR, utilisateur.getTelephoneUTI());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 		return obj.toString();
 	}
-	
-	/**
-	 * Method to construct JSON
-	 * 
-	 * @param tag
-	 * @param status
-	 * @return
-	 */
+
 	public static String constructInsertJSON(String tag, boolean status, int newId) {
 		JSONObject obj = constructSimpleJSON(tag, status);
 		try {
 			obj.put(ID_ANNONCE, newId);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 		return obj.toString();
 	}
 
-	/**
-	 * Method to construct JSON with Error Msg
-	 * 
-	 * @param tag
-	 * @param status
-	 * @param err_msg
-	 * @return
-	 */
 	public static String constructJSON(String tag, boolean status, String err_msg) {
 		JSONObject obj = constructSimpleJSON(tag, status);
 		try {
 			obj.put(ERROR_MSG, err_msg);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 		return obj.toString(); 
 	}	
 }

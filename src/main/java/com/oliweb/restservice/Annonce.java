@@ -3,7 +3,7 @@ package com.oliweb.restservice;
 import com.google.gson.Gson;
 import com.oliweb.DB.DAO.*;
 import com.oliweb.DB.DTO.AnnonceDTO;
-import com.oliweb.DB.utility.ConstantsDB;
+import com.oliweb.DB.utility.Properties;
 import com.oliweb.DB.utility.ReturnClass;
 
 import javax.ws.rs.*;
@@ -71,7 +71,8 @@ public class Annonce {
             annonce.setOwnerANO(utilisateurDAO.getById(idUser));
 
             // L'utilisateur n'a le droit de poster que 5 annonces sauf si c'est un Admin
-            if (((annonceDAO.numberAnnonceByIdUser(idUser) < ConstantsDB.MAX_ANNONCE) || (utilisateurDAO.checkAdmin(idUser)))) {
+            Integer nbMax = Integer.valueOf(Properties.getProperty(Properties.MAX_ANNONCE));
+            if (((annonceDAO.numberAnnonceByIdUser(idUser) < nbMax) || (utilisateurDAO.checkAdmin(idUser)))) {
                 if (annonceDAO.insert(annonce)) {
                     rs.setId(annonce.getIdANO());
                     rs.setStatus(true);
@@ -79,7 +80,7 @@ public class Annonce {
                     rs.setMsg("L'annonce n'a pas pu être créée dans la BD");
                 }
             } else {
-                rs.setMsg("Vous avez atteint votre quota d'annonce. " + String.valueOf(ConstantsDB.MAX_ANNONCE) + " annonces maximum par utilisateur.");
+                rs.setMsg("Vous avez atteint votre quota d'annonce. " + String.valueOf(Properties.MAX_ANNONCE) + " annonces maximum par utilisateur.");
             }
         }
         return gson.toJson(rs);

@@ -2,24 +2,21 @@ package com.oliweb.DB.DAO;
 
 import com.oliweb.DB.Contract.PhotoContract;
 import com.oliweb.DB.DTO.AnnonceDTO;
-import com.oliweb.DB.utility.ConstantsDB;
+import com.oliweb.DB.utility.Properties;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.oliweb.DB.Contract.AnnonceContract.*;
 
 
 public class AnnonceDAO {
 
-    private Integer idannonce;
-    private Integer utilisateur_idutilisateur;
-    private Integer categorie_idcategorie;
-    private String titreAnnonce;
-    private String descriptionAnnonce;
-    private Timestamp datePublicationAnnonce;
-    private Integer prixAnnonce;
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private Connection dbConn;
 
@@ -27,61 +24,99 @@ public class AnnonceDAO {
         this.dbConn = dbConn;
     }
 
-    public Integer getIdannonce() {
-        return idannonce;
+    @Deprecated
+    public int getMaxId(Integer idCategorie, Integer idUtilisateur) {
+        int retour = -1;
+        String query = "SELECT MAX(" + COL_ID_ANNONCE + ") AS MAXID FROM " + TABLE_NAME + " WHERE "
+                + COL_ID_CATEGORY + " = ? AND "
+                + COL_ID_UTILISATEUR + " = ?";
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query);
+            stmt.setInt(1, idCategorie);
+            stmt.setInt(2, idUtilisateur);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                retour = rs.getInt("MAXID");
+            }
+            stmt.close();
+            rs.close();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "getMaxId", e);
+        }
+        return retour;
     }
 
-    public void setIdannonce(Integer idannonce) {
-        this.idannonce = idannonce;
+    @Deprecated
+    public ArrayList<AnnonceDTO> searchByKeywordWithPage(String keyword, Integer page) {
+        ArrayList<AnnonceDTO> myList = new ArrayList<>();
+
+        Integer pagination = Integer.valueOf(Properties.getProperty(Properties.PAGINATION));
+
+        String query = "SELECT " + COL_ID_ANNONCE + ", "
+                + COL_TITRE_ANNONCE + ", "
+                + COL_DESCRIPTION_ANNONCE + ", "
+                + COL_DATE_PUBLICATION + ", "
+                + COL_PRIX_ANNONCE + ", "
+                + COL_ID_CATEGORY + ", "
+                + COL_ID_UTILISATEUR + ""
+                + " FROM " + TABLE_NAME
+                + " WHERE (" + COL_DESCRIPTION_ANNONCE + " LIKE ?"
+                + " OR " + COL_TITRE_ANNONCE + " LIKE ?"
+                + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
+                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
+                + " LIMIT " + String.valueOf((page - 1) * pagination) + "," + String.valueOf(pagination - 1);
+
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query);
+
+            // Le String keyword peut être composé de plusieurs mots. On va le découper (split) pour faire une recherche sur tous ces mots.
+            String[] keys = keyword.split(" ");
+            for (String key : keys) {
+                String likeKey = "%" + key + "%";
+                stmt.setString(1, likeKey);
+                stmt.setString(2, likeKey);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    // Ajout de l'annonce dans la liste
+                    myList.add(transfertAnnonce(rs));
+                }
+                rs.close();
+            }
+
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "searchByKeywordWithPage", e);
+        }
+
+        // On retourne la liste d'annonce que l'on vient de créer.
+        return myList;
     }
 
-    public Integer getUtilisateur_idutilisateur() {
-        return utilisateur_idutilisateur;
+    public ArrayList<AnnonceDTO> getByIdCategory(Integer idCategory) {
+        ArrayList<AnnonceDTO> myList = new ArrayList<>();
+
+        String query = "SELECT * "
+                + " FROM " + TABLE_NAME
+                + " WHERE " + COL_ID_CATEGORY + " = ?"
+                + " AND " + COL_STATUT_ANNONCE + " = ?"
+                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
+
+        try {
+            PreparedStatement pstmt = dbConn.prepareStatement(query);
+            pstmt.setInt(1, idCategory);
+            pstmt.setString(2, enumStatutAnnonce.VALID.valeur());
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                myList.add(transfertAnnonce(rs));
+            }
+            pstmt.close();
+            rs.close();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "getByIdCategory", e);
+        }
+        return myList;
     }
 
-    public void setUtilisateur_idutilisateur(Integer utilisateur_idutilisateur) {
-        this.utilisateur_idutilisateur = utilisateur_idutilisateur;
-    }
-
-    public Integer getCategorie_idcategorie() {
-        return categorie_idcategorie;
-    }
-
-    public void setCategorie_idcategorie(Integer categorie_idcategorie) {
-        this.categorie_idcategorie = categorie_idcategorie;
-    }
-
-    public String getTitreAnnonce() {
-        return titreAnnonce;
-    }
-
-    public void setTitreAnnonce(String titreAnnonce) {
-        this.titreAnnonce = titreAnnonce;
-    }
-
-    public String getDescriptionAnnonce() {
-        return descriptionAnnonce;
-    }
-
-    public void setDescriptionAnnonce(String descriptionAnnonce) {
-        this.descriptionAnnonce = descriptionAnnonce;
-    }
-
-    public Timestamp getDatePublicationAnnonce() {
-        return datePublicationAnnonce;
-    }
-
-    public void setDatePublicationAnnonce(Timestamp datePublicationAnnonce) {
-        this.datePublicationAnnonce = datePublicationAnnonce;
-    }
-
-    public Integer getPrixAnnonce() {
-        return prixAnnonce;
-    }
-
-    public void setPrixAnnonce(Integer prixAnnonce) {
-        this.prixAnnonce = prixAnnonce;
-    }
 
     public AnnonceDTO getById(Integer idAnnonce) {
 
@@ -104,79 +139,23 @@ public class AnnonceDAO {
             }
 
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getById", e);
         }
         return retour;
     }
 
-    public ArrayList<AnnonceDTO> searchByKeywordWithPage(String keyword, Integer page) throws Exception {
-        ArrayList<AnnonceDTO> myList = new ArrayList<>();
-        Statement stmt = dbConn.createStatement();
-        // Le String keyword peut être composé de plusieurs mots. On va le découper (split) pour faire une recherche sur tous ces mots.
-        String[] keys = keyword.split(" ");
-        for (String key : keys) {
-            String query = "SELECT " + COL_ID_ANNONCE + ", "
-                    + COL_TITRE_ANNONCE + ", "
-                    + COL_DESCRIPTION_ANNONCE + ", "
-                    + COL_DATE_PUBLICATION + ", "
-                    + COL_PRIX_ANNONCE + ", "
-                    + COL_ID_CATEGORY + ", "
-                    + COL_ID_UTILISATEUR + ""
-                    + " FROM " + TABLE_NAME
-                    + " WHERE (" + COL_DESCRIPTION_ANNONCE + " LIKE '%" + key + "%'"
-                    + " OR " + COL_TITRE_ANNONCE + " LIKE '%" + key + "%') "
-                    + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
-                    + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                    + " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                // Ajout de l'annonce dans la liste
-                myList.add(transfertAnnonce(rs));
-            }
-        }
-
-        stmt.close();
-
-        // On retourne la liste d'annonce que l'on vient de créer.
-        return myList;
-    }
-
-    public ArrayList<AnnonceDTO> getByIdCategory(Integer idCategory) {
-        ArrayList<AnnonceDTO> myList = new ArrayList<>();
-        try {
-            Statement stmt = dbConn.createStatement();
-            String query = "SELECT * "
-                    + " FROM " + TABLE_NAME
-                    + " WHERE " + COL_ID_CATEGORY + " = " + String.valueOf(idCategory)
-                    + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
-                    + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
-            //System.out.println(query);
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                // Ajout de l'annonce dans la liste
-                myList.add(transfertAnnonce(rs));
-            }
-
-            stmt.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // On retourne la liste d'annonce que l'on vient de créer.
-        return myList;
-    }
-
     public ArrayList<AnnonceDTO> getByIdUser(Integer idUser, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
+        Integer pagination = Integer.valueOf(Properties.getProperty(Properties.PAGINATION));
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
                     + " FROM " + TABLE_NAME
                     + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUser)
                     + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                    + " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
+                    + " LIMIT " + String.valueOf((page - 1) * pagination) + "," + String.valueOf(pagination - 1);
             System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
 
@@ -185,14 +164,16 @@ public class AnnonceDAO {
             }
 
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getByIdUser", e);
         }
         return myList;
     }
 
     public ArrayList<AnnonceDTO> getByIdCategoryWithPage(Integer idCategory, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
+        Integer pagination = Integer.valueOf(Properties.getProperty(Properties.PAGINATION));
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
@@ -200,30 +181,30 @@ public class AnnonceDAO {
                     + " WHERE " + COL_ID_CATEGORY + " = " + String.valueOf(idCategory)
                     + " AND " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
                     + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                    + " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
+                    + " LIMIT " + String.valueOf((page - 1) * pagination) + "," + String.valueOf(pagination - 1);
             System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
-
             while (rs.next()) {
                 myList.add(transfertAnnonce(rs));
             }
-
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getByIdCategoryWithPage", e);
         }
         return myList;
     }
 
     public ArrayList<AnnonceDTO> getListAnnonce(Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
+        Integer pagination = Integer.valueOf(Properties.getProperty(Properties.PAGINATION));
         try {
             Statement stmt = dbConn.createStatement();
             String query = "SELECT * "
                     + " FROM " + TABLE_NAME
                     + " WHERE " + COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'"
                     + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                    + " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
+                    + " LIMIT " + String.valueOf((page - 1) * pagination) + "," + String.valueOf(pagination - 1);
             System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
 
@@ -232,8 +213,9 @@ public class AnnonceDAO {
             }
 
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getListAnnonce", e);
         }
 
         return myList;
@@ -262,33 +244,11 @@ public class AnnonceDAO {
             annonce.setOwnerANO(utilisateurDAO.getById(rs.getInt(COL_ID_UTILISATEUR)));
             annonce.setPhotos(photoDAO.getByIdAnnonce(annonce.getIdANO()));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "transfertAnnonce", e);
         }
         return annonce;
     }
 
-    public int getMaxId(Integer idCategorie, Integer idUtilisateur) {
-        String query;
-        int retour = -1;
-
-        try {
-            Statement stmt = dbConn.createStatement();
-
-            query = "Select MAX(" + COL_ID_ANNONCE + ") as MAXID from " + TABLE_NAME + " WHERE "
-                    + COL_ID_CATEGORY + " = " + idCategorie + " AND "
-                    + COL_ID_UTILISATEUR + " = " + idUtilisateur;
-            ResultSet rs;
-
-            rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                retour = rs.getInt("MAXID");
-            }
-            stmt.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return retour;
-    }
 
     public boolean update(AnnonceDTO annonce) {
         boolean insertStatus = false;
@@ -303,14 +263,13 @@ public class AnnonceDAO {
                     + COL_ID_CATEGORY + " = " + String.valueOf(annonce.getCategorieANO().getIdCAT()) + ", "
                     + COL_DATE_PUBLICATION + " = CURRENT_TIME()"
                     + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(annonce.getIdANO());
-            System.out.println(query);
             records = stmt.executeUpdate(query);
 
             // When record is successfully inserted
             insertStatus = records != 0;
             stmt.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "update", e);
         }
         return insertStatus;
     }
@@ -346,12 +305,13 @@ public class AnnonceDAO {
                 insertStatus = true;
                 // On met à jour l'ID de l'annonce qu'on vient de créer.
                 annonce.setIdANO(newId);
+                rs.close();
             } else {
                 insertStatus = false;
             }
             stmt.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "insert", e);
         }
         return insertStatus;
     }
@@ -368,8 +328,9 @@ public class AnnonceDAO {
                 }
             }
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "exist", e);
         }
         return existStatus;
     }
@@ -394,8 +355,9 @@ public class AnnonceDAO {
             records = stmt.executeUpdate(delete);
             deleteStatus = records != 0;
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "deleteByIdUser", e);
         }
         return deleteStatus;
     }
@@ -424,8 +386,9 @@ public class AnnonceDAO {
                 }
             }
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "devalideByIdUser", e);
         }
         return updateStatus;
     }
@@ -449,7 +412,7 @@ public class AnnonceDAO {
             deleteStatus = records != 0;
             stmt.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "delete", e);
         }
         return deleteStatus;
     }
@@ -465,8 +428,9 @@ public class AnnonceDAO {
                 retour = rs.getInt(1);
             }
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "numberAnnonceByIdUser", e);
         }
         return retour;
     }
@@ -474,7 +438,8 @@ public class AnnonceDAO {
     public ArrayList<AnnonceDTO> getMultiParam(Integer idCat, String keyword, Integer minPrice, Integer maxPrice, boolean photo, Integer page) {
         ArrayList<AnnonceDTO> myList = new ArrayList<>();
         ArrayList<String> conditions = new ArrayList<>();
-
+        Integer pagination = Integer.valueOf(Properties.getProperty(Properties.PAGINATION));
+        Integer id_all_categorie = Integer.valueOf(Properties.getProperty(Properties.ID_ALL_CATEGORIE));
         // On va récupérer toutes les annonces pour la catégorie demandée
         try {
             Statement stmt = dbConn.createStatement();
@@ -493,7 +458,7 @@ public class AnnonceDAO {
             conditions.add(COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'");
 
             // Si on a renseigné une catégorie, on va rechercher sur cette catégorie
-            if (idCat != ConstantsDB.id_all_categories) {
+            if (!Objects.equals(idCat, id_all_categorie)) {
                 conditions.add(COL_ID_CATEGORY + " = " + String.valueOf(idCat));
             }
 
@@ -537,7 +502,7 @@ public class AnnonceDAO {
             }
 
             String order = " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
-            String limit = " LIMIT " + String.valueOf((page - 1) * ConstantsDB.PAGINATION) + "," + String.valueOf(ConstantsDB.PAGINATION - 1);
+            String limit = " LIMIT " + String.valueOf((page - 1) * pagination) + "," + String.valueOf(pagination - 1);
             String query = select + where + conditions_concat + order + limit;
 
             ResultSet rs = stmt.executeQuery(query);
@@ -545,8 +510,9 @@ public class AnnonceDAO {
                 myList.add(transfertAnnonce(rs));
             }
             stmt.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            rs.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "getMultiParam", e);
         }
         return myList;
     }
@@ -566,8 +532,9 @@ public class AnnonceDAO {
                 nb_annonce = results.getInt(1);
             }
             stmt.close();
+            results.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getNbAnnonce", e);
         }
         return nb_annonce;
     }

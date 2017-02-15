@@ -6,18 +6,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SendSms {
 
     private static final String api_mblox_token = "c0f8612fa5e94f03b6f0d1d0d6158091";
     private static final String api_mblox_link = "https://api.mblox.com/xms/v1/oliweb12/batches";
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String send(String from, String to, String body) {
 
         String message = null;
 
         try {
-
             URL url = new URL(api_mblox_link);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -51,7 +53,7 @@ public class SendSms {
             }
             conn.disconnect();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return message;

@@ -6,9 +6,8 @@ import com.oliweb.DB.DAO.AnnonceDAO;
 import com.oliweb.DB.DAO.MyConnection;
 import com.oliweb.DB.DAO.PhotoDAO;
 import com.oliweb.DB.DTO.PhotoDTO;
-import com.oliweb.DB.utility.ConstantsDB;
+import com.oliweb.DB.utility.Properties;
 import com.oliweb.DB.utility.ReturnClass;
-import com.oliweb.utility.Constants;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.ws.rs.*;
@@ -43,7 +42,8 @@ public class Photo {
                 if (!presentName.equals(newName)) {
                     // La photo existe mais ne porte pas le même nom qu'auparavant
                     // On va mettre à jour notre photo
-                    photoDTO.setNamePhoto(ConstantsDB.upload_directory + newName);
+
+                    photoDTO.setNamePhoto(Properties.getProperty(Properties.DIRECTORY_UPLOAD) + newName);
                     if (photoDAO.update(photoDTO)) {
                         rs.setStatus(true);
                         rs.setId(photoDTO.getIdPhoto());
@@ -54,12 +54,12 @@ public class Photo {
                 } else {
                     // La photo n'a pas changée, elle existe déjà
                     rs.setStatus(true);
-                    rs.setMsg(Constants.PHOTO_ALREADY_EXIST);
+                    rs.setMsg(Properties.getProperty(Properties.PHOTO_ALREADY_EXIST));
                 }
             } else {
                 // La photo n'existe pas, il faut la créer
                 photoDTO = new PhotoDTO();
-                photoDTO.setNamePhoto(ConstantsDB.upload_directory + newName);
+                photoDTO.setNamePhoto(Properties.getProperty(Properties.DIRECTORY_UPLOAD) + newName);
                 photoDTO.setIdAnnoncePhoto(idAnnonce);
                 Integer newId = photoDAO.insert(photoDTO);
                 if (newId != 0) {
@@ -86,11 +86,11 @@ public class Photo {
         ReturnClass rs = new ReturnClass("photoexist", false, null, null);
         if (photoDAO.existByAnnonceAndName(idAnnonce, idPhoto, namePhoto)) {
             rs.setStatus(true);
-            rs.setMsg(Constants.same_name);
+            rs.setMsg(Properties.getProperty(Properties.SAME_NAME));
         } else {
             if (photoDAO.existWithDifferentName(idAnnonce, idPhoto, namePhoto)) {
                 rs.setStatus(true);
-                rs.setMsg(Constants.different_name);
+                rs.setMsg(Properties.getProperty(Properties.DIFFRENT_NAME));
             }
         }
         return gson.toJson(rs);

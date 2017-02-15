@@ -3,57 +3,22 @@ package com.oliweb.DB.DAO;
 import com.oliweb.DB.Contract.AnnonceContract;
 import com.oliweb.DB.DTO.CategorieDTO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.oliweb.DB.Contract.CategorieContract.*;
 
 
 public class CategorieDAO {
 
-    private Integer idCategorie;
-    private String nomCategorie;
-    private String couleurCategorie;
-    private Integer versionCategorie;
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private Connection dbConn;
 
     public CategorieDAO(Connection dbConn) {
         this.dbConn = dbConn;
-    }
-
-    public Integer getIdCategorie() {
-        return idCategorie;
-    }
-
-    public void setIdCategorie(Integer idCategorie) {
-        this.idCategorie = idCategorie;
-    }
-
-    public String getNomCategorie() {
-        return nomCategorie;
-    }
-
-    public void setNomCategorie(String nomCategorie) {
-        this.nomCategorie = nomCategorie;
-    }
-
-    public String getCouleurCategorie() {
-        return couleurCategorie;
-    }
-
-    public void setCouleurCategorie(String couleurCategorie) {
-        this.couleurCategorie = couleurCategorie;
-    }
-
-    public Integer getVersionCategorie() {
-        return versionCategorie;
-    }
-
-    public void setVersionCategorie(Integer versionCategorie) {
-        this.versionCategorie = versionCategorie;
     }
 
     public ArrayList<CategorieDTO> getCompleteList() {
@@ -89,7 +54,7 @@ public class CategorieDAO {
                 stmt.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getCompleteList", e);
         }
         return myList;
     }
@@ -113,8 +78,9 @@ public class CategorieDAO {
                 categorie.setCouleurCAT(rs.getString(COL_COULEUR_CATEGORIE));
             }
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "getById", e);
         }
         return categorie;
     }
@@ -131,28 +97,35 @@ public class CategorieDAO {
                 }
             }
             stmt.close();
+            rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "existById", e);
         }
         return exist;
     }
 
-    // @SuppressWarnings("unused")
-    public CategorieDTO getByName(String nameCategorie) throws Exception {
+    @SuppressWarnings("unused")
+    public CategorieDTO getByName(String nameCategorie) {
 
         CategorieDTO categorie = new CategorieDTO();
-
-        Statement stmt = dbConn.createStatement();
         String query = "SELECT " + COL_ID_CATEGORIE + ", " + COL_NOM_CATEGORIE + " "
                 + " FROM " + TABLE_NAME
-                + " WHERE " + COL_NOM_CATEGORIE + " ='" + nameCategorie + "'";
-        //System.out.println(query);
-        ResultSet results = stmt.executeQuery(query);
-        while (results.next()) {
-            categorie.setIdCAT(results.getInt(COL_ID_CATEGORIE));
-            categorie.setNameCAT(results.getString(COL_NOM_CATEGORIE));
+                + " WHERE " + COL_NOM_CATEGORIE + " = ?";
+
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query);
+            stmt.setString(1, nameCategorie);
+            ResultSet results = stmt.executeQuery();
+            while (results.next()) {
+                categorie.setIdCAT(results.getInt(COL_ID_CATEGORIE));
+                categorie.setNameCAT(results.getString(COL_NOM_CATEGORIE));
+            }
+            stmt.close();
+            results.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "existById", e);
         }
-        stmt.close();
+
         return categorie;
     }
 }

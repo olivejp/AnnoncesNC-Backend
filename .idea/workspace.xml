@@ -9,16 +9,31 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/AnnonceContract.java" line="11" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1f61e3e-1a34-48ea-b2f8-14c6dbad7502" name="Default" comment="Premier test avec Mockito&#10;Découpage avec les contracts&#10;Création des DAO en dynamique&#10;/*** Reste à faire des tests SOAPui pour tous les services ***/">
+    <list default="true" id="c1f61e3e-1a34-48ea-b2f8-14c6dbad7502" name="Default" comment="Mise à jour des Contracts">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/Properties.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/conf.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/ConstantsTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/ConstantsDB.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/AnnonceContract.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/AnnonceContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/CategorieContract.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/CategorieContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/MessageContract.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/MessageContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/PhotoContract.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/PhotoContract.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Categorie.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Categorie.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Utilisateur.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Utilisateur.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Crypto.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Crypto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java" afterPath="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/RestServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/RestServiceTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -28,6 +43,63 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CloverPlugin" class="com.atlassian.clover.idea.config.IdeaCloverConfig">
+    <includePassedTestCoverageOnly>true</includePassedTestCoverageOnly>
+    <useGeneratedInitString>true</useGeneratedInitString>
+    <manualInitString null="true" />
+    <showTooltips>true</showTooltips>
+    <failedCoveredHighlight>-11513856</failedCoveredHighlight>
+    <periodicRefresh>false</periodicRefresh>
+    <languageLevel>1.8 - lambda functions, virtual extension methods.</languageLevel>
+    <instrumentLambda class="com.atlassian.clover.cfg.instr.java.LambdaInstrumentation">NONE</instrumentLambda>
+    <testCaseLayout class="com.atlassian.clover.idea.config.TestCaseLayout">TEST_CASES</testCaseLayout>
+    <autoScrollFromSource>false</autoScrollFromSource>
+    <coveredHighlight>-16756736</coveredHighlight>
+    <outOfDateStripe>-256</outOfDateStripe>
+    <includes null="true" />
+    <excludes null="true" />
+    <alwaysExpandTestClasses>false</alwaysExpandTestClasses>
+    <autoViewInCloudReport>true</autoViewInCloudReport>
+    <flushPolicy>0</flushPolicy>
+    <filteredHighlight>-11513776</filteredHighlight>
+    <outOfDateHighlight>-16777201</outOfDateHighlight>
+    <showInline>true</showInline>
+    <dumpInstrumentedSources>false</dumpInstrumentedSources>
+    <hideFullyCovered>false</hideFullyCovered>
+    <autoRefresh>true</autoRefresh>
+    <modelScope class="com.atlassian.clover.idea.util.ModelScope">APP_CLASSES_ONLY</modelScope>
+    <coveredStripe>-16711936</coveredStripe>
+    <highlightCovered>true</highlightCovered>
+    <viewCoverage>true</viewCoverage>
+    <notCoveredHighlight>-11534336</notCoveredHighlight>
+    <relativeInitString>false</relativeInitString>
+    <failedCoveredStripe>-14336</failedCoveredStripe>
+    <testViewScope class="com.atlassian.clover.idea.config.TestViewScope">GLOBAL</testViewScope>
+    <showGutter>true</showGutter>
+    <alwaysCollapseTestClasses>false</alwaysCollapseTestClasses>
+    <notCoveredStripe>-65536</notCoveredStripe>
+    <autoScroll>true</autoScroll>
+    <calculateTestCoverage>true</calculateTestCoverage>
+    <autoRefreshInterval>2000</autoRefreshInterval>
+    <generatedInitString>C:\Users\2761OLI\Android\AnnoncesNC-Backend\.clover\coverage.db</generatedInitString>
+    <regexpContexts class="java.util.ArrayList" />
+    <flushInterval>5000</flushInterval>
+    <flattenPackages>false</flattenPackages>
+    <viewIncludeAnnotation>true</viewIncludeAnnotation>
+    <loadPerTestData>true</loadPerTestData>
+    <showErrorMarks>true</showErrorMarks>
+    <buildWithClover>true</buildWithClover>
+    <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
+    <contextFilterSpec />
+    <span>0</span>
+    <instrumentTests>true</instrumentTests>
+    <projectRebuild class="com.atlassian.clover.idea.config.ProjectRebuild">ASK</projectRebuild>
+    <showSummaryInToolbar>true</showSummaryInToolbar>
+    <filteredStripe>-4144960</filteredStripe>
+    <cloudReportIncludeSubpkgs>false</cloudReportIncludeSubpkgs>
+    <enabled>false</enabled>
+    <showSummaryInToolwindow>true</showSummaryInToolwindow>
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -70,12 +142,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Annonce.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java">
+      <file leaf-file-name="AnnonceDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7276">
+              <caret line="441" column="61" lean-forward="false" selection-start-line="441" selection-start-column="61" selection-end-line="441" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#571#572#0" expanded="false" />
+                <element signature="e#607#608#0" expanded="false" />
+                <marker date="1487136743521" expanded="true" signature="745:913" ph="Select MAX(i... annonce" />
+                <marker date="1487136743521" expanded="true" signature="1675:2370" ph="SELECT idann... annonce" />
+                <marker date="1487136743521" expanded="true" signature="3505:3729" ph="SELECT * FRO... annonce" />
+                <marker date="1487136743521" expanded="true" signature="4437:4851" ph="SELECT idann... annonce" />
+                <marker date="1487136743521" expanded="true" signature="5526:5813" ph="SELECT * FRO... annonce" />
+                <marker date="1487136743521" expanded="true" signature="6558:6947" ph="SELECT * FRO... annonce" />
+                <marker date="1487136743521" expanded="true" signature="7673:7977" ph="SELECT * FRO... annonce" />
+                <marker date="1487136743521" expanded="true" signature="9892:10420" ph="UPDATE annon... " />
+                <marker date="1487136743521" expanded="true" signature="10920:11691" ph="INSERT INTO annonce... " />
+                <marker date="1487136743521" expanded="true" signature="12571:12641" ph="SELECT COUNT... annonce" />
+                <marker date="1487136743521" expanded="true" signature="13377:13466" ph="SELECT idann... annonce" />
+                <marker date="1487136743521" expanded="true" signature="13803:13869" ph="DELETE FROM " />
+                <marker date="1487136743521" expanded="true" signature="14454:14548" ph="SELECT COUNT... annonce" />
+                <marker date="1487136743521" expanded="true" signature="14849:14992" ph="UPDATE annon... " />
+                <marker date="1487136743521" expanded="true" signature="15798:15860" ph="DELETE FROM " />
+                <marker date="1487136743521" expanded="true" signature="16372:16446" ph="SELECT COUNT... annonce" />
+                <marker date="1487136743521" expanded="true" signature="17429:17773" ph="SELECT idann... annonce" />
+                <marker date="1487136743521" expanded="true" signature="20889:21006" ph="SELECT COUNT... annonce" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Properties.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/Properties.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="27" column="61" lean-forward="true" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="conf.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/conf.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Service.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RestServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/RestServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="45" column="45" lean-forward="true" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
+              <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConstantsTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/ConstantsTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,11 +259,21 @@
       <find>INSERT</find>
       <find>\n</find>
       <find>&quot;idannonce</find>
+      <find>Exception</find>
+      <find>transfertPhoto</find>
+      <find>ResultSet</find>
+      <find>transfertMessage</find>
+      <find>e.printStackTrace();</find>
+      <find>getMaxId</find>
+      <find>ConstantsDB.PAGINATION</find>
     </findStrings>
     <replaceStrings>
       <replace>é</replace>
       <replace>annonceDAO.</replace>
       <replace>categorieDAO.</replace>
+      <replace>SQLException</replace>
+      <replace>LOGGER.log(Level.SEVERE, &quot;existByAnnonceAndName&quot;, e);</replace>
+      <replace>pagination</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -127,11 +293,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Post.java" />
-        <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Message.java" />
-        <option value="$PROJECT_DIR$/src/com/oliweb/restservice/List.java" />
-        <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Sql.java" />
-        <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Service.java" />
         <option value="$PROJECT_DIR$/src/com/oliweb/DB/DAO/MessageDAO.java" />
         <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Utilisateur.java" />
         <option value="$PROJECT_DIR$/src/com/oliweb/restservice/Photo.java" />
@@ -144,40 +305,45 @@
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/.project" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/appengine-web.xml" />
         <option value="dbtable:/5078d0a3/0f3844f7-ac0f-444f-9abf-0fa304d1a774/DEVDCRF.BPO020" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Base64.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/ConstantsDB.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/enumStatutAnnonce.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/TransactionContract.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/TransactionDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/AnnonceDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/CategorieDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/MessageDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/PhotoDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/UtilisateurDTO.java" />
-        <option value="$PROJECT_DIR$/src/test/java/RestServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/AnnonceContract.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/CategorieContract.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/MessageContract.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/PhotoContract.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Categorie.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java" />
+        <option value="$PROJECT_DIR$/src/test/java/RestServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ConstantsTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/ConstantsDB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/conf.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Utilisateur.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/utility/Crypto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/Properties.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -199,6 +365,7 @@
       <MavenGeneralSettings>
         <option name="alwaysUpdateSnapshots" value="true" />
         <option name="pluginUpdatePolicy" value="UPDATE" />
+        <option name="usePluginRegistry" value="true" />
       </MavenGeneralSettings>
     </option>
     <option name="importingSettings">
@@ -229,8 +396,8 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Plugins" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
+          <option name="myItemId" value="Run Configurations" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RunConfigurationsNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -243,8 +410,8 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Lifecycle" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+          <option name="myItemId" value="Plugins" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
         </PATH_ELEMENT>
       </PATH>
     </treeState>
@@ -257,7 +424,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="PackagesPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -271,7 +438,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -281,12 +447,26 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="annoncesnc-backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PackageViewModuleNodeWrapper" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AnnoncesNC-Backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="annoncesnc-backend" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PackageViewModuleNodeWrapper" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com.oliweb" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PackageElementNodeWrapper" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -296,7 +476,7 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PsiDirectoryNodeWrapper" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -306,89 +486,16 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PsiDirectoryNodeWrapper" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oliweb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AnnoncesNC-Backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oliweb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="restservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.atlassian.clover.idea.projectview.PsiDirectoryNodeWrapper" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -399,7 +506,7 @@
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.32514817" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -411,7 +518,9 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\2761OLI\Android\AnnoncesNC-Backend\src\main\resources" />
       <recent name="C:\Users\2761OLI\Android\AnnoncesNC-Backend\WebContent\WEB-INF\lib" />
+      <recent name="C:\Users\2761OLI\Android\AnnoncesNC-Backend\src" />
       <recent name="C:\Users\2761OLI\Android\AnnoncesNC-Backend\WebContent" />
       <recent name="C:\Users\2761OLI\Android\AnnoncesNC-Backend\WebContent\WEB-INF" />
     </key>
@@ -741,7 +850,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Local Tomcat">
+  <component name="RunManager" selected="Maven.Clean Sonar">
     <configuration default="false" name="RestServiceTest.testAdd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="annoncesnc-backend" />
@@ -772,6 +881,27 @@
       <option name="MAIN_CLASS_NAME" value="RestServiceTest" />
       <option name="METHOD_NAME" value="testAdd" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="ConstantsTest.testConstantsDB" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="annoncesnc-backend" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ConstantsTest" />
+      <option name="METHOD_NAME" value="testConstantsDB" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
@@ -1200,6 +1330,59 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
+    <configuration default="false" name="Clean Sonar" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="sonar:sonar" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="false" name="Clean Clover" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="clover:setup" />
+                <option value="test" />
+                <option value="clover:aggregate" />
+                <option value="clover:clover" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
     <configuration default="false" name="Local Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6.0.44" ALTERNATIVE_JRE_ENABLED="false">
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -1269,15 +1452,19 @@
       </ConfigurationWrapper>
       <method />
     </configuration>
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Local Tomcat" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.RestServiceTest.testAdd" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.RestServiceTest" />
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="Maven.Clean Sonar" />
+      <item index="1" class="java.lang.String" itemvalue="Maven.Clean Clover" />
+      <item index="2" class="java.lang.String" itemvalue="Tomcat Server.Local Tomcat" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.RestServiceTest.testAdd" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.RestServiceTest" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.ConstantsTest.testConstantsDB" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="JUnit.RestServiceTest.testAdd" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.RestServiceTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ConstantsTest.testConstantsDB" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.RestServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -1312,7 +1499,11 @@
       <workItem from="1486631395530" duration="1190000" />
       <workItem from="1486636478135" duration="8837000" />
       <workItem from="1486954015130" duration="1527000" />
-      <workItem from="1486961440654" duration="942000" />
+      <workItem from="1486961440654" duration="982000" />
+      <workItem from="1487119558814" duration="7019000" />
+      <workItem from="1487130245505" duration="5733000" />
+      <workItem from="1487136309365" duration="18000" />
+      <workItem from="1487136368894" duration="1314000" />
     </task>
     <task id="LOCAL-00001" summary="Nouvelle Version du BackEnd">
       <created>1486536119349</created>
@@ -1321,30 +1512,37 @@
       <option name="project" value="LOCAL" />
       <updated>1486536119349</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Mise à jour des Contracts">
+      <created>1486962422226</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1486962422226</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="RestServiceTest - 2017.02.09 at 22h 47m 35s.xml">
-      <configuration name="RestServiceTest" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 40m 16s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest - 2017.02.09 at 23h 05m 18s.xml">
-      <configuration name="RestServiceTest" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 40m 49s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest - 2017.02.09 at 23h 08m 47s.xml">
-      <configuration name="RestServiceTest" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 42m 12s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest_testAdd - 2017.02.09 at 23h 08m 30s.xml">
-      <configuration name="RestServiceTest.testAdd" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 42m 40s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest_testAdd - 2017.02.09 at 23h 11m 55s.xml">
-      <configuration name="RestServiceTest.testAdd" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 43m 54s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest_testAdd - 2017.02.09 at 23h 14m 33s.xml">
-      <configuration name="RestServiceTest.testAdd" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 46m 05s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RestServiceTest_testAdd - 2017.02.09 at 23h 17m 35s.xml">
-      <configuration name="RestServiceTest.testAdd" configurationId="JUnit" />
+    <history-entry file="ConstantsTest_testConstantsDB - 2017.02.15 at 15h 46m 14s.xml">
+      <configuration name="ConstantsTest.testConstantsDB" configurationId="JUnit" />
     </history-entry>
     <history-entry file="RestServiceTest_testAdd - 2017.02.09 at 23h 18m 06s.xml">
       <configuration name="RestServiceTest.testAdd" configurationId="JUnit" />
@@ -1357,7 +1555,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64346000" />
+    <option name="totallyTimeSpent" value="78470000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1374,40 +1572,81 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2391775" sideWeight="0.5133262" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.508658" sideWeight="0.5063966" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17217484" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1988273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17324094" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14712153" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37594798" sideWeight="0.684968" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37554112" sideWeight="0.67963755" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.4738806" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.49573562" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21212122" sideWeight="0.72121537" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31960997" sideWeight="0.4824094" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17323652" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1945629" sideWeight="0.4801762" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20309168" sideWeight="0.4801762" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13113007" sideWeight="0.5198238" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33982685" sideWeight="0.4936034" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.48667377" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28710726" sideWeight="0.7707889" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.4978678" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17531121" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.508658" sideWeight="0.5063966" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17217484" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1988273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14712153" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37554112" sideWeight="0.67963755" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.4738806" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.49573562" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28710726" sideWeight="0.7707889" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21212122" sideWeight="0.72121537" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17323652" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.4978678" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20309168" sideWeight="0.4801762" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13113007" sideWeight="0.5198238" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.508658" sideWeight="0.4936034" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -1421,14 +1660,15 @@
     <MESSAGE value="Nouvelle Version du BackEnd" />
     <MESSAGE value="Version Maven du BackEnd" />
     <MESSAGE value="Premier test avec Mockito&#10;Découpage avec les contracts&#10;Création des DAO en dynamique&#10;/*** Reste à faire des tests SOAPui pour tous les services ***/" />
-    <option name="LAST_COMMIT_MESSAGE" value="Premier test avec Mockito&#10;Découpage avec les contracts&#10;Création des DAO en dynamique&#10;/*** Reste à faire des tests SOAPui pour tous les services ***/" />
+    <MESSAGE value="Mise à jour des Contracts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mise à jour des Contracts" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="30" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1437,28 +1677,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_112/src.zip!/java/sql/DriverManager.java" />
-    <entry file="file://$PROJECT_DIR$/.classpath">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.project">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1470,13 +1688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="40" lean-forward="false" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="61" lean-forward="false" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -1508,20 +1719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1604,14 +1801,6 @@
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/34960759-76c6-4726-a04e-a46522f67d1f/console.sql" />
     <entry file="dbDummy://dbtable:/e7823d44/34960759-76c6-4726-a04e-a46522f67d1f/annoncesrest.annonce" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/enumStatutAnnonce.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1621,14 +1810,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/TransactionContract.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/TransactionDAO.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/ConstantsDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/CategorieDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1650,25 +1831,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/RestServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="48" column="60" lean-forward="true" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DTO/PhotoDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1688,149 +1854,6 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/sql/PreparedStatement.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/sql/Connection.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="130" column="17" lean-forward="false" selection-start-line="130" selection-start-column="17" selection-end-line="130" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#532#533#0" expanded="false" />
-            <element signature="e#568#569#0" expanded="false" />
-            <element signature="e#607#608#0" expanded="false" />
-            <element signature="e#641#642#0" expanded="false" />
-            <element signature="e#696#697#0" expanded="false" />
-            <element signature="e#742#743#0" expanded="false" />
-            <element signature="e#781#782#0" expanded="false" />
-            <element signature="e#816#817#0" expanded="false" />
-            <element signature="e#872#873#0" expanded="false" />
-            <element signature="e#920#921#0" expanded="false" />
-            <element signature="e#963#964#0" expanded="false" />
-            <element signature="e#1002#1003#0" expanded="false" />
-            <element signature="e#1066#1067#0" expanded="false" />
-            <element signature="e#1122#1123#0" expanded="false" />
-            <element signature="e#1166#1167#0" expanded="false" />
-            <element signature="e#1205#1206#0" expanded="false" />
-            <element signature="e#1270#1271#0" expanded="false" />
-            <element signature="e#1326#1327#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="56" column="22" lean-forward="false" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="84" column="4" lean-forward="false" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#535#536#0" expanded="false" />
-            <element signature="e#571#572#0" expanded="false" />
-            <element signature="e#605#606#0" expanded="false" />
-            <element signature="e#628#629#0" expanded="false" />
-            <element signature="e#676#677#0" expanded="false" />
-            <element signature="e#709#710#0" expanded="false" />
-            <element signature="e#741#742#0" expanded="false" />
-            <element signature="e#763#764#0" expanded="false" />
-            <element signature="e#808#809#0" expanded="false" />
-            <element signature="e#839#840#0" expanded="false" />
-            <element signature="e#873#874#0" expanded="false" />
-            <element signature="e#897#898#0" expanded="false" />
-            <element signature="e#946#947#0" expanded="false" />
-            <element signature="e#981#982#0" expanded="false" />
-            <element signature="e#1012#1013#0" expanded="false" />
-            <element signature="e#1033#1034#0" expanded="false" />
-            <element signature="e#1076#1077#0" expanded="false" />
-            <element signature="e#1105#1106#0" expanded="false" />
-            <element signature="e#1146#1147#0" expanded="false" />
-            <element signature="e#1177#1178#0" expanded="false" />
-            <element signature="e#1234#1235#0" expanded="false" />
-            <element signature="e#1277#1278#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="85" column="74" lean-forward="false" selection-start-line="85" selection-start-column="74" selection-end-line="85" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6579">
-          <caret line="420" column="32" lean-forward="false" selection-start-line="420" selection-start-column="32" selection-end-line="420" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1457#1458#0" expanded="false" />
-            <element signature="e#1493#1494#0" expanded="false" />
-            <element signature="e#1552#1553#0" expanded="false" />
-            <element signature="e#1602#1603#0" expanded="false" />
-            <element signature="e#1643#1644#0" expanded="false" />
-            <element signature="e#1680#1681#0" expanded="false" />
-            <element signature="e#1740#1741#0" expanded="false" />
-            <element signature="e#1792#1793#0" expanded="false" />
-            <element signature="e#1836#1837#0" expanded="false" />
-            <element signature="e#1876#1877#0" expanded="false" />
-            <element signature="e#1942#1943#0" expanded="false" />
-            <element signature="e#2000#2001#0" expanded="false" />
-            <element signature="e#2048#2049#0" expanded="false" />
-            <element signature="e#2091#2092#0" expanded="false" />
-            <element signature="e#2271#2272#0" expanded="false" />
-            <element signature="e#2310#2311#0" expanded="false" />
-            <element signature="e#2374#2375#0" expanded="false" />
-            <element signature="e#2430#2431#0" expanded="false" />
-            <element signature="e#2483#2484#0" expanded="false" />
-            <element signature="e#2529#2530#0" expanded="false" />
-            <element signature="e#2723#2724#0" expanded="false" />
-            <element signature="e#2762#2763#0" expanded="false" />
-            <element signature="e#2826#2827#0" expanded="false" />
-            <element signature="e#2882#2883#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3910">
-          <caret line="262" column="47" lean-forward="false" selection-start-line="262" selection-start-column="47" selection-end-line="262" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#667#668#0" expanded="false" />
-            <element signature="e#703#704#0" expanded="false" />
-            <element signature="e#740#741#0" expanded="false" />
-            <element signature="e#772#773#0" expanded="false" />
-            <element signature="e#823#824#0" expanded="false" />
-            <element signature="e#865#866#0" expanded="false" />
-            <element signature="e#918#919#0" expanded="false" />
-            <element signature="e#966#967#0" expanded="false" />
-            <element signature="e#1172#1173#0" expanded="false" />
-            <element signature="e#1216#1217#0" expanded="false" />
-            <element signature="e#1396#1397#0" expanded="false" />
-            <element signature="e#1431#1432#0" expanded="false" />
-            <element signature="e#1487#1488#0" expanded="false" />
-            <element signature="e#1535#1536#0" expanded="false" />
-            <element signature="e#1580#1581#0" expanded="false" />
-            <element signature="e#1621#1622#0" expanded="false" />
-            <element signature="e#1689#1690#0" expanded="false" />
-            <element signature="e#1749#1750#0" expanded="false" />
-            <element signature="e#1801#1802#0" expanded="false" />
-            <element signature="e#1846#1847#0" expanded="false" />
-            <element signature="e#2032#2033#0" expanded="false" />
-            <element signature="e#2066#2067#0" expanded="false" />
-            <element signature="e#2121#2122#0" expanded="false" />
-            <element signature="e#2167#2168#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/AnnonceContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1843,7 +1866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="48" lean-forward="false" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1851,7 +1873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1859,55 +1880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="48" lean-forward="true" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="55" lean-forward="true" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1486961494712" expanded="true" signature="1612:1877" ph="SELECT COUNT... photo" />
-            <marker date="1486961494712" expanded="true" signature="2444:2710" ph="SELECT COUNT... photo" />
-            <marker date="1486961494712" expanded="true" signature="3292:3453" ph="SELECT COUNT... photo" />
-            <marker date="1486961494712" expanded="true" signature="3927:4178" ph="UPDATE photo... " />
-            <marker date="1486961494712" expanded="true" signature="4625:4817" ph="SELECT idPho... photo" />
-            <marker date="1486961494712" expanded="true" signature="5220:5509" ph="SELECT idPho... photo" />
-            <marker date="1486961494712" expanded="true" signature="5976:6023" ph="SELECT MAX(i... photo" />
-            <marker date="1486961494712" expanded="true" signature="6473:6570" ph="Select MAX(i... photo" />
-            <marker date="1486961494712" expanded="true" signature="7026:7279" ph="INSERT INTO photo... " />
-            <marker date="1486961494712" expanded="true" signature="8382:8416" ph="SELECT nomPh... photomissingValue" />
-            <marker date="1486961494712" expanded="true" signature="8615:8627" ph="DELETE FROM " />
-            <marker date="1486961494712" expanded="true" signature="9610:9716" ph="SELECT idPho... photo" />
-            <marker date="1486961494712" expanded="true" signature="10286:10357" ph="SELECT COUNT... photo" />
-            <marker date="1486961494712" expanded="true" signature="10941:11005" ph="SELECT * FRO... photo" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="39" column="5" lean-forward="false" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Utilisateur.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2000">
-          <caret line="71" column="29" lean-forward="false" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1915,14 +1887,232 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="40" column="48" lean-forward="false" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Utility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1564">
+          <caret line="100" column="9" lean-forward="true" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/S_MAIL/SendMail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="67" column="56" lean-forward="false" selection-start-line="67" selection-start-column="56" selection-end-line="67" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/S_SMS/SendSms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="85" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MessageDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/UtilisateurDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="106" column="44" lean-forward="false" selection-start-line="106" selection-start-column="32" selection-end-line="106" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/Contract/UtilisateurContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="6" lean-forward="true" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/CategorieDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="85" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#479#480#0" expanded="false" />
+            <element signature="e#515#516#0" expanded="false" />
+            <marker date="1487130702439" expanded="true" signature="837:932" ph="SELECT idcat... categorie" />
+            <marker date="1487130702439" expanded="true" signature="1566:1707" ph="SELECT count... annonce" />
+            <marker date="1487130702439" expanded="true" signature="2361:2588" ph="SELECT idcat... categorie" />
+            <marker date="1487130702439" expanded="true" signature="3280:3352" ph="SELECT COUNT... categorie" />
+            <marker date="1487130702439" expanded="true" signature="3908:4062" ph="SELECT idcat... categorie" />
+            <marker date="1487130702439" expanded="true" signature="3908:4064" ph="SELECT idcat... categorie" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/AnnonceDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7276">
+          <caret line="441" column="61" lean-forward="false" selection-start-line="441" selection-start-column="61" selection-end-line="441" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#571#572#0" expanded="false" />
+            <element signature="e#607#608#0" expanded="false" />
+            <marker date="1487136743521" expanded="true" signature="745:913" ph="Select MAX(i... annonce" />
+            <marker date="1487136743521" expanded="true" signature="1675:2370" ph="SELECT idann... annonce" />
+            <marker date="1487136743521" expanded="true" signature="3505:3729" ph="SELECT * FRO... annonce" />
+            <marker date="1487136743521" expanded="true" signature="4437:4851" ph="SELECT idann... annonce" />
+            <marker date="1487136743521" expanded="true" signature="5526:5813" ph="SELECT * FRO... annonce" />
+            <marker date="1487136743521" expanded="true" signature="6558:6947" ph="SELECT * FRO... annonce" />
+            <marker date="1487136743521" expanded="true" signature="7673:7977" ph="SELECT * FRO... annonce" />
+            <marker date="1487136743521" expanded="true" signature="9892:10420" ph="UPDATE annon... " />
+            <marker date="1487136743521" expanded="true" signature="10920:11691" ph="INSERT INTO annonce... " />
+            <marker date="1487136743521" expanded="true" signature="12571:12641" ph="SELECT COUNT... annonce" />
+            <marker date="1487136743521" expanded="true" signature="13377:13466" ph="SELECT idann... annonce" />
+            <marker date="1487136743521" expanded="true" signature="13803:13869" ph="DELETE FROM " />
+            <marker date="1487136743521" expanded="true" signature="14454:14548" ph="SELECT COUNT... annonce" />
+            <marker date="1487136743521" expanded="true" signature="14849:14992" ph="UPDATE annon... " />
+            <marker date="1487136743521" expanded="true" signature="15798:15860" ph="DELETE FROM " />
+            <marker date="1487136743521" expanded="true" signature="16372:16446" ph="SELECT COUNT... annonce" />
+            <marker date="1487136743521" expanded="true" signature="17429:17773" ph="SELECT idann... annonce" />
+            <marker date="1487136743521" expanded="true" signature="20889:21006" ph="SELECT COUNT... annonce" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/MyConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-537">
+          <caret line="37" column="69" lean-forward="true" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Photo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="93" column="75" lean-forward="false" selection-start-line="93" selection-start-column="75" selection-end-line="93" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Annonce.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="135" column="57" lean-forward="false" selection-start-line="135" selection-start-column="57" selection-end-line="135" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/DAO/PhotoDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="235" column="87" lean-forward="false" selection-start-line="235" selection-start-column="87" selection-end-line="235" selection-end-column="87" />
+          <folding>
+            <marker date="1487136743521" expanded="true" signature="1767:1828" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1847" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1852" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1903" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1904" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1952" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="1767:1954" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="2154:2329" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="2154:2331" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="2661:2830" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="3451:3702" ph="UPDATE photo... " />
+            <marker date="1487136743521" expanded="true" signature="4175:4383" ph="SELECT idPho... photo" />
+            <marker date="1487136743521" expanded="true" signature="4925:5214" ph="SELECT idPho... photo" />
+            <marker date="1487136743521" expanded="true" signature="5753:5800" ph="SELECT MAX(i... photo" />
+            <marker date="1487136743521" expanded="true" signature="6375:6472" ph="Select MAX(i... photo" />
+            <marker date="1487136743521" expanded="true" signature="7084:7337" ph="INSERT INTO photo... " />
+            <marker date="1487136743521" expanded="true" signature="8484:8518" ph="SELECT nomPh... photomissingValue" />
+            <marker date="1487136743521" expanded="true" signature="8717:8729" ph="DELETE FROM " />
+            <marker date="1487136743521" expanded="true" signature="9757:9863" ph="SELECT idPho... photo" />
+            <marker date="1487136743521" expanded="true" signature="10457:10528" ph="SELECT COUNT... photo" />
+            <marker date="1487136743521" expanded="true" signature="11173:11237" ph="SELECT * FRO... photo" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/ConstantsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Utilisateur.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1228">
+          <caret line="200" column="0" lean-forward="true" selection-start-line="200" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Crypto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-132">
+          <caret line="17" column="13" lean-forward="true" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/utility/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="45" column="45" lean-forward="true" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/RestServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/DB/utility/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="27" column="61" lean-forward="true" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oliweb/restservice/Service.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/conf.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -1986,7 +2176,6 @@
             <option name="proportions">
               <list>
                 <option value="0.32514817" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

@@ -4,10 +4,13 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SendMail {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	public static void executeTLS(final PropertiesMail propertiesMail, String to, String object, String text) {
+    public static void executeTLS(final PropertiesMail propertiesMail, String to, String object, String text) {
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -24,21 +27,16 @@ public class SendMail {
 		});
 
 		try {
-
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(propertiesMail.getFrom()));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(to));
 			message.setSubject(object);
 			message.setText(text);
-
 			Transport.send(message);
-
-			System.out.println("Send email to " + to + " done.");
-
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 	}
 
 	public static void executeSSL(final PropertiesMail propertiesMail, String to, String object, String text) {
@@ -66,13 +64,9 @@ public class SendMail {
 					InternetAddress.parse(to));
 			message.setSubject(object);
 			message.setText(text + "SSL");
-
 			Transport.send(message);
-
-			System.out.println("Send email to " + to + " done.");
-
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
 	}
 }

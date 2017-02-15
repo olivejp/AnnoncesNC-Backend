@@ -4,19 +4,18 @@ import com.oliweb.DB.DTO.MessageDTO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.oliweb.DB.Contract.MessageContract.*;
 
 public class MessageDAO {
-	private Integer idMessage;
-	private String idSender;
-	private String idReceiver;
-	private String message;
-	private Timestamp dateMessage;
+
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private Connection dbConn;
 
@@ -24,47 +23,7 @@ public class MessageDAO {
         this.dbConn = dbConn;
     }
 
-	public Integer getIdMessage() {
-		return idMessage;
-	}
-
-	public void setIdMessage(Integer idMessage) {
-		this.idMessage = idMessage;
-	}
-
-	public String getIdSender() {
-		return idSender;
-	}
-
-	public void setIdSender(String idSender) {
-		this.idSender = idSender;
-	}
-
-	public String getIdReceiver() {
-		return idReceiver;
-	}
-
-	public void setIdReceiver(String idReceiver) {
-		this.idReceiver = idReceiver;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-    public Timestamp getDateMessage() {
-        return dateMessage;
-	}
-
-    public void setDateMessage(Timestamp dateMessage) {
-        this.dateMessage = dateMessage;
-	}
-
-    private MessageDTO transfertMessage(ResultSet rs) throws Exception {
+    private MessageDTO transfertMessage(ResultSet rs) throws SQLException {
         // Création d'une nouvelle annonce
         MessageDTO message = new MessageDTO();
 
@@ -82,59 +41,70 @@ public class MessageDAO {
 		return message;
 	}
 
-    private int getMaxId(Integer idSender) throws Exception {
+    private int getMaxId(Integer idSender) {
         String query;
         int retour = -1;
-		Statement stmt = dbConn.createStatement();
-		query = "Select MAX(" + COL_ID_MESSAGE + ") as MAXID from " + TABLE_NAME +" WHERE " + COL_ID_SENDER + " = " + String.valueOf(idSender);
-		ResultSet rs;
-		rs = stmt.executeQuery(query);
-		if (rs.next()){
-			retour = rs.getInt("MAXID");
-		}
-		stmt.close();
-		return retour;
+        try {
+            Statement stmt = dbConn.createStatement();
+            query = "Select MAX(" + COL_ID_MESSAGE + ") as MAXID from " + TABLE_NAME + " WHERE " + COL_ID_SENDER + " = " + String.valueOf(idSender);
+            ResultSet rs;
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                retour = rs.getInt("MAXID");
+            }
+            stmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "getMaxId", e);
+        }
+        return retour;
 	}
 
-    public boolean insert(MessageDTO message) throws Exception {
-        boolean insertStatus;
+    public boolean insert(MessageDTO message) {
+        boolean insertStatus = false;
         int records;
-		String query;
-		Statement stmt = dbConn.createStatement();
-		query = "INSERT INTO " + TABLE_NAME + " (" + COL_ID_SENDER + ", "
-				+ COL_ID_RECEIVER + ", "
-				+ COL_MESSAGE + ", "
-				+ COL_DATE_MESSAGE +")"
-				+ " values("+
-				message.getSender().getIdUTI() + ","+
-				message.getReceiver().getIdUTI() + ",'"+
-				message.getMessage()+ "',"+
-				"CURRENT_TIME())";
-		
-		records = stmt.executeUpdate(query);
+        try {
+            Statement stmt = dbConn.createStatement();
+            String query = "INSERT INTO " + TABLE_NAME + " (" + COL_ID_SENDER + ", "
+                    + COL_ID_RECEIVER + ", "
+                    + COL_MESSAGE + ", "
+                    + COL_DATE_MESSAGE + ")"
+                    + " values(" +
+                    message.getSender().getIdUTI() + "," +
+                    message.getReceiver().getIdUTI() + ",'" +
+                    message.getMessage() + "'," +
+                    "CURRENT_TIME())";
 
-		// When record is successfully inserted
-		if (records != 0) {
-			insertStatus = true;
-			message.setIdMessage(getMaxId(message.getSender().getIdUTI()));
-		}else{
-			insertStatus = false;
-		}
-		stmt.close();
+            records = stmt.executeUpdate(query);
+
+            // When record is successfully inserted
+            if (records != 0) {
+                insertStatus = true;
+                message.setIdMessage(getMaxId(message.getSender().getIdUTI()));
+            } else {
+                insertStatus = false;
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "insert", e);
+        }
+
 		return insertStatus;
 	}
 
-    public boolean delete(Integer idMessage) throws Exception {
-        boolean deleteStatus;
+    public boolean delete(Integer idMessage) {
+        boolean deleteStatus = false;
         int records;
 		String delete;
-		Statement stmt = dbConn.createStatement();
-		
-		delete = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_MESSAGE + " = " + String.valueOf(idMessage);
-
-		records = stmt.executeUpdate(delete);
-        deleteStatus = records != 0;
-        stmt.close();
+        try {
+            Statement stmt = dbConn.createStatement();
+            delete = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_MESSAGE + " = " + String.valueOf(idMessage);
+            records = stmt.executeUpdate(delete);
+            deleteStatus = records != 0;
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "delete", e);
+        }
         return deleteStatus;
 	}
 
@@ -158,9 +128,10 @@ public class MessageDAO {
 				myList.add(messageDTO);
 			}
 			stmt.close();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+            rs.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "listByIdSender", e);
+        }
 		return myList;
 	}
 }
