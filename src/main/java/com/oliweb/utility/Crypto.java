@@ -1,7 +1,5 @@
 package com.oliweb.utility;
 
-import com.oliweb.DB.utility.Properties;
-
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import java.io.UnsupportedEncodingException;
@@ -14,10 +12,13 @@ import java.util.logging.Logger;
 public class Crypto {
 	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private Crypto() {
+    }
+
 	public static String desEncryptIt(String value) {
 		try {
-			DESKeySpec keySpec = new DESKeySpec(Properties.getProperty(Properties.CRYPTO_PASS).getBytes("UTF8"));
-			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+            DESKeySpec keySpec = new DESKeySpec(Proprietes.getProperty(Proprietes.CRYPTO_PASS).getBytes("UTF8"));
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
 			SecretKey key = keyFactory.generateSecret(keySpec);
 
 			byte[] clearText = value.getBytes("UTF8");
@@ -35,15 +36,15 @@ public class Crypto {
 
 	public static String desDecryptIt(String value) {
 		try {
-			DESKeySpec keySpec = new DESKeySpec(Properties.getProperty(Properties.CRYPTO_PASS).getBytes("UTF8"));
-			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+            DESKeySpec keySpec = new DESKeySpec(Proprietes.getProperty(Proprietes.CRYPTO_PASS).getBytes("UTF8"));
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
 			SecretKey key = keyFactory.generateSecret(keySpec);
 
 			byte[] encrypedPwdBytes = Base64.decode(value, Base64.DEFAULT);
 			// cipher is not thread safe
 			Cipher cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.DECRYPT_MODE, key);
-			byte[] decrypedValueBytes = (cipher.doFinal(encrypedPwdBytes));
+            byte[] decrypedValueBytes = cipher.doFinal(encrypedPwdBytes);
 
 			return new String(decrypedValueBytes);
 

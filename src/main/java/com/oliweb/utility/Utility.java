@@ -1,12 +1,14 @@
 package com.oliweb.utility;
 
 import com.google.gson.Gson;
-import com.oliweb.DB.DTO.CategorieDTO;
-import com.oliweb.DB.DTO.UtilisateurDTO;
+import com.oliweb.db.dto.CategorieDTO;
+import com.oliweb.db.dto.UtilisateurDTO;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,17 +36,26 @@ public class Utility {
 	public static final String UTILISATEUR_EMAIL = "emailUtilisateur";
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private static SecureRandom random = new SecureRandom();
+
+    private Utility() {
+    }
+
+    public static String generateRandomInt() {
+        return new BigInteger(50, random).toString(20);
+    }
+
 	public static String sansAccent(String s) {
 		final String accents = "?????????????????????????????????????????????????"; // A compl?ter...
 		final String letters = "AAAAAAaaaaaaEEEEeeeeIIIIOOOOOUUUUYiiiiooooouuuuyy"; // A compl?ter...
 
-		StringBuffer buffer = null;
-		for(int i=s.length()-1 ; i>=0; i--) {
+        StringBuilder buffer = null;
+        for(int i=s.length()-1 ; i>=0; i--) {
 			int index = accents.indexOf(s.charAt(i));
 			if (index>=0) {
 				if (buffer==null) {
-					buffer = new StringBuffer(s);
-				}
+                    buffer = new StringBuilder(s);
+                }
 				buffer.setCharAt(i, letters.charAt(index));
 			}
 		}
@@ -68,8 +79,8 @@ public class Utility {
 	}
 
 
-	public static String constructListCategoryJSON(String tag, boolean status, ArrayList<CategorieDTO> myList){
-		JSONObject obj = constructSimpleJSON(tag, status);
+    public static String constructListCategoryJSON(String tag, boolean status, List<CategorieDTO> myList) {
+        JSONObject obj = constructSimpleJSON(tag, status);
 		try {
 			Gson gson = new Gson();
 			String response = gson.toJson(myList);
