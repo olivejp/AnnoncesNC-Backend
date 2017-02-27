@@ -22,7 +22,7 @@ public class CategorieRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listCategorie() {
-        ReturnClass rs = new ReturnClass("listcategory", false, null, null);
+        ReturnWS rs = new ReturnWS("listcategory", false, null, null);
         List<CategorieDTO> myList = categorieDAO.getCompleteList();
         if (myList != null) {
             rs.setStatus(true);
@@ -38,7 +38,7 @@ public class CategorieRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String listAnnonceByCategoryWithPage(@PathParam("idCategory") Integer idCategory,
                                                 @QueryParam("page") Integer page) {
-        ReturnClass rs = new ReturnClass("listAnnonceByCategoryWithPage", false, null, null);
+        ReturnWS rs = new ReturnWS("listAnnonceByCategoryWithPage", false, null, null);
         List<AnnonceDTO> myList;
 
         if (page != null) {

@@ -14,6 +14,7 @@ public class MessageContract {
             COL_ID_MESSAGE + " INTEGER UNSIGNED NOT NULL AUTO_INCREMENT," +
             COL_ID_ANNONCE + " INTEGER NOT NULL," +
             COL_ID_SENDER + " INTEGER NOT NULL," +
+            COL_ID_RECEIVER + " INTEGER NOT NULL," +
             COL_MESSAGE + " VARCHAR(1000) NULL," +
             COL_DATE_MESSAGE + " TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP()," +
             "  PRIMARY KEY(" + COL_ID_MESSAGE + "));";

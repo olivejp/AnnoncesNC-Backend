@@ -27,7 +27,7 @@ public class ServiceRestService {
     @Path("/checkconnection")
     @Produces(MediaType.APPLICATION_JSON)
     public String CheckConnection(){
-        ReturnClass rs = new ReturnClass("checkconnection", true, null, null);
+        ReturnWS rs = new ReturnWS("checkconnection", true, null, null);
         return gson.toJson(rs);
     }
 
@@ -37,7 +37,7 @@ public class ServiceRestService {
     public String SendSms(@QueryParam("to") String to, @QueryParam("from") String from, @QueryParam("body") String body) {
         String tag = "sendsms";
         String message;
-        ReturnClass rs = new ReturnClass(tag, true, null, null);
+        ReturnWS rs = new ReturnWS(tag, true, null, null);
         message = SendSms.send(from, to, body);
         rs.setMsg(message);
         return gson.toJson(rs);

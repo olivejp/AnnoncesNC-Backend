@@ -1,12 +1,8 @@
 package com.oliweb.db.dao;
 
-import com.oliweb.db.contract.CategorieContract;
 import com.oliweb.db.dto.CategorieDTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,25 +40,6 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
         return myList;
     }
 
-    public boolean existById(Integer id) {
-        boolean exist = false;
-        String query = "SELECT COUNT(*) FROM " + CategorieContract.TABLE_NAME
-                + " WHERE " + CategorieContract.COL_ID_CATEGORIE + " = ?";
-        try {
-            PreparedStatement stmt = dbConn.prepareStatement(query);
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() && rs.getInt(1) >= 1) {
-                exist = true;
-            }
-            stmt.close();
-            rs.close();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "existById", e);
-        }
-        return exist;
-    }
-
     @Override
     public CategorieDTO get(int idCategorie) {
         CategorieDTO categorie = null;
@@ -75,7 +52,7 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
             stmt.setInt(1, idCategorie);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 categorie = new CategorieDTO();
                 categorie.setIdCAT(rs.getInt(COL_ID_CATEGORIE));
@@ -92,7 +69,29 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
 
     @Override
     public boolean save(CategorieDTO item) {
-        return false;
+        boolean insertStatus = false;
+
+        String query = "INSERT INTO " + TABLE_NAME + " (" + COL_NOM_CATEGORIE + ", "
+                + COL_COULEUR_CATEGORIE + ")"
+                + " VALUES( ?, ?)";
+
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, item.getNameCAT());
+            stmt.setString(2, item.getCouleurCAT());
+
+            if (stmt.executeUpdate() != 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                rs.next();
+                item.setIdCAT(rs.getInt(1));  // On met à jour l'ID de l'annonce qu'on vient de créer.
+                insertStatus = true;
+                rs.close();
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "insert", e);
+        }
+        return insertStatus;
     }
 
     @Override
@@ -102,6 +101,38 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
 
     @Override
     public boolean delete(int itemId) {
-        return false;
+        boolean deleteStatus = false;
+        int records;
+        String query;
+        try {
+            Statement stmt = dbConn.createStatement();
+
+            query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_CATEGORIE + " = " + String.valueOf(itemId);
+
+            records = stmt.executeUpdate(query);
+
+            //When record is successfully deleted
+            deleteStatus = records != 0;
+            stmt.close();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "delete", e);
+        }
+        return deleteStatus;
+    }
+
+    public boolean deleteAll() {
+        boolean deleteStatus = false;
+        int records;
+        String query;
+        try {
+            Statement stmt = dbConn.createStatement();
+            query = "DELETE FROM " + TABLE_NAME;
+            records = stmt.executeUpdate(query);
+            deleteStatus = records != 0;
+            stmt.close();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "deleteAll", e);
+        }
+        return deleteStatus;
     }
 }

@@ -25,7 +25,7 @@ public class PhotoRestService {
                               @QueryParam("idPhoto") Integer idPhoto,
                               @QueryParam("nomPhoto") String nomPhoto) {
         PhotoDTO photoDTO;
-        ReturnClass rs = new ReturnClass("doPostPhoto", false, null, null);
+        ReturnWS rs = new ReturnWS("doPostPhoto", false, null, null);
         String directoryUpload = Proprietes.getProperty(Proprietes.DIRECTORY_UPLOAD);
 
         // Récupération du filename qu'on vient de recevoir
@@ -79,7 +79,7 @@ public class PhotoRestService {
     public String photoExist(@QueryParam("idAnnonce") Integer idAnnonce,
                              @QueryParam("idPhoto") Integer idPhoto,
                              @QueryParam("namePhoto") String namePhoto) {
-        ReturnClass rs = new ReturnClass("photoexist", false, null, null);
+        ReturnWS rs = new ReturnWS("photoexist", false, null, null);
         if (photoDAO.existByAnnonceAndName(idAnnonce, idPhoto, namePhoto)) {
             rs.setStatus(true);
             rs.setMsg(Proprietes.getProperty(Proprietes.SAME_NAME));

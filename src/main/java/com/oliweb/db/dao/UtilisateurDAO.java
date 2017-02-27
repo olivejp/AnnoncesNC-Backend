@@ -6,18 +6,13 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.oliweb.db.contract.UtilisateurContract.*;
 
-public class UtilisateurDAO {
-
-    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private Connection dbConn;
+public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
 
     public UtilisateurDAO(Connection connection) {
-        super();
-        dbConn = connection;
+        super(connection);
     }
 
     public boolean checkLogin(String email, String pwd) {
@@ -26,12 +21,13 @@ public class UtilisateurDAO {
         String query = "SELECT * FROM " + TABLE_NAME
                 + " WHERE " + COL_EMAIL_UTILISATEUR + " = ? "
                 + " AND " + COL_MOT_PASSE_UTILISATEUR + "= ? "
-                + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
+                + " AND " + COL_STATUT_UTILISATEUR + "= ?";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
             stmt.setString(1, email);
             stmt.setString(2, pwd);
+            stmt.setString(3, enumStatutUtilisateur.VALID.valeur());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 isUserAvailable = true;
@@ -56,7 +52,7 @@ public class UtilisateurDAO {
             PreparedStatement stmt = dbConn.prepareStatement(query);
             stmt.setString(1, email);
             stmt.setString(2, pwd);
-            stmt.setString(3, "O");
+            stmt.setString(3, enumAdminUtilisateur.OUI.valeur());
             stmt.setString(4, enumStatutUtilisateur.VALID.valeur());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -92,31 +88,6 @@ public class UtilisateurDAO {
         return isAdmin;
     }
 
-    public UtilisateurDTO getById(Integer idUtilisateur) {
-        UtilisateurDTO utilisateur = new UtilisateurDTO();
-        try {
-            Statement stmt = dbConn.createStatement();
-            String query = "SELECT " + COL_ID_UTILISATEUR + ", "
-                    + COL_TELEPHONE_UTILISATEUR + ", "
-                    + COL_EMAIL_UTILISATEUR
-                    + " FROM " + TABLE_NAME
-                    + " WHERE " + COL_ID_UTILISATEUR + " = " + String.valueOf(idUtilisateur)
-                    + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                utilisateur.setIdUTI(rs.getInt(COL_ID_UTILISATEUR));
-                utilisateur.setEmailUTI(rs.getString(COL_EMAIL_UTILISATEUR));
-                utilisateur.setTelephoneUTI(rs.getInt(COL_TELEPHONE_UTILISATEUR));
-            }
-            stmt.close();
-            rs.close();
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "getById", e);
-        }
-        return utilisateur;
-    }
-
     public void updateDateLastConnexion(Integer idUser) {
         try {
             Statement stmt = dbConn.createStatement();
@@ -129,6 +100,38 @@ public class UtilisateurDAO {
         }
     }
 
+    @Override
+    public boolean save(UtilisateurDTO utilisateurDTO) {
+        boolean insertStatus = false;
+        String query = "INSERT INTO " + TABLE_NAME
+                + "(" + COL_EMAIL_UTILISATEUR + ", "
+                + COL_TELEPHONE_UTILISATEUR + ", "
+                + COL_MOT_PASSE_UTILISATEUR + ")"
+                + " VALUES (?,?,?)";
+
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, utilisateurDTO.getEmailUTI());
+            stmt.setInt(2, utilisateurDTO.getTelephoneUTI());
+            stmt.setString(3, utilisateurDTO.getPasswordUTI());
+
+            if (stmt.executeUpdate() != 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                rs.next();
+                insertStatus = true;
+                utilisateurDTO.setIdUTI(rs.getInt(1));
+                rs.close();
+            } else {
+                insertStatus = false;
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "insert", e);
+        }
+
+        return insertStatus;
+    }
+
+    @Override
     public boolean update(UtilisateurDTO user) {
         int retour = 0;
         try {
@@ -145,24 +148,81 @@ public class UtilisateurDAO {
         return retour != 0;
     }
 
-    public boolean existById(Integer id) {
-
-        boolean exist = false;
-
+    @Override
+    public boolean delete(int idUser) {
+        boolean deleteStatus = false;
         try {
             Statement stmt = dbConn.createStatement();
-            String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(id)
-                    + " AND " + COL_STATUT_UTILISATEUR + "='" + enumStatutUtilisateur.VALID.valeur() + "'";
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next() && rs.getInt(1) >= 1) {
-                exist = true;
+            int retour;
+
+            // On supprime d'abord les annonces de l'utilisateur
+            AnnonceDAO annonceDAO = new AnnonceDAO(dbConn);
+            if (annonceDAO.deleteByIdUser(idUser)) {
+                String delete = "DELETE FROM " + TABLE_NAME
+                        + " WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(idUser);
+                retour = stmt.executeUpdate(delete);
+
+                deleteStatus = retour != 0;
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "deleteById", e);
+        }
+        return deleteStatus;
+    }
+
+    public boolean deleteAll() {
+        boolean deleteStatus = false;
+        try {
+            Statement stmt = dbConn.createStatement();
+            int retour;
+            String delete = "DELETE FROM " + TABLE_NAME;
+            retour = stmt.executeUpdate(delete);
+
+            deleteStatus = retour != 0;
+            stmt.close();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "deleteAll", e);
+        }
+        return deleteStatus;
+    }
+
+    @Override
+    public UtilisateurDTO get(int idUtilisateur) {
+        UtilisateurDTO utilisateur = null;
+
+        String query = "SELECT " + COL_ID_UTILISATEUR + ", "
+                + COL_TELEPHONE_UTILISATEUR + ", "
+                + COL_EMAIL_UTILISATEUR + ", "
+                + COL_DATE_CREATION_UTILISATEUR + ", "
+                + COL_MOT_PASSE_UTILISATEUR + ", "
+                + COL_DATE_LAST_CONNEXION + ", "
+                + COL_ADMIN_UTILISATEUR + ", "
+                + COL_STATUT_UTILISATEUR
+                + " FROM " + TABLE_NAME
+                + " WHERE " + COL_ID_UTILISATEUR + " = ? ";
+
+        try {
+            PreparedStatement stmt = dbConn.prepareStatement(query);
+            stmt.setInt(1, idUtilisateur);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                utilisateur = new UtilisateurDTO();
+                utilisateur.setIdUTI(rs.getInt(COL_ID_UTILISATEUR));
+                utilisateur.setEmailUTI(rs.getString(COL_EMAIL_UTILISATEUR));
+                utilisateur.setTelephoneUTI(rs.getInt(COL_TELEPHONE_UTILISATEUR));
+                utilisateur.setDateCreationUTI(rs.getString(COL_DATE_CREATION_UTILISATEUR));
+                utilisateur.setPasswordUTI(rs.getString(COL_MOT_PASSE_UTILISATEUR));
+                utilisateur.setDateLastConnexionUTI(rs.getString(COL_DATE_LAST_CONNEXION));
+                utilisateur.setAdminUTI(rs.getString(COL_ADMIN_UTILISATEUR));
+                utilisateur.setStatutUTI(rs.getString(COL_STATUT_UTILISATEUR));
             }
             stmt.close();
             rs.close();
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "existById", e);
+            LOGGER.log(Level.SEVERE, "getById", e);
         }
-        return exist;
+        return utilisateur;
     }
 
     public boolean existByEmail(String email) {
@@ -214,87 +274,6 @@ public class UtilisateurDAO {
             LOGGER.log(Level.SEVERE, "getByEmail", e);
         }
         return utilisateur;
-    }
-
-    public int insert(String email, String pwd, Integer telephone) {
-        int insertStatus = -1;
-        if (!existByEmail(email)) {
-            try {
-                Statement stmt = dbConn.createStatement();
-                String query = "INSERT INTO " + TABLE_NAME
-                        + "(" + COL_EMAIL_UTILISATEUR + ", "
-                        + COL_TELEPHONE_UTILISATEUR + ", "
-                        + COL_MOT_PASSE_UTILISATEUR + ")"
-                        + " VALUES ('"
-                        + email + "', "
-                        + String.valueOf(telephone) + ", '"
-                        + pwd + "')";
-                int records = stmt.executeUpdate(query);
-                stmt.close();
-
-                //When record is successfully inserted
-                if (records != 0) {
-                    insertStatus = 1;
-                }
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "insert", e);
-            }
-
-        } else {
-            // Il existe déjà un enregistrement avec cette adresse mail
-            insertStatus = -2;
-        }
-        return insertStatus;
-    }
-
-    public String getPasswordByEmail(String email) {
-
-        Statement stmt;
-        String query;
-        ResultSet results;
-        String password = null;
-
-        try {
-            stmt = dbConn.createStatement();
-            query = "SELECT " + COL_MOT_PASSE_UTILISATEUR
-                    + " FROM " + TABLE_NAME
-                    + " WHERE " + COL_EMAIL_UTILISATEUR + "='" + email + "'";
-
-            results = stmt.executeQuery(query);
-            if (results.next()) {
-                password = results.getString(COL_MOT_PASSE_UTILISATEUR);
-            }
-            stmt.close();
-            results.close();
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "getPasswordByEmail", e);
-        }
-        return password;
-    }
-
-    public String getPasswordByIdUser(Integer idUser) {
-
-        Statement stmt;
-        String query;
-        ResultSet results;
-        String password = null;
-
-        try {
-            stmt = dbConn.createStatement();
-            query = "SELECT " + COL_MOT_PASSE_UTILISATEUR
-                    + " FROM " + TABLE_NAME
-                    + " WHERE " + COL_ID_UTILISATEUR + "=" + idUser;
-
-            results = stmt.executeQuery(query);
-            if (results.next()) {
-                password = results.getString(COL_MOT_PASSE_UTILISATEUR);
-            }
-            stmt.close();
-            results.close();
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "getPasswordByIdUser", e);
-        }
-        return password;
     }
 
     public boolean changePassword(Integer idUser, String newPassword) {
@@ -363,27 +342,5 @@ public class UtilisateurDAO {
             LOGGER.log(Level.SEVERE, "getNbUser", e);
         }
         return nb_user;
-    }
-
-    public boolean deleteById(Integer idUser) {
-        boolean deleteStatus = false;
-        try {
-            Statement stmt = dbConn.createStatement();
-            int retour;
-
-            // On supprime d'abord les annonces de l'utilisateur
-            AnnonceDAO annonceDAO = new AnnonceDAO(dbConn);
-            if (annonceDAO.deleteByIdUser(idUser)) {
-                String delete = "DELETE FROM " + TABLE_NAME
-                        + " WHERE " + COL_ID_UTILISATEUR + " =" + String.valueOf(idUser);
-                retour = stmt.executeUpdate(delete);
-
-                deleteStatus = retour != 0;
-            }
-            stmt.close();
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "deleteById", e);
-        }
-        return deleteStatus;
     }
 }

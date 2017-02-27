@@ -23,8 +23,8 @@ public class MessageDAO extends AbstractDAO<MessageDTO> {
         // Renseignement des champs de l'annonce
         message.setIdMessage(rs.getInt(COL_ID_MESSAGE));
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO(dbConn);
-        message.setIdReceiver(utilisateurDAO.getById(rs.getInt(COL_ID_RECEIVER)));
-        message.setIdSender(utilisateurDAO.getById(rs.getInt(COL_ID_SENDER)));
+        message.setIdReceiver(utilisateurDAO.get(rs.getInt(COL_ID_RECEIVER)));
+        message.setIdSender(utilisateurDAO.get(rs.getInt(COL_ID_SENDER)));
 
         // On formate la date Timestamp en String
         String dateAsText = new SimpleDateFormat("yyyyMMddHHmm").format(rs.getTimestamp(COL_DATE_MESSAGE));

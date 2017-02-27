@@ -23,6 +23,7 @@ import static com.oliweb.utility.Proprietes.*;
 @Path("/utilisateurs")
 public class UtilisateurRestService {
 
+    private static final String ERROR_MAIL_ALREADY_EXIST = "ERROR_MAIL_ALREADY_EXIST";
     private static Gson gson = new Gson();
     private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
@@ -33,7 +34,7 @@ public class UtilisateurRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String listAnnonceByUser(@PathParam("idUser") Integer idUser,
                                     @QueryParam("page") Integer page) {
-        ReturnClass rs = new ReturnClass("listAnnonceByUser", false, null, null);
+        ReturnWS rs = new ReturnWS("listAnnonceByUser", false, null, null);
         List<AnnonceDTO> myList = annonceDAO.getByIdUser(idUser, page);
         if (myList != null) {
             rs.setStatus(true);
@@ -50,9 +51,9 @@ public class UtilisateurRestService {
     public String updateUser(@PathParam("idUser") Integer idUser,
                              @QueryParam("emailUser") String emailUser,
                              @QueryParam("telephoneUser") Integer telephoneUser) {
-        ReturnClass rs = new ReturnClass("updateUser", false, null, null);
-        if (utilisateurDAO.existById(idUser)) {
-            UtilisateurDTO user = utilisateurDAO.getById(idUser);
+        ReturnWS rs = new ReturnWS("updateUser", false, null, null);
+        if (utilisateurDAO.get(idUser) != null) {
+            UtilisateurDTO user = utilisateurDAO.get(idUser);
             user.setEmailUTI(emailUser);
             user.setTelephoneUTI(telephoneUser);
 
@@ -70,32 +71,28 @@ public class UtilisateurRestService {
     public String doregister(@QueryParam("email") String email,
                              @QueryParam("password") String encryptedPwd,
                              @QueryParam("telephone") Integer telephone) {
-        int result;
-        ReturnClass rs = new ReturnClass("doregister", false, null, null);
+        ReturnWS rs = new ReturnWS("doregister", false, null, null);
 
-        // On décrypte le mot de passe
+        // On décrypte le mot de passe s'il est <> de null
         String decryptedPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
 
         if (Utility.isNotNull(email) && Utility.isNotNull(decryptedPwd)) {
-            result = utilisateurDAO.insert(email, decryptedPwd, telephone);
-        } else {
-            result = -4;
-        }
+            UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+            utilisateurDTO.setEmailUTI(email);
+            utilisateurDTO.setPasswordUTI(decryptedPwd);
+            utilisateurDTO.setTelephoneUTI(telephone);
 
-        switch (result) {
-            case 1:
-                return doLogin(email, encryptedPwd);
-            case -2:
-                rs.setMsg("Cette adresse mail est déjà utilisée.");
-                break;
-            case -3:
-                rs.setMsg("Insertion utilisateur échouée.");
-                break;
-            case -4:
-                rs.setMsg("Email ou mot de passe vide");
-                break;
-            default:
-                break;
+            // Check that the mail doesnt already exists
+            if (utilisateurDAO.existByEmail(utilisateurDTO.getEmailUTI())) {
+                rs.setMsg(ERROR_MAIL_ALREADY_EXIST);
+                return gson.toJson(rs);
+            }
+
+            // try to save the user
+            if (utilisateurDAO.save(utilisateurDTO)) {
+                rs.setStatus(true);
+                rs.setId(utilisateurDTO.getIdUTI());
+            }
         }
         return gson.toJson(rs);
     }
@@ -104,8 +101,8 @@ public class UtilisateurRestService {
     @Path("{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public String unregister(@PathParam("idUser") Integer idUser) {
-        ReturnClass rs = new ReturnClass("unregister", false, null, null);
-        if (utilisateurDAO.existById(idUser)) {
+        ReturnWS rs = new ReturnWS("unregister", false, null, null);
+        if (utilisateurDAO.get(idUser) != null) {
             if (utilisateurDAO.unregisterUser(idUser)) {
                 rs.setStatus(true);
             } else {
@@ -120,7 +117,7 @@ public class UtilisateurRestService {
     @Path("/count")
     @Produces(MediaType.APPLICATION_JSON)
     public String getnbuser() {
-        ReturnClass rs = new ReturnClass("getnbuser", false, null, null);
+        ReturnWS rs = new ReturnWS("getnbuser", false, null, null);
         rs.setStatus(true);
         rs.setMsg(String.valueOf(utilisateurDAO.getNbUser()));
         return gson.toJson(rs);
@@ -132,7 +129,7 @@ public class UtilisateurRestService {
     public String changepassword(@PathParam("idUser") Integer idUser,
                                  @QueryParam("oldPassword") String oldEncryptedPwd,
                                  @QueryParam("newPassword") String newEncryptedPwd) {
-        ReturnClass rs = new ReturnClass("changepassword", false, null, null);
+        ReturnWS rs = new ReturnWS("changepassword", false, null, null);
 
         String oldDecryptedPwd = null;
         String newDecryptedPwd = null;
@@ -145,9 +142,10 @@ public class UtilisateurRestService {
             newDecryptedPwd = Crypto.desDecryptIt(newEncryptedPwd);
         }
 
-        if (utilisateurDAO.existById(idUser)) {
+        if (utilisateurDAO.get(idUser) != null) {
             // Vérification que l'ancien password est le même que celui qu'on a renvoyé
-            if (utilisateurDAO.getPasswordByIdUser(idUser).equals(oldDecryptedPwd)) {
+            String password = utilisateurDAO.get(idUser).getPasswordUTI();
+            if (password.equals(oldDecryptedPwd)) {
                 if (utilisateurDAO.changePassword(idUser, newDecryptedPwd)) {
                     rs.setStatus(true);
                 } else {
@@ -168,7 +166,7 @@ public class UtilisateurRestService {
     public String doLogin(@QueryParam("email") String email,
                           @QueryParam("password") String encryptedPwd) {
         boolean result;
-        ReturnClass rs = new ReturnClass("doLogin", false, null, null);
+        ReturnWS rs = new ReturnWS("doLogin", false, null, null);
 
         // On décrypte le mot de passe
         String decryptPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
@@ -192,7 +190,7 @@ public class UtilisateurRestService {
     @Path("/lostpassword")
     @Produces(MediaType.APPLICATION_JSON)
     public String lostpassword(@QueryParam("email") String email) {
-        ReturnClass rs = new ReturnClass("lostpassword", false, null, null);
+        ReturnWS rs = new ReturnWS("lostpassword", false, null, null);
 
         if (utilisateurDAO.existByEmail(email)) {
             UtilisateurDTO user = utilisateurDAO.getByEmail(email);
@@ -221,7 +219,7 @@ public class UtilisateurRestService {
     @Path("{idUser}/messages")
     @Produces(MediaType.APPLICATION_JSON)
     public String listMessages(@PathParam("idUser") Integer idUser) {
-        ReturnClass rs = new ReturnClass("listMessages", false, null, null);
+        ReturnWS rs = new ReturnWS("listMessages", false, null, null);
         rs.setMsg(gson.toJson(messageDAO.listByIdSender(idUser)));
         return gson.toJson(rs);
     }

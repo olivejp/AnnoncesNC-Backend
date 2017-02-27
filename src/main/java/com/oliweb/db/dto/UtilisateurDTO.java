@@ -4,17 +4,13 @@ public class UtilisateurDTO {
     private Integer idUTI;
     private String emailUTI;
     private Integer telephoneUTI;
-    
-    public UtilisateurDTO(Integer idUTI, String emailUTI, Integer telephoneUTI) {
-        this.idUTI = idUTI;
-        this.emailUTI = emailUTI;
-        this.telephoneUTI = telephoneUTI;
-    }
-    
+    private String passwordUTI;
+    private String dateCreationUTI;
+    private String dateLastConnexionUTI;
+    private String adminUTI;
+    private String statutUTI;
+
     public UtilisateurDTO() {
-        this.idUTI = null;
-        this.emailUTI = null;
-        this.telephoneUTI = null;
     }
     
     public Integer getIdUTI() {
@@ -39,5 +35,45 @@ public class UtilisateurDTO {
 
     public void setTelephoneUTI(Integer telephoneUTI) {
         this.telephoneUTI = telephoneUTI;
+    }
+
+    public String getPasswordUTI() {
+        return passwordUTI;
+    }
+
+    public void setPasswordUTI(String passwordUTI) {
+        this.passwordUTI = passwordUTI;
+    }
+
+    public String getDateCreationUTI() {
+        return dateCreationUTI;
+    }
+
+    public void setDateCreationUTI(String dateCreationUTI) {
+        this.dateCreationUTI = dateCreationUTI;
+    }
+
+    public String getDateLastConnexionUTI() {
+        return dateLastConnexionUTI;
+    }
+
+    public void setDateLastConnexionUTI(String dateLastConnexionUTI) {
+        this.dateLastConnexionUTI = dateLastConnexionUTI;
+    }
+
+    public String getAdminUTI() {
+        return adminUTI;
+    }
+
+    public void setAdminUTI(String adminUTI) {
+        this.adminUTI = adminUTI;
+    }
+
+    public String getStatutUTI() {
+        return statutUTI;
+    }
+
+    public void setStatutUTI(String statutUTI) {
+        this.statutUTI = statutUTI;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public class AnnonceDTO {
     private Integer idANO;               // Identifiant
     private CategorieDTO categorieANO;   // Une annonce appartient a une catégorie
-    private UtilisateurDTO ownerANO;     // Une annonce est rédigée par une personne
+    private UtilisateurDTO utilisateurANO;     // Une annonce est rédigée par une personne
     private Integer priceANO;            // L'annonce a un prix
     private String descriptionANO;       // Description de l'annonce
     private String titreANO;             // Titre de l'annonce
@@ -17,7 +17,7 @@ public class AnnonceDTO {
     public AnnonceDTO() {
         this.idANO = 0;
         this.categorieANO = null;
-        this.ownerANO = null;
+        this.utilisateurANO = null;
         this.priceANO = 0;
         this.descriptionANO = "";
         this.titreANO = "";
@@ -42,12 +42,12 @@ public class AnnonceDTO {
         this.categorieANO = categorieANO;
     }
 
-    public UtilisateurDTO getOwnerANO() {
-        return ownerANO;
+    public UtilisateurDTO getUtilisateurANO() {
+        return utilisateurANO;
     }
 
-    public void setOwnerANO(UtilisateurDTO ownerANO) {
-        this.ownerANO = ownerANO;
+    public void setUtilisateurANO(UtilisateurDTO utilisateurANO) {
+        this.utilisateurANO = utilisateurANO;
     }
 
     public Integer getPriceANO() {

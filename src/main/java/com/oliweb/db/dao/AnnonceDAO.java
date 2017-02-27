@@ -46,7 +46,6 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return myList;
     }
 
-
     public List<AnnonceDTO> getByIdUser(Integer idUser, Integer page) {
         List<AnnonceDTO> myList = new ArrayList<>();
         Integer pagination = Integer.valueOf(Proprietes.getProperty(Proprietes.PAGINATION));
@@ -167,7 +166,7 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
             annonce.setDatePublished(Long.valueOf(dateAsText));
             annonce.setPriceANO(rs.getInt(COL_PRIX_ANNONCE));
             annonce.setCategorieANO(categorieDAO.get(rs.getInt(COL_ID_CATEGORY)));
-            annonce.setOwnerANO(utilisateurDAO.getById(rs.getInt(COL_ID_UTILISATEUR)));
+            annonce.setUtilisateurANO(utilisateurDAO.get(rs.getInt(COL_ID_UTILISATEUR)));
             annonce.setPhotos(photoDAO.getByIdAnnonce(annonce.getIdANO()));
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "transfertAnnonce", e);
@@ -251,11 +250,13 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return retour;
     }
 
-    private void addKeywordCondition(String keywords, List<String> conditions) {
+    public void addKeywordCondition(String keywords, List<String> conditions) {
         if (!keywords.isEmpty()) {
             String keyword_concat = "(";
             String[] keys = keywords.split(" ");
             for (int i = 0; i < keys.length; i++) {
+                keyword_concat = keyword_concat.concat(COL_DESCRIPTION_ANNONCE).concat(" LIKE '%").concat(keys[i]).concat("%' OR ");
+                keyword_concat = keyword_concat.concat(COL_TITRE_ANNONCE).concat(" LIKE '%").concat(keys[i]).concat("%'");
                 keyword_concat = (i < keys.length - 1) ? keyword_concat.concat(" OR ") : keyword_concat;
             }
             keyword_concat = keyword_concat + ")";
@@ -285,16 +286,22 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         conditions.add(COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'");
 
         // Si on a renseigné une catégorie, on va rechercher sur cette catégorie
-        if (!Objects.equals(idCat, id_all_categorie)) {
-            conditions.add(COL_ID_CATEGORY + " = " + String.valueOf(idCat));
+        if (idCat != null) {
+            if (!Objects.equals(idCat, id_all_categorie)) {
+                conditions.add(COL_ID_CATEGORY + " = " + String.valueOf(idCat));
+            }
         }
 
         // Si on a renseigné des mots clef, on va rechercher sur ces mots clef
-        addKeywordCondition(keyword, conditions);
+        if (keyword != null) {
+            addKeywordCondition(keyword, conditions);
+        }
 
         // Si on a renseigné une fourchette de prix
-        if (minPrice != 0 && maxPrice != 0) {
-            conditions.add(COL_PRIX_ANNONCE + " BETWEEN " + String.valueOf(minPrice) + " AND " + String.valueOf(maxPrice));
+        if (minPrice != null && maxPrice != null) {
+            if (minPrice != 0 && maxPrice != 0) {
+                conditions.add(COL_PRIX_ANNONCE + " BETWEEN " + String.valueOf(minPrice) + " AND " + String.valueOf(maxPrice));
+            }
         }
 
         // Si on en veut uniquement les annonces avec photo
@@ -356,17 +363,23 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
     public boolean update(AnnonceDTO annonce) {
         boolean insertStatus = false;
         int records;
-        String query;
+        String query = "UPDATE " + TABLE_NAME + " SET "
+                + COL_TITRE_ANNONCE + " = ?, "
+                + COL_DESCRIPTION_ANNONCE + " = ?, "
+                + COL_PRIX_ANNONCE + " = ?, "
+                + COL_ID_CATEGORY + " = ?, "
+                + COL_DATE_PUBLICATION + " = ? "
+                + " WHERE " + COL_ID_ANNONCE + " = ?";
+
         try {
-            Statement stmt = dbConn.createStatement();
-            query = "UPDATE " + TABLE_NAME + " SET "
-                    + COL_TITRE_ANNONCE + " = '" + annonce.getTitreANO() + "', "
-                    + COL_DESCRIPTION_ANNONCE + " = '" + annonce.getDescriptionANO() + "', "
-                    + COL_PRIX_ANNONCE + " = " + String.valueOf(annonce.getPriceANO()) + ", "
-                    + COL_ID_CATEGORY + " = " + String.valueOf(annonce.getCategorieANO().getIdCAT()) + ", "
-                    + COL_DATE_PUBLICATION + " = CURRENT_TIME()"
-                    + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(annonce.getIdANO());
-            records = stmt.executeUpdate(query);
+            PreparedStatement stmt = dbConn.prepareStatement(query);
+            stmt.setString(1, annonce.getTitreANO());
+            stmt.setString(2, annonce.getDescriptionANO());
+            stmt.setInt(3, annonce.getPriceANO());
+            stmt.setInt(4, annonce.getCategorieANO().getIdCAT());
+            stmt.setString(5, "CURRENT_TIME()");
+            stmt.setInt(6, annonce.getIdANO());
+            records = stmt.executeUpdate();
 
             // When record is successfully inserted
             insertStatus = records != 0;
@@ -389,7 +402,7 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
                 + COL_ID_CATEGORY + ", "
                 + COL_DATE_PUBLICATION + ", "
                 + COL_STATUT_ANNONCE + ")"
-                + " VALUES( ?, ?, ?, ?, ?, ?, ?)";
+                + " VALUES( ?, ?, ?, ?, ?, CURRENT_TIME(), ?)";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query,
@@ -398,10 +411,9 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
             stmt.setString(1, annonce.getTitreANO());
             stmt.setString(2, annonce.getDescriptionANO());
             stmt.setInt(3, annonce.getPriceANO());
-            stmt.setInt(4, annonce.getOwnerANO().getIdUTI());
+            stmt.setInt(4, annonce.getUtilisateurANO().getIdUTI());
             stmt.setInt(5, annonce.getCategorieANO().getIdCAT());
-            stmt.setString(6, "CURRENT_TIME()");
-            stmt.setString(7, enumStatutAnnonce.VALID.valeur());
+            stmt.setString(6, enumStatutAnnonce.VALID.valeur());
 
             if (stmt.executeUpdate() != 0) {
                 ResultSet rs = stmt.getGeneratedKeys();

@@ -1,5 +1,7 @@
 package com.oliweb.db.dao;
 
+import org.jetbrains.annotations.Contract;
+
 public enum enumStatutUtilisateur {
 	UNREGISTRED("R"),
 	VALID("V");
@@ -7,8 +9,10 @@ public enum enumStatutUtilisateur {
 	enumStatutUtilisateur(String valeur){
 		this.valeur = valeur;
 	}
-	public String valeur(){
-		return valeur;
+
+    @Contract(pure = true)
+    public String valeur() {
+        return valeur;
 	}
 	
 }
