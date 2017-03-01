@@ -354,7 +354,7 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
             stmt.close();
             results.close();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "getNbAnnonce", e);
+            LOGGER.log(Level.SEVERE, "getCount", e);
         }
         return nb_annonce;
     }

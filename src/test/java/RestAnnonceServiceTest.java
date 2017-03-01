@@ -38,7 +38,7 @@ public class RestAnnonceServiceTest {
         utilisateurDAO.delete(1);
 
         AnnonceRestService AnnonceRestService = new AnnonceRestService();
-        String returnWs = AnnonceRestService.postAnnonce(1, 1, "Titre", "Description", 123);
+        String returnWs = AnnonceRestService.post(1, 1, "Titre", "Description", 123);
 
         Type returnWsType = new TypeToken<ReturnWS>() {
         }.getType();
@@ -61,7 +61,7 @@ public class RestAnnonceServiceTest {
 
         // Call the WS to post annonce
         AnnonceRestService annonceRestService = new AnnonceRestService();
-        String returnWs = annonceRestService.postAnnonce(categorie.getIdCAT(), utilisateur.getIdUTI(), "Titre", "Description", 123);
+        String returnWs = annonceRestService.post(categorie.getIdCAT(), utilisateur.getIdUTI(), "Titre", "Description", 123);
 
         // Récupération du type retourné
         Type returnWsType = new TypeToken<ReturnWS>() {
@@ -85,7 +85,7 @@ public class RestAnnonceServiceTest {
         testWinInsertAnnonce();
 
         AnnonceRestService annonceRestService = new AnnonceRestService();
-        String returnWs = annonceRestService.doSearchMultiparam(0, 0, 0, "e", false, 1);
+        String returnWs = annonceRestService.getByMultiparam(0, 0, 0, "e", false, 1);
 
         Type returnWsType = new TypeToken<ReturnWS>() {
         }.getType();

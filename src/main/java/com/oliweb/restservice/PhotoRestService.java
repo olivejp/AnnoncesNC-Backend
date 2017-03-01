@@ -21,11 +21,11 @@ public class PhotoRestService {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String doPostPhoto(@QueryParam("idAnnonce") Integer idAnnonce,
-                              @QueryParam("idPhoto") Integer idPhoto,
-                              @QueryParam("nomPhoto") String nomPhoto) {
+    public String post(@QueryParam("idAnnonce") Integer idAnnonce,
+                       @QueryParam("idPhoto") Integer idPhoto,
+                       @QueryParam("nomPhoto") String nomPhoto) {
         PhotoDTO photoDTO;
-        ReturnWS rs = new ReturnWS("doPostPhoto", false, null, null);
+        ReturnWS rs = new ReturnWS("post", false, null, null);
         String directoryUpload = Proprietes.getProperty(Proprietes.DIRECTORY_UPLOAD);
 
         // Récupération du filename qu'on vient de recevoir

@@ -68,10 +68,10 @@ public class UtilisateurRestService {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String doregister(@QueryParam("email") String email,
-                             @QueryParam("password") String encryptedPwd,
-                             @QueryParam("telephone") Integer telephone) {
-        ReturnWS rs = new ReturnWS("doregister", false, null, null);
+    public String register(@QueryParam("email") String email,
+                           @QueryParam("password") String encryptedPwd,
+                           @QueryParam("telephone") Integer telephone) {
+        ReturnWS rs = new ReturnWS("register", false, null, null);
 
         // On décrypte le mot de passe s'il est <> de null
         String decryptedPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
@@ -116,8 +116,8 @@ public class UtilisateurRestService {
     @GET
     @Path("/count")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getnbuser() {
-        ReturnWS rs = new ReturnWS("getnbuser", false, null, null);
+    public String count() {
+        ReturnWS rs = new ReturnWS("count", false, null, null);
         rs.setStatus(true);
         rs.setMsg(String.valueOf(utilisateurDAO.getNbUser()));
         return gson.toJson(rs);
@@ -126,10 +126,10 @@ public class UtilisateurRestService {
     @POST
     @Path("{idUser}/change-password")
     @Produces(MediaType.APPLICATION_JSON)
-    public String changepassword(@PathParam("idUser") Integer idUser,
+    public String changePassword(@PathParam("idUser") Integer idUser,
                                  @QueryParam("oldPassword") String oldEncryptedPwd,
                                  @QueryParam("newPassword") String newEncryptedPwd) {
-        ReturnWS rs = new ReturnWS("changepassword", false, null, null);
+        ReturnWS rs = new ReturnWS("changePassword", false, null, null);
 
         String oldDecryptedPwd = null;
         String newDecryptedPwd = null;
@@ -163,10 +163,10 @@ public class UtilisateurRestService {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public String doLogin(@QueryParam("email") String email,
-                          @QueryParam("password") String encryptedPwd) {
+    public String login(@QueryParam("email") String email,
+                        @QueryParam("password") String encryptedPwd) {
         boolean result;
-        ReturnWS rs = new ReturnWS("doLogin", false, null, null);
+        ReturnWS rs = new ReturnWS("login", false, null, null);
 
         // On décrypte le mot de passe
         String decryptPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
@@ -187,10 +187,10 @@ public class UtilisateurRestService {
     }
 
     @POST
-    @Path("/lostpassword")
+    @Path("/lost-password")
     @Produces(MediaType.APPLICATION_JSON)
-    public String lostpassword(@QueryParam("email") String email) {
-        ReturnWS rs = new ReturnWS("lostpassword", false, null, null);
+    public String lostPassword(@QueryParam("email") String email) {
+        ReturnWS rs = new ReturnWS("lostPassword", false, null, null);
 
         if (utilisateurDAO.existByEmail(email)) {
             UtilisateurDTO user = utilisateurDAO.getByEmail(email);

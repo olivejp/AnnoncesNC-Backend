@@ -20,8 +20,8 @@ public class AnnonceRestService {
     @GET
     @Path("{idAnnonce}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String annonceById(@PathParam("idAnnonce") Integer idAnnonce) {
-        ReturnWS rs = new ReturnWS("annonceById", true, null, null);
+    public String getById(@PathParam("idAnnonce") Integer idAnnonce) {
+        ReturnWS rs = new ReturnWS("getById", true, null, null);
         rs.setMsg(gson.toJson(annonceDAO.get(idAnnonce)));
         return gson.toJson(rs);
     }
@@ -29,12 +29,12 @@ public class AnnonceRestService {
     @PUT
     @Path("{idAnnonce}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateannonce(@PathParam("idAnnonce") Integer idAnnonce,
-                                @QueryParam("idCat") Integer idCat,
-                                @QueryParam("titre") String titre,
-                                @QueryParam("description") String description,
-                                @QueryParam("prix") Integer prix) {
-        ReturnWS rs = new ReturnWS("updateannonce", false, null, null);
+    public String update(@PathParam("idAnnonce") Integer idAnnonce,
+                         @QueryParam("idCat") Integer idCat,
+                         @QueryParam("titre") String titre,
+                         @QueryParam("description") String description,
+                         @QueryParam("prix") Integer prix) {
+        ReturnWS rs = new ReturnWS("update", false, null, null);
         if (annonceDAO.get(idAnnonce) != null) {
             AnnonceDTO annonce = annonceDAO.get(idAnnonce);
             annonce.setCategorieANO(categorieDAO.get(idCat));
@@ -53,21 +53,21 @@ public class AnnonceRestService {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postAnnonce(@QueryParam("idCat") Integer idCat,
-                              @QueryParam("idUser") Integer idUser,
-                              @QueryParam("titre") String titre,
-                              @QueryParam("description") String description,
-                              @QueryParam("prix") Integer prix) {
+    public String post(@QueryParam("idCat") Integer idCat,
+                       @QueryParam("idUser") Integer idUser,
+                       @QueryParam("titre") String titre,
+                       @QueryParam("description") String description,
+                       @QueryParam("prix") Integer prix) {
 
         ReturnWS rs = new ReturnWS("dopostannonce", false, null, null);
 
         if (categorieDAO.get(idCat) == null) {
-            rs.setMsg("Categorie inexistante.");
+            rs.setMsg("Erreur serveur : Categorie inexistante.");
             return gson.toJson(rs);
         }
 
         if (utilisateurDAO.get(idUser) == null) {
-            rs.setMsg("Utilisateur inexistant.");
+            rs.setMsg("Erreur serveur : Utilisateur inexistant.");
             return gson.toJson(rs);
         }
 
@@ -85,7 +85,7 @@ public class AnnonceRestService {
                 rs.setMsg(gson.toJson(annonce));
                 rs.setStatus(true);
             } else {
-                rs.setMsg("L'annonce n'a pas pu être créée dans la BD");
+                rs.setMsg("Erreur serveur : L'annonce n'a pas pu être créée dans la BD");
             }
         } else {
             rs.setMsg("Vous avez atteint votre quota d'annonce. " + String.valueOf(Proprietes.MAX_ANNONCE) + " annonces maximum par utilisateur.");
@@ -97,8 +97,8 @@ public class AnnonceRestService {
     @DELETE
     @Path("{idAnnonce}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteannonce(@PathParam("idAnnonce") Integer idAnnonce) {
-        ReturnWS rs = new ReturnWS("deleteannonce", false, null, null);
+    public String delete(@PathParam("idAnnonce") Integer idAnnonce) {
+        ReturnWS rs = new ReturnWS("delete", false, null, null);
         if (annonceDAO.get(idAnnonce) != null && annonceDAO.delete(idAnnonce)) {
             rs.setStatus(true);
             rs.setMsg("Annonce bien supprimée.");
@@ -108,7 +108,7 @@ public class AnnonceRestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAnnonce(@QueryParam("page") Integer page) {
+    public String getListByPage(@QueryParam("page") Integer page) {
         ReturnWS rs = new ReturnWS("list_annonce", false, null, null);
         ArrayList<AnnonceDTO> myList = (ArrayList<AnnonceDTO>) annonceDAO.getListAnnonce(page);
         if (myList != null && !myList.isEmpty()) {
@@ -121,8 +121,8 @@ public class AnnonceRestService {
     @GET
     @Path("/count")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getnbannonce() {
-        ReturnWS rs = new ReturnWS("getnbannonce", true, String.valueOf(annonceDAO.getNbAnnonce()), null);
+    public String getCount() {
+        ReturnWS rs = new ReturnWS("getCount", true, String.valueOf(annonceDAO.getNbAnnonce()), null);
         return gson.toJson(rs);
     }
 
@@ -153,14 +153,14 @@ public class AnnonceRestService {
     @GET
     @Path("/dosearchmultiparam")
     @Produces(MediaType.APPLICATION_JSON)
-    public String doSearchMultiparam(@QueryParam("idCat") Integer idCat,
-                                     @QueryParam("minPrice") Integer minPrice,
-                                     @QueryParam("maxPrice") Integer maxPrice,
-                                     @QueryParam("keyword") String keyword,
-                                     @QueryParam("photo") boolean photo,
-                                     @QueryParam("page") Integer page) {
+    public String getByMultiparam(@QueryParam("idCat") Integer idCat,
+                                  @QueryParam("minPrice") Integer minPrice,
+                                  @QueryParam("maxPrice") Integer maxPrice,
+                                  @QueryParam("keyword") String keyword,
+                                  @QueryParam("photo") boolean photo,
+                                  @QueryParam("page") Integer page) {
 
-        ReturnWS rs = new ReturnWS("doSearchMultiparam", false, null, null);
+        ReturnWS rs = new ReturnWS("getByMultiparam", false, null, null);
         ArrayList<AnnonceDTO> myList = (ArrayList<AnnonceDTO>) annonceDAO.getMultiParam(idCat, keyword, minPrice, maxPrice, photo, page);
         if (myList != null) {
             rs.setStatus(true);

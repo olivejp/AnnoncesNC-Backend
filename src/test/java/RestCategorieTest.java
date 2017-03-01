@@ -55,7 +55,7 @@ public class RestCategorieTest {
         saveCategorie(generateCategorie());
 
         CategorieRestService categorieRestService = new CategorieRestService();
-        String returnWs = categorieRestService.listCategorie();
+        String returnWs = categorieRestService.getListCategorie();
 
         Type returnWsType = new TypeToken<ReturnWS>() {
         }.getType();

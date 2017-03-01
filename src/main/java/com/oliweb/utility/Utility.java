@@ -28,9 +28,9 @@ public class Utility {
 	public static final String PRIX_ANNONCE = "prixAnnonce";
 	public static final String DATE_PUBLI_ANNONCE = "datePubliAnnonce";
 	public static final String CATEGORIE_ANNONCE = "categorieAnnonce";
-	public static final String LISTE_ANNONCE = "listAnnonce";
-	public static final String LISTE_CATEGORIE = "listCategorie";
-	public static final String IMAGE_ANNONCE = "imageAnnonce";
+    public static final String LISTE_ANNONCE = "getListByPage";
+    public static final String LISTE_CATEGORIE = "getListCategorie";
+    public static final String IMAGE_ANNONCE = "imageAnnonce";
 	public static final String UTILISATEUR_NOM = "nomUtilisateur";
 	public static final String UTILISATEUR_TEL = "telephoneUtilisateur";
 	public static final String UTILISATEUR_EMAIL = "emailUtilisateur";
@@ -120,6 +120,6 @@ public class Utility {
 		} catch (JSONException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
-		return obj.toString(); 
-	}	
+        return obj.toString();
+    }
 }

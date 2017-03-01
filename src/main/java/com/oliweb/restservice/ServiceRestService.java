@@ -26,7 +26,7 @@ public class ServiceRestService {
     @POST
     @Path("/checkconnection")
     @Produces(MediaType.APPLICATION_JSON)
-    public String CheckConnection(){
+    public String checkConnection() {
         ReturnWS rs = new ReturnWS("checkconnection", true, null, null);
         return gson.toJson(rs);
     }
@@ -34,7 +34,7 @@ public class ServiceRestService {
     @POST
     @Path("/sendsms")
     @Produces(MediaType.APPLICATION_JSON)
-    public String SendSms(@QueryParam("to") String to, @QueryParam("from") String from, @QueryParam("body") String body) {
+    public String sendSms(@QueryParam("to") String to, @QueryParam("from") String from, @QueryParam("body") String body) {
         String tag = "sendsms";
         String message;
         ReturnWS rs = new ReturnWS(tag, true, null, null);
