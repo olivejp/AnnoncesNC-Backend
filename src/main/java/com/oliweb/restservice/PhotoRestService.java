@@ -46,7 +46,7 @@ public class PhotoRestService {
             photoDTO.setIdAnnoncePhoto(idAnnonce);
             if (photoDAO.save(photoDTO)) {
                 rs.setStatus(true);
-                rs.setId(photoDTO.getIdPhoto());
+                rs.setIdServer(photoDTO.getIdPhoto());
                 rs.setMsg(nomPhoto);
             } else {
                 rs.setMsg("La photo n'a pas pu être créée dans la BD");
@@ -60,7 +60,7 @@ public class PhotoRestService {
             photoDTO.setNamePhoto(directoryUpload.concat(newName));
             if (photoDAO.update(photoDTO)) {
                 rs.setStatus(true);
-                rs.setId(photoDTO.getIdPhoto());
+                rs.setIdServer(photoDTO.getIdPhoto());
                 rs.setMsg(nomPhoto);
             } else {
                 rs.setMsg("La photo n'a pas pu être mise à jour dans la BD");

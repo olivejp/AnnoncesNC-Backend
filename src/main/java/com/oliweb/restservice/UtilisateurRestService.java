@@ -91,7 +91,7 @@ public class UtilisateurRestService {
             // try to save the user
             if (utilisateurDAO.save(utilisateurDTO)) {
                 rs.setStatus(true);
-                rs.setId(utilisateurDTO.getIdUTI());
+                rs.setIdServer(utilisateurDTO.getIdUTI());
             }
         }
         return gson.toJson(rs);

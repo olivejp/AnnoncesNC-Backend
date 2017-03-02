@@ -33,8 +33,9 @@ public class AnnonceRestService {
                          @QueryParam("idCat") Integer idCat,
                          @QueryParam("titre") String titre,
                          @QueryParam("description") String description,
-                         @QueryParam("prix") Integer prix) {
-        ReturnWS rs = new ReturnWS("update", false, null, null);
+                         @QueryParam("prix") Integer prix,
+                         @QueryParam("idLocal") Integer idLocal) {
+        ReturnWS rs = new ReturnWS("update", false, null, null, idLocal);
         if (annonceDAO.get(idAnnonce) != null) {
             AnnonceDTO annonce = annonceDAO.get(idAnnonce);
             annonce.setCategorieANO(categorieDAO.get(idCat));
@@ -57,9 +58,10 @@ public class AnnonceRestService {
                        @QueryParam("idUser") Integer idUser,
                        @QueryParam("titre") String titre,
                        @QueryParam("description") String description,
-                       @QueryParam("prix") Integer prix) {
+                       @QueryParam("prix") Integer prix,
+                       @QueryParam("idLocal") Integer idLocal) {
 
-        ReturnWS rs = new ReturnWS("dopostannonce", false, null, null);
+        ReturnWS rs = new ReturnWS("dopostannonce", false, null, null, idLocal);
 
         if (categorieDAO.get(idCat) == null) {
             rs.setMsg("Erreur serveur : Categorie inexistante.");

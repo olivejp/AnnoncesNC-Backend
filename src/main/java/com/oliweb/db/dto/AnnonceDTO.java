@@ -25,7 +25,7 @@ public class AnnonceDTO {
         this.datePublished = (long) 0;
         this.photos = new ArrayList<>();
     }
-    
+
     public Integer getIdANO() {
         return idANO;
     }
@@ -98,6 +98,4 @@ public class AnnonceDTO {
         this.photos = photos;
 	}
 
-	
-    
 }
