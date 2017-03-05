@@ -129,8 +129,11 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return myList;
     }
 
-    Integer getNbAnnonceByCategorie(Integer idCategorie) {
-        String query = "SELECT count(" + AnnonceContract.COL_ID_ANNONCE + ") FROM " + AnnonceContract.TABLE_NAME + " WHERE " + AnnonceContract.COL_ID_CATEGORY + " = " + String.valueOf(idCategorie);
+    public Integer getNbAnnonceByCategorie(Integer idCategorie) {
+        String query = "SELECT count(" + AnnonceContract.COL_ID_ANNONCE +
+                ") FROM " + AnnonceContract.TABLE_NAME +
+                " WHERE " + AnnonceContract.COL_ID_CATEGORY + " = " + String.valueOf(idCategorie) +
+                " AND " + AnnonceContract.COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'";
         Integer retour = 0;
         try {
             Statement stmt = dbConn.createStatement();

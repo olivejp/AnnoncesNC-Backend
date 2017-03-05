@@ -19,6 +19,15 @@ public class PhotoRestService {
     private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
     private PhotoDAO photoDAO = new PhotoDAO(MyConnection.getInstance());
 
+    @GET
+    @Path("{idPhoto}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getById(@PathParam("idPhoto") Integer idPhoto) {
+        ReturnWS rs = new ReturnWS("getById", true, null, null);
+        rs.setMsg(gson.toJson(photoDAO.get(idPhoto)));
+        return gson.toJson(rs);
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String post(@QueryParam("idAnnonce") Integer idAnnonce,
@@ -69,6 +78,18 @@ public class PhotoRestService {
             // La photo n'a pas changée, elle existe déjà
             rs.setStatus(true);
             rs.setMsg(Proprietes.getProperty(Proprietes.PHOTO_ALREADY_EXIST));
+        }
+        return gson.toJson(rs);
+    }
+
+    @DELETE
+    @Path("{idPhoto}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String delete(@PathParam("idPhoto") Integer idPhoto) {
+        ReturnWS rs = new ReturnWS("deletePhoto", false, null, null);
+        if (photoDAO.get(idPhoto) != null && photoDAO.delete(idPhoto)) {
+            rs.setStatus(true);
+            rs.setMsg("Photo bien supprimée.");
         }
         return gson.toJson(rs);
     }

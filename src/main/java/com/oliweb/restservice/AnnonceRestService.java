@@ -129,10 +129,10 @@ public class AnnonceRestService {
     }
 
     @DELETE
-    @Path("{idAnnonce}/photos")
+    @Path("{idAnnonce}/photos/{idPhoto}")
     @Produces(MediaType.APPLICATION_JSON)
     public String doDeletePhoto(@PathParam("idAnnonce") Integer idAnnonce,
-                                @QueryParam("idPhoto") Integer idPhoto) {
+                                @PathParam("idPhoto") Integer idPhoto) {
         ReturnWS rs = new ReturnWS("doDeletePhoto", false, null, null);
 
         // Vérification que l'annonce existe bien

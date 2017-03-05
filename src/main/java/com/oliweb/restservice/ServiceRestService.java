@@ -1,8 +1,11 @@
 package com.oliweb.restservice;
 
 import com.google.gson.Gson;
+import com.oliweb.db.dao.AnnonceDAO;
+import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
+import com.oliweb.db.dto.CategorieDTO;
 import com.oliweb.sms.SendSms;
 import com.oliweb.utility.Proprietes;
 import com.oliweb.utility.Utility;
@@ -11,6 +14,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,12 +27,39 @@ public class ServiceRestService {
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static Gson gson = new Gson();
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
+    private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
+    private CategorieDAO categorieDAO = new CategorieDAO(MyConnection.getInstance());
 
     @POST
     @Path("/checkconnection")
     @Produces(MediaType.APPLICATION_JSON)
     public String checkConnection() {
         ReturnWS rs = new ReturnWS("checkconnection", true, null, null);
+        return gson.toJson(rs);
+    }
+
+    @POST
+    @Path("/infoserver")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getInfosServer() {
+        ReturnWS rs = new ReturnWS("getInfosServer", false, null, null);
+        InfoServer infoServer = new InfoServer();
+        infoServer.setNbAnnonce(annonceDAO.getNbAnnonce());
+        infoServer.setNbUtilisateur(utilisateurDAO.getNbUser());
+
+        HashMap<Integer, Integer> mHashMap = new HashMap<>();
+
+        List<CategorieDTO> mListCategorie = categorieDAO.getCompleteList();
+        for (CategorieDTO categorieDTO : mListCategorie) {
+            Integer idCategorie = categorieDTO.getIdCAT();
+            mHashMap.put(idCategorie, annonceDAO.getNbAnnonceByCategorie(idCategorie));
+        }
+
+        infoServer.setNbAnnonceByCategorie(mHashMap);
+
+        rs.setStatus(true);
+        rs.setMsg(gson.toJson(infoServer));
+
         return gson.toJson(rs);
     }
 
