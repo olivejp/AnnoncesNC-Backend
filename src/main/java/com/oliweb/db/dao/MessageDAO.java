@@ -1,6 +1,6 @@
 package com.oliweb.db.dao;
 
-import com.oliweb.db.dto.MessageDTO;
+import com.oliweb.db.dto.Message;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -10,15 +10,15 @@ import java.util.logging.Level;
 
 import static com.oliweb.db.contract.MessageContract.*;
 
-public class MessageDAO extends AbstractDAO<MessageDTO> {
+public class MessageDAO extends AbstractDAO<Message> {
 
     public MessageDAO(Connection dbConn) {
         super(dbConn);
     }
 
-    private MessageDTO transfertMessage(ResultSet rs) throws SQLException {
+    private Message transfertMessage(ResultSet rs) throws SQLException {
         // Création d'une nouvelle annonce
-        MessageDTO message = new MessageDTO();
+        Message message = new Message();
 
         // Renseignement des champs de l'annonce
         message.setIdMessage(rs.getInt(COL_ID_MESSAGE));
@@ -34,8 +34,8 @@ public class MessageDAO extends AbstractDAO<MessageDTO> {
         return message;
     }
 
-    public List<MessageDTO> listByIdSender(Integer idSender) {
-        ArrayList<MessageDTO> myList = new ArrayList<>();
+    public List<Message> listByIdSender(Integer idSender) {
+        ArrayList<Message> myList = new ArrayList<>();
 
         try {
             Statement stmt = dbConn.createStatement();
@@ -50,8 +50,8 @@ public class MessageDAO extends AbstractDAO<MessageDTO> {
 
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                MessageDTO messageDTO = transfertMessage(rs);
-                myList.add(messageDTO);
+                Message message = transfertMessage(rs);
+                myList.add(message);
             }
             stmt.close();
             rs.close();
@@ -62,7 +62,7 @@ public class MessageDAO extends AbstractDAO<MessageDTO> {
     }
 
     @Override
-    public boolean save(MessageDTO item) {
+    public boolean save(Message item) {
         boolean insertStatus = false;
 
         String query = "INSERT INTO " + TABLE_NAME + " (" + COL_ID_SENDER + ", "
@@ -93,12 +93,12 @@ public class MessageDAO extends AbstractDAO<MessageDTO> {
     }
 
     @Override
-    public boolean update(MessageDTO item) {
+    public boolean update(Message item) {
         return false;
     }
 
     @Override
-    public MessageDTO get(int id) {
+    public Message get(int id) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 package com.oliweb.db.dto;
 
-public class UtilisateurDTO {
+public class Utilisateur {
     private Integer idUTI;
     private String emailUTI;
     private Integer telephoneUTI;
@@ -10,9 +10,9 @@ public class UtilisateurDTO {
     private String adminUTI;
     private String statutUTI;
 
-    public UtilisateurDTO() {
+    public Utilisateur() {
     }
-    
+
     public Integer getIdUTI() {
         return idUTI;
     }

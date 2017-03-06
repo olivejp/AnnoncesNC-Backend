@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.PhotoDAO;
-import com.oliweb.db.dto.PhotoDTO;
+import com.oliweb.db.dto.Photo;
 import com.oliweb.utility.Proprietes;
 import org.apache.commons.io.FilenameUtils;
 
@@ -33,7 +33,7 @@ public class PhotoRestService {
     public String post(@QueryParam("idAnnonce") Integer idAnnonce,
                        @QueryParam("idPhoto") Integer idPhoto,
                        @QueryParam("nomPhoto") String nomPhoto) {
-        PhotoDTO photoDTO;
+        Photo photo;
         ReturnWS rs = new ReturnWS("post", false, null, null);
         String directoryUpload = Proprietes.getProperty(Proprietes.DIRECTORY_UPLOAD);
 
@@ -47,15 +47,15 @@ public class PhotoRestService {
         }
 
         // Si la photo n'existe pas encore, je vais la créer
-        photoDTO = photoDAO.get(idPhoto);
-        if (photoDTO == null) {
+        photo = photoDAO.get(idPhoto);
+        if (photo == null) {
             // La photo n'existe pas, il faut la créer
-            photoDTO = new PhotoDTO();
-            photoDTO.setNamePhoto(Proprietes.getProperty(Proprietes.DIRECTORY_UPLOAD) + newName);
-            photoDTO.setIdAnnoncePhoto(idAnnonce);
-            if (photoDAO.save(photoDTO)) {
+            photo = new Photo();
+            photo.setNamePhoto(Proprietes.getProperty(Proprietes.DIRECTORY_UPLOAD) + newName);
+            photo.setIdAnnoncePhoto(idAnnonce);
+            if (photoDAO.save(photo)) {
                 rs.setStatus(true);
-                rs.setIdServer(photoDTO.getIdPhoto());
+                rs.setIdServer(photo.getIdPhoto());
                 rs.setMsg(nomPhoto);
             } else {
                 rs.setMsg("La photo n'a pas pu être créée dans la BD");
@@ -64,12 +64,12 @@ public class PhotoRestService {
         }
 
         // La photo existe déjà, on va vérifier si elle a changé de nom ou pas
-        String presentName = FilenameUtils.getName(photoDTO.getNamePhoto());
+        String presentName = FilenameUtils.getName(photo.getNamePhoto());
         if (!presentName.equals(newName)) {
-            photoDTO.setNamePhoto(directoryUpload.concat(newName));
-            if (photoDAO.update(photoDTO)) {
+            photo.setNamePhoto(directoryUpload.concat(newName));
+            if (photoDAO.update(photo)) {
                 rs.setStatus(true);
-                rs.setIdServer(photoDTO.getIdPhoto());
+                rs.setIdServer(photo.getIdPhoto());
                 rs.setMsg(nomPhoto);
             } else {
                 rs.setMsg("La photo n'a pas pu être mise à jour dans la BD");

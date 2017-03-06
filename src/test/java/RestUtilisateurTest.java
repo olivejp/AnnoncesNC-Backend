@@ -1,7 +1,7 @@
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
 import com.oliweb.db.dao.enumStatutUtilisateur;
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Utilisateur;
 import com.oliweb.restservice.UtilisateurRestService;
 import org.junit.Test;
 
@@ -15,12 +15,12 @@ public class RestUtilisateurTest {
     private static UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
     private static UtilisateurRestService utilisateurRestService = new UtilisateurRestService();
 
-    public static UtilisateurDTO generateUtilisateur() {
-        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setEmailUTI(EMAIL_UTILISATEUR);
-        utilisateurDTO.setTelephoneUTI(TEL_UTILISATEUR);
-        utilisateurDTO.setStatutUTI(enumStatutUtilisateur.VALID.valeur());
-        return utilisateurDTO;
+    public static Utilisateur generateUtilisateur() {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setEmailUTI(EMAIL_UTILISATEUR);
+        utilisateur.setTelephoneUTI(TEL_UTILISATEUR);
+        utilisateur.setStatutUTI(enumStatutUtilisateur.VALID.valeur());
+        return utilisateur;
     }
 
     public static void deleteAllUtilisateur() {
@@ -29,16 +29,16 @@ public class RestUtilisateurTest {
         assertTrue(utilisateurDAO.deleteAll());
     }
 
-    public static UtilisateurDTO saveUtilisateur(UtilisateurDTO utilisateurDTO) {
-        assertTrue(utilisateurDAO.save(utilisateurDTO));
-        return utilisateurDTO;
+    public static Utilisateur saveUtilisateur(Utilisateur utilisateur) {
+        assertTrue(utilisateurDAO.save(utilisateur));
+        return utilisateur;
     }
 
     @Test
     public void testInsertDeleteUtilisateur() {
         UtilityTest.initDb();
-        UtilisateurDTO utilisateurDTO = saveUtilisateur(generateUtilisateur());
-        int id = utilisateurDTO.getIdUTI();
+        Utilisateur utilisateur = saveUtilisateur(generateUtilisateur());
+        int id = utilisateur.getIdUTI();
         utilisateurRestService.unregister(id);
         assertEquals(utilisateurDAO.get(id).getStatutUTI(), enumStatutUtilisateur.UNREGISTRED.valeur());
     }

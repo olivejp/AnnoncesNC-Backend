@@ -1,8 +1,8 @@
 package com.oliweb.utility;
 
 import com.google.gson.Gson;
-import com.oliweb.db.dto.CategorieDTO;
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Categorie;
+import com.oliweb.db.dto.Utilisateur;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -79,7 +79,7 @@ public class Utility {
 	}
 
 
-    public static String constructListCategoryJSON(String tag, boolean status, List<CategorieDTO> myList) {
+    public static String constructListCategoryJSON(String tag, boolean status, List<Categorie> myList) {
         JSONObject obj = constructSimpleJSON(tag, status);
 		try {
 			Gson gson = new Gson();
@@ -91,8 +91,8 @@ public class Utility {
 		return obj.toString();
 	}
 
-	public static String constructUtilisateurJSON(String tag, boolean status, UtilisateurDTO utilisateur) {
-		JSONObject obj = constructSimpleJSON(tag, status);
+    public static String constructUtilisateurJSON(String tag, boolean status, Utilisateur utilisateur) {
+        JSONObject obj = constructSimpleJSON(tag, status);
 		try {
 			obj.put(ID_UTILISATEUR, utilisateur.getIdUTI());
 			obj.put(EMAIL_UTILISATEUR, utilisateur.getEmailUTI());

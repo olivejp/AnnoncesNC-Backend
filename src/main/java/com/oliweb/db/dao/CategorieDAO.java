@@ -1,6 +1,6 @@
 package com.oliweb.db.dao;
 
-import com.oliweb.db.dto.CategorieDTO;
+import com.oliweb.db.dto.Categorie;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.logging.Level;
 
 import static com.oliweb.db.contract.CategorieContract.*;
 
-public class CategorieDAO extends AbstractDAO<CategorieDTO> {
+public class CategorieDAO extends AbstractDAO<Categorie> {
 
     public CategorieDAO(Connection dbConn) {
         super(dbConn);
     }
 
-    public List<CategorieDTO> getCompleteList() {
-        List<CategorieDTO> myList = new ArrayList<>();
+    public List<Categorie> getCompleteList() {
+        List<Categorie> myList = new ArrayList<>();
         AnnonceDAO annonceDAO = new AnnonceDAO(dbConn);
         String query = "SELECT " + COL_ID_CATEGORIE + ", " + COL_NOM_CATEGORIE + ", " + COL_COULEUR_CATEGORIE + " FROM " + TABLE_NAME;
 
@@ -25,7 +25,7 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
             ResultSet rs;
             rs = stmt.executeQuery(query);
             while (rs.next()) {
-                CategorieDTO cat = new CategorieDTO();
+                Categorie cat = new Categorie();
                 cat.setIdCAT(rs.getInt(COL_ID_CATEGORIE));
                 cat.setNameCAT(rs.getString(COL_NOM_CATEGORIE));
                 cat.setCouleurCAT(rs.getString(COL_COULEUR_CATEGORIE));
@@ -41,8 +41,8 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
     }
 
     @Override
-    public CategorieDTO get(int idCategorie) {
-        CategorieDTO categorie = null;
+    public Categorie get(int idCategorie) {
+        Categorie categorie = null;
         String query = "SELECT " + COL_ID_CATEGORIE + ", "
                 + COL_NOM_CATEGORIE + ", "
                 + COL_COULEUR_CATEGORIE
@@ -54,7 +54,7 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
             stmt.setInt(1, idCategorie);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                categorie = new CategorieDTO();
+                categorie = new Categorie();
                 categorie.setIdCAT(rs.getInt(COL_ID_CATEGORIE));
                 categorie.setNameCAT(rs.getString(COL_NOM_CATEGORIE));
                 categorie.setCouleurCAT(rs.getString(COL_COULEUR_CATEGORIE));
@@ -68,7 +68,7 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
     }
 
     @Override
-    public boolean save(CategorieDTO item) {
+    public boolean save(Categorie item) {
         boolean insertStatus = false;
 
         String query = "INSERT INTO " + TABLE_NAME + " (" + COL_NOM_CATEGORIE + ", "
@@ -95,7 +95,7 @@ public class CategorieDAO extends AbstractDAO<CategorieDTO> {
     }
 
     @Override
-    public boolean update(CategorieDTO item) {
+    public boolean update(Categorie item) {
         return false;
     }
 

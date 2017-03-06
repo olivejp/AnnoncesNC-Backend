@@ -6,8 +6,8 @@ import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.MessageDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
-import com.oliweb.db.dto.AnnonceDTO;
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Annonce;
+import com.oliweb.db.dto.Utilisateur;
 import com.oliweb.mail.PropertiesMail;
 import com.oliweb.mail.SendMail;
 import com.oliweb.utility.Crypto;
@@ -35,7 +35,7 @@ public class UtilisateurRestService {
     public String listAnnonceByUser(@PathParam("idUser") Integer idUser,
                                     @QueryParam("page") Integer page) {
         ReturnWS rs = new ReturnWS("listAnnonceByUser", false, null, null);
-        List<AnnonceDTO> myList = annonceDAO.getByIdUser(idUser, page);
+        List<Annonce> myList = annonceDAO.getByIdUser(idUser, page);
         if (myList != null) {
             rs.setStatus(true);
             if (!myList.isEmpty()) {
@@ -53,7 +53,7 @@ public class UtilisateurRestService {
                              @QueryParam("telephoneUser") Integer telephoneUser) {
         ReturnWS rs = new ReturnWS("updateUser", false, null, null);
         if (utilisateurDAO.get(idUser) != null) {
-            UtilisateurDTO user = utilisateurDAO.get(idUser);
+            Utilisateur user = utilisateurDAO.get(idUser);
             user.setEmailUTI(emailUser);
             user.setTelephoneUTI(telephoneUser);
 
@@ -77,21 +77,21 @@ public class UtilisateurRestService {
         String decryptedPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
 
         if (Utility.isNotNull(email) && Utility.isNotNull(decryptedPwd)) {
-            UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-            utilisateurDTO.setEmailUTI(email);
-            utilisateurDTO.setPasswordUTI(decryptedPwd);
-            utilisateurDTO.setTelephoneUTI(telephone);
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setEmailUTI(email);
+            utilisateur.setPasswordUTI(decryptedPwd);
+            utilisateur.setTelephoneUTI(telephone);
 
             // Check that the mail doesnt already exists
-            if (utilisateurDAO.existByEmail(utilisateurDTO.getEmailUTI())) {
+            if (utilisateurDAO.existByEmail(utilisateur.getEmailUTI())) {
                 rs.setMsg(ERROR_MAIL_ALREADY_EXIST);
                 return gson.toJson(rs);
             }
 
             // try to save the user
-            if (utilisateurDAO.save(utilisateurDTO)) {
+            if (utilisateurDAO.save(utilisateur)) {
                 rs.setStatus(true);
-                rs.setIdServer(utilisateurDTO.getIdUTI());
+                rs.setIdServer(utilisateur.getIdUTI());
             }
         }
         return gson.toJson(rs);
@@ -174,7 +174,7 @@ public class UtilisateurRestService {
         result = Utility.isNotNull(email) && Utility.isNotNull(decryptPwd) && utilisateurDAO.checkLogin(email, decryptPwd);
 
         if (result) {
-            UtilisateurDTO utilisateur = utilisateurDAO.getByEmail(email);
+            Utilisateur utilisateur = utilisateurDAO.getByEmail(email);
             rs.setStatus(true);
             rs.setMsg(gson.toJson(utilisateur));
 
@@ -193,7 +193,7 @@ public class UtilisateurRestService {
         ReturnWS rs = new ReturnWS("lostPassword", false, null, null);
 
         if (utilisateurDAO.existByEmail(email)) {
-            UtilisateurDTO user = utilisateurDAO.getByEmail(email);
+            Utilisateur user = utilisateurDAO.getByEmail(email);
 
             rs.setStatus(true);
             String newPassword = Utility.generateRandomInt();

@@ -5,7 +5,7 @@ import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
-import com.oliweb.db.dto.CategorieDTO;
+import com.oliweb.db.dto.Categorie;
 import com.oliweb.sms.SendSms;
 import com.oliweb.utility.Proprietes;
 import com.oliweb.utility.Utility;
@@ -49,9 +49,9 @@ public class ServiceRestService {
 
         HashMap<Integer, Integer> mHashMap = new HashMap<>();
 
-        List<CategorieDTO> mListCategorie = categorieDAO.getCompleteList();
-        for (CategorieDTO categorieDTO : mListCategorie) {
-            Integer idCategorie = categorieDTO.getIdCAT();
+        List<Categorie> mListCategorie = categorieDAO.getCompleteList();
+        for (Categorie categorie : mListCategorie) {
+            Integer idCategorie = categorie.getIdCAT();
             mHashMap.put(idCategorie, annonceDAO.getNbAnnonceByCategorie(idCategorie));
         }
 

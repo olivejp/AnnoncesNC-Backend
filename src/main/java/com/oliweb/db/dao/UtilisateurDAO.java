@@ -1,6 +1,6 @@
 package com.oliweb.db.dao;
 
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Utilisateur;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,7 @@ import java.util.logging.Level;
 
 import static com.oliweb.db.contract.UtilisateurContract.*;
 
-public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
+public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
     public UtilisateurDAO(Connection connection) {
         super(connection);
@@ -101,7 +101,7 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
     }
 
     @Override
-    public boolean save(UtilisateurDTO utilisateurDTO) {
+    public boolean save(Utilisateur utilisateur) {
         boolean insertStatus = false;
         String query = "INSERT INTO " + TABLE_NAME
                 + "(" + COL_EMAIL_UTILISATEUR + ", "
@@ -111,15 +111,15 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, utilisateurDTO.getEmailUTI());
-            stmt.setInt(2, utilisateurDTO.getTelephoneUTI());
-            stmt.setString(3, utilisateurDTO.getPasswordUTI());
+            stmt.setString(1, utilisateur.getEmailUTI());
+            stmt.setInt(2, utilisateur.getTelephoneUTI());
+            stmt.setString(3, utilisateur.getPasswordUTI());
 
             if (stmt.executeUpdate() != 0) {
                 ResultSet rs = stmt.getGeneratedKeys();
                 rs.next();
                 insertStatus = true;
-                utilisateurDTO.setIdUTI(rs.getInt(1));
+                utilisateur.setIdUTI(rs.getInt(1));
                 rs.close();
             } else {
                 insertStatus = false;
@@ -132,7 +132,7 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
     }
 
     @Override
-    public boolean update(UtilisateurDTO user) {
+    public boolean update(Utilisateur user) {
         int retour = 0;
         try {
             Statement stmt = dbConn.createStatement();
@@ -188,8 +188,8 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
     }
 
     @Override
-    public UtilisateurDTO get(int idUtilisateur) {
-        UtilisateurDTO utilisateur = null;
+    public Utilisateur get(int idUtilisateur) {
+        Utilisateur utilisateur = null;
 
         String query = "SELECT " + COL_ID_UTILISATEUR + ", "
                 + COL_TELEPHONE_UTILISATEUR + ", "
@@ -207,7 +207,7 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
             stmt.setInt(1, idUtilisateur);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                utilisateur = new UtilisateurDTO();
+                utilisateur = new Utilisateur();
                 utilisateur.setIdUTI(rs.getInt(COL_ID_UTILISATEUR));
                 utilisateur.setEmailUTI(rs.getString(COL_EMAIL_UTILISATEUR));
                 utilisateur.setTelephoneUTI(rs.getInt(COL_TELEPHONE_UTILISATEUR));
@@ -247,8 +247,8 @@ public class UtilisateurDAO extends AbstractDAO<UtilisateurDTO> {
         return exist;
     }
 
-    public UtilisateurDTO getByEmail(String email) {
-        UtilisateurDTO utilisateur = new UtilisateurDTO();
+    public Utilisateur getByEmail(String email) {
+        Utilisateur utilisateur = new Utilisateur();
         Statement stmt;
         String query;
         ResultSet results;

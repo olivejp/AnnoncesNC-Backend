@@ -2,7 +2,7 @@ package com.oliweb.restservice;
 
 import com.google.gson.Gson;
 import com.oliweb.db.dao.*;
-import com.oliweb.db.dto.AnnonceDTO;
+import com.oliweb.db.dto.Annonce;
 import com.oliweb.utility.Proprietes;
 
 import javax.ws.rs.*;
@@ -37,8 +37,8 @@ public class AnnonceRestService {
                          @QueryParam("idLocal") Integer idLocal) {
         ReturnWS rs = new ReturnWS("update", false, null, null, idLocal);
         if (annonceDAO.get(idAnnonce) != null) {
-            AnnonceDTO annonce = annonceDAO.get(idAnnonce);
-            annonce.setCategorieANO(categorieDAO.get(idCat));
+            Annonce annonce = annonceDAO.get(idAnnonce);
+            annonce.setIdCategorieANO(idCat);
             annonce.setTitreANO(titre);
             annonce.setPriceANO(prix);
             annonce.setDescriptionANO(description);
@@ -73,11 +73,11 @@ public class AnnonceRestService {
             return gson.toJson(rs);
         }
 
-        AnnonceDTO annonce = new AnnonceDTO();
+        Annonce annonce = new Annonce();
         annonce.setTitreANO(titre);
         annonce.setDescriptionANO(description);
         annonce.setPriceANO(prix);
-        annonce.setCategorieANO(categorieDAO.get(idCat));
+        annonce.setIdCategorieANO(idCat);
         annonce.setUtilisateurANO(utilisateurDAO.get(idUser));
 
         // L'utilisateur n'a le droit de poster que 5 annonces sauf si c'est un Admin
@@ -112,7 +112,7 @@ public class AnnonceRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getListByPage(@QueryParam("page") Integer page) {
         ReturnWS rs = new ReturnWS("list_annonce", false, null, null);
-        ArrayList<AnnonceDTO> myList = (ArrayList<AnnonceDTO>) annonceDAO.getListAnnonce(page);
+        ArrayList<Annonce> myList = (ArrayList<Annonce>) annonceDAO.getListAnnonce(page);
         if (myList != null && !myList.isEmpty()) {
             rs.setStatus(true);
             rs.setMsg(gson.toJson(myList));
@@ -163,7 +163,7 @@ public class AnnonceRestService {
                                   @QueryParam("page") Integer page) {
 
         ReturnWS rs = new ReturnWS("getByMultiparam", false, null, null);
-        ArrayList<AnnonceDTO> myList = (ArrayList<AnnonceDTO>) annonceDAO.getMultiParam(idCat, keyword, minPrice, maxPrice, photo, page);
+        ArrayList<Annonce> myList = (ArrayList<Annonce>) annonceDAO.getMultiParam(idCat, keyword, minPrice, maxPrice, photo, page);
         if (myList != null) {
             rs.setStatus(true);
             if (!myList.isEmpty()) {

@@ -2,8 +2,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
-import com.oliweb.db.dto.CategorieDTO;
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Categorie;
+import com.oliweb.db.dto.Utilisateur;
 import com.oliweb.restservice.CategorieRestService;
 import com.oliweb.restservice.ReturnWS;
 import org.junit.Test;
@@ -22,18 +22,18 @@ public class RestCategorieTest {
     private static Gson gson = new Gson();
     private static CategorieDAO categorieDAO = new CategorieDAO(MyConnection.getInstance());
     @Mock
-    UtilisateurDTO utilisateurDTO;
+    Utilisateur utilisateur;
 
-    public static CategorieDTO generateCategorie() {
-        CategorieDTO categorieDTO = new CategorieDTO();
-        categorieDTO.setNameCAT(NOM_CATEGORIE);
-        categorieDTO.setCouleurCAT(COULEUR_CATEGORIE);
-        return categorieDTO;
+    public static Categorie generateCategorie() {
+        Categorie categorie = new Categorie();
+        categorie.setNameCAT(NOM_CATEGORIE);
+        categorie.setCouleurCAT(COULEUR_CATEGORIE);
+        return categorie;
     }
 
-    public static CategorieDTO saveCategorie(CategorieDTO categorieDTO) {
-        assertTrue(categorieDAO.save(categorieDTO));
-        return categorieDTO;
+    public static Categorie saveCategorie(Categorie categorie) {
+        assertTrue(categorieDAO.save(categorie));
+        return categorie;
     }
 
     public static void deleteAllCategorie() {
@@ -45,8 +45,8 @@ public class RestCategorieTest {
     @Test
     public void testInsertDeleteCategorie() {
         deleteAllCategorie();
-        CategorieDTO categorieDTO = saveCategorie(generateCategorie());
-        assertTrue(categorieDAO.delete(categorieDTO.getIdCAT()));
+        Categorie categorie = saveCategorie(generateCategorie());
+        assertTrue(categorieDAO.delete(categorie.getIdCAT()));
     }
 
     @Test
@@ -61,9 +61,9 @@ public class RestCategorieTest {
         }.getType();
         ReturnWS rs = gson.fromJson(returnWs, returnWsType);
 
-        Type listType = new TypeToken<ArrayList<CategorieDTO>>() {
+        Type listType = new TypeToken<ArrayList<Categorie>>() {
         }.getType();
-        ArrayList<CategorieDTO> myList = gson.fromJson(rs.getMsg(), listType);
+        ArrayList<Categorie> myList = gson.fromJson(rs.getMsg(), listType);
         assertEquals(myList.get(0).getNameCAT(), NOM_CATEGORIE);
     }
 }

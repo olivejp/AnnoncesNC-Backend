@@ -1,6 +1,6 @@
 package com.oliweb.db.dao;
 
-import com.oliweb.db.dto.PhotoDTO;
+import com.oliweb.db.dto.Photo;
 import com.oliweb.utility.Proprietes;
 import org.apache.commons.io.FilenameUtils;
 
@@ -12,14 +12,14 @@ import java.util.logging.Level;
 
 import static com.oliweb.db.contract.PhotoContract.*;
 
-public class PhotoDAO extends AbstractDAO<PhotoDTO> {
+public class PhotoDAO extends AbstractDAO<Photo> {
 
     public PhotoDAO(Connection dbConn) {
         super(dbConn);
     }
 
-    private PhotoDTO transfertPhoto(ResultSet rs) throws SQLException {
-        PhotoDTO photo = new PhotoDTO();
+    private Photo transfertPhoto(ResultSet rs) throws SQLException {
+        Photo photo = new Photo();
         photo.setIdPhoto(rs.getInt(COL_ID_PHOTO));
         photo.setIdAnnoncePhoto(rs.getInt(COL_ID_ANNONCE));
         photo.setNamePhoto(rs.getString(COL_NOM_PHOTO));
@@ -93,8 +93,8 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
         return deleteStatus;
     }
 
-    List<PhotoDTO> getByIdAnnonce(Integer idAnnonce) {
-        ArrayList<PhotoDTO> photosDTO = new ArrayList<>();
+    List<Photo> getByIdAnnonce(Integer idAnnonce) {
+        ArrayList<Photo> photosDTO = new ArrayList<>();
         String query;
 
         try {
@@ -102,7 +102,7 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
             query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID_ANNONCE + " = " + String.valueOf(idAnnonce);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                photosDTO.add(new PhotoDTO(rs.getInt(COL_ID_PHOTO), rs.getString(COL_NOM_PHOTO), rs.getInt(COL_ID_ANNONCE)));
+                photosDTO.add(new Photo(rs.getInt(COL_ID_PHOTO), rs.getString(COL_NOM_PHOTO), rs.getInt(COL_ID_ANNONCE)));
             }
             stmt.close();
             rs.close();
@@ -113,7 +113,7 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
     }
 
     @Override
-    public boolean save(PhotoDTO photo) {
+    public boolean save(Photo photo) {
         boolean insertStatus = false;
         PreparedStatement stmt;
         Integer idAnnonce = photo.getIdAnnoncePhoto();
@@ -149,9 +149,9 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
         boolean deleteStatus = false;
         String query, nom_photo = "";
 
-        PhotoDTO photoDTO = get(idPhoto);
-        if (photoDTO != null) {
-            nom_photo = photoDTO.getNamePhoto();
+        Photo photo = get(idPhoto);
+        if (photo != null) {
+            nom_photo = photo.getNamePhoto();
         }
 
         query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID_PHOTO + " = ? ";
@@ -173,8 +173,8 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
     }
 
     @Override
-    public PhotoDTO get(int idPhoto) {
-        PhotoDTO photoDTO = null;
+    public Photo get(int idPhoto) {
+        Photo photo = null;
 
         String query = "SELECT " + COL_ID_PHOTO + ", "
                 + COL_NOM_PHOTO + ", "
@@ -186,18 +186,18 @@ public class PhotoDAO extends AbstractDAO<PhotoDTO> {
             stmt.setInt(1, idPhoto);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                photoDTO = transfertPhoto(rs);
+                photo = transfertPhoto(rs);
             }
             stmt.close();
             rs.close();
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "getById", e);
         }
-        return photoDTO;
+        return photo;
     }
 
     @Override
-    public boolean update(PhotoDTO photo) {
+    public boolean update(Photo photo) {
         boolean updateStatus = false;
         int records;
         String query;

@@ -3,20 +3,20 @@ package com.oliweb.db.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnnonceDTO {
+public class Annonce {
     private Integer idANO;               // Identifiant
-    private CategorieDTO categorieANO;   // Une annonce appartient a une catégorie
-    private UtilisateurDTO utilisateurANO;     // Une annonce est rédigée par une personne
+    private Integer idCategorieANO;   // Une annonce appartient a une catégorie
+    private Utilisateur utilisateurANO;     // Une annonce est rédigée par une personne
     private Integer priceANO;            // L'annonce a un prix
     private String descriptionANO;       // Description de l'annonce
     private String titreANO;             // Titre de l'annonce
     private boolean publishedANO;        // True si l'annonce est publiée sinon False
     private Long datePublished;          // La date de la parution
-    private List<PhotoDTO> photos;       // Les photos de l'annonce
+    private List<Photo> photos;       // Les photos de l'annonce
 
-    public AnnonceDTO() {
+    public Annonce() {
         this.idANO = 0;
-        this.categorieANO = null;
+        this.idCategorieANO = null;
         this.utilisateurANO = null;
         this.priceANO = 0;
         this.descriptionANO = "";
@@ -34,19 +34,19 @@ public class AnnonceDTO {
         this.idANO = idANO;
     }
 
-    public CategorieDTO getCategorieANO() {
-        return categorieANO;
+    public Integer getIdCategorieANO() {
+        return idCategorieANO;
     }
 
-    public void setCategorieANO(CategorieDTO categorieANO) {
-        this.categorieANO = categorieANO;
+    public void setIdCategorieANO(Integer idCategorieANO) {
+        this.idCategorieANO = idCategorieANO;
     }
 
-    public UtilisateurDTO getUtilisateurANO() {
+    public Utilisateur getUtilisateurANO() {
         return utilisateurANO;
     }
 
-    public void setUtilisateurANO(UtilisateurDTO utilisateurANO) {
+    public void setUtilisateurANO(Utilisateur utilisateurANO) {
         this.utilisateurANO = utilisateurANO;
     }
 
@@ -90,11 +90,11 @@ public class AnnonceDTO {
         this.datePublished = datePublished;
     }
 
-    public List<PhotoDTO> getPhotos() {
+    public List<Photo> getPhotos() {
         return photos;
 	}
 
-    public void setPhotos(List<PhotoDTO> photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
 	}
 

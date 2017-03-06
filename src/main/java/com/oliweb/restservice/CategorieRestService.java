@@ -5,8 +5,8 @@ import com.google.gson.Gson;
 import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
-import com.oliweb.db.dto.AnnonceDTO;
-import com.oliweb.db.dto.CategorieDTO;
+import com.oliweb.db.dto.Annonce;
+import com.oliweb.db.dto.Categorie;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,7 +23,7 @@ public class CategorieRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getListCategorie() {
         ReturnWS rs = new ReturnWS("listcategory", false, null, null);
-        List<CategorieDTO> myList = categorieDAO.getCompleteList();
+        List<Categorie> myList = categorieDAO.getCompleteList();
         if (myList != null) {
             rs.setStatus(true);
             if (!myList.isEmpty()) {
@@ -39,7 +39,7 @@ public class CategorieRestService {
     public String getAnnoncesByIdCategorieWithPage(@PathParam("idCategory") Integer idCategory,
                                                    @QueryParam("page") Integer page) {
         ReturnWS rs = new ReturnWS("getAnnoncesByIdCategorieWithPage", false, null, null);
-        List<AnnonceDTO> myList;
+        List<Annonce> myList;
 
         if (page != null) {
             myList = annonceDAO.getByIdCategoryWithPage(idCategory, page);

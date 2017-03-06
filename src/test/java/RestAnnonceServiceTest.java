@@ -4,9 +4,9 @@ import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
-import com.oliweb.db.dto.AnnonceDTO;
-import com.oliweb.db.dto.CategorieDTO;
-import com.oliweb.db.dto.UtilisateurDTO;
+import com.oliweb.db.dto.Annonce;
+import com.oliweb.db.dto.Categorie;
+import com.oliweb.db.dto.Utilisateur;
 import com.oliweb.restservice.AnnonceRestService;
 import com.oliweb.restservice.ReturnWS;
 import org.junit.Test;
@@ -23,10 +23,10 @@ public class RestAnnonceServiceTest {
     private static Gson gson = new Gson();
 
     @Mock
-    CategorieDTO categorieDTO;
+    Categorie categorie;
 
     @Mock
-    UtilisateurDTO utilisateurDTO;
+    Utilisateur utilisateur;
 
     // Test pour demontrer qu'on ne peut pas poster d'annonce si l'utilisateur n'existe pas.
     @Test
@@ -54,10 +54,10 @@ public class RestAnnonceServiceTest {
         UtilityTest.initDb();
 
         // Creation dune nouvelle categorie
-        CategorieDTO categorie = RestCategorieTest.saveCategorie(RestCategorieTest.generateCategorie());
+        Categorie categorie = RestCategorieTest.saveCategorie(RestCategorieTest.generateCategorie());
 
         // Creation dun nouvel utilisateur
-        UtilisateurDTO utilisateur = RestUtilisateurTest.saveUtilisateur(RestUtilisateurTest.generateUtilisateur());
+        Utilisateur utilisateur = RestUtilisateurTest.saveUtilisateur(RestUtilisateurTest.generateUtilisateur());
 
         // Call the WS to post annonce
         AnnonceRestService annonceRestService = new AnnonceRestService();
@@ -71,12 +71,12 @@ public class RestAnnonceServiceTest {
         // Le résultat doit être vrai
         assertTrue(rs.isValid());
 
-        Type annonceType = new TypeToken<AnnonceDTO>() {
+        Type annonceType = new TypeToken<Annonce>() {
         }.getType();
 
         // Recupération de l'annonce
-        AnnonceDTO annonceDTO = gson.fromJson(rs.getMsg(), annonceType);
-        assertEquals(annonceDTO.getTitreANO(), "Titre");
+        Annonce annonce = gson.fromJson(rs.getMsg(), annonceType);
+        assertEquals(annonce.getTitreANO(), "Titre");
     }
 
     // Test de recherche d'annonce
@@ -94,11 +94,11 @@ public class RestAnnonceServiceTest {
         // Le résultat doit être vrai
         assertTrue(rs.isValid());
 
-        Type listAnnonceType = new TypeToken<ArrayList<AnnonceDTO>>() {
+        Type listAnnonceType = new TypeToken<ArrayList<Annonce>>() {
         }.getType();
 
         // Recupération de l'annonce
-        ArrayList<AnnonceDTO> mListAnnonce = gson.fromJson(rs.getMsg(), listAnnonceType);
+        ArrayList<Annonce> mListAnnonce = gson.fromJson(rs.getMsg(), listAnnonceType);
         assertTrue(mListAnnonce.size() > 0);
     }
 

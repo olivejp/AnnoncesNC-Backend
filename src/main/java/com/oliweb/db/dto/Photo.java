@@ -1,17 +1,18 @@
 package com.oliweb.db.dto;
 
-public class PhotoDTO {
-	private Integer idPhoto;
+public class Photo {
+    private Integer idPhoto;
 	private String namePhoto;
 	private Integer idAnnoncePhoto;
 
-	public PhotoDTO(Integer idPhoto, String namePhoto, Integer idAnnoncePhoto) {
-		this.idPhoto = idPhoto;
+    public Photo(Integer idPhoto, String namePhoto, Integer idAnnoncePhoto) {
+        this.idPhoto = idPhoto;
 		this.namePhoto = namePhoto;
 		this.idAnnoncePhoto = idAnnoncePhoto;
 	}
-	public PhotoDTO() {
-		super();
+
+    public Photo() {
+        super();
 		this.idPhoto = null;
 		this.namePhoto = null;
 		this.idAnnoncePhoto = null;

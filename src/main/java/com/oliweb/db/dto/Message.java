@@ -1,13 +1,13 @@
 package com.oliweb.db.dto;
 
-public class MessageDTO {
+public class Message {
     private Integer idMessage;
-    private UtilisateurDTO sender;
-    private UtilisateurDTO receiver;
+    private Utilisateur sender;
+    private Utilisateur receiver;
     private String message;
     private Long dateMessage;
 
-    public MessageDTO(Integer idMessage, UtilisateurDTO sender, UtilisateurDTO receiver, String message, Long dateMessage) {
+    public Message(Integer idMessage, Utilisateur sender, Utilisateur receiver, String message, Long dateMessage) {
         super();
 		this.idMessage = idMessage;
 		this.sender = sender;
@@ -16,8 +16,8 @@ public class MessageDTO {
 		this.dateMessage = dateMessage;
 	}
 
-	public MessageDTO() {
-		// TODO Auto-generated constructor stub
+    public Message() {
+        // TODO Auto-generated constructor stub
 	}
 
 	public Integer getIdMessage() {
@@ -28,20 +28,20 @@ public class MessageDTO {
 		this.idMessage = idMessage;
 	}
 
-	public UtilisateurDTO getSender() {
-		return sender;
+    public Utilisateur getSender() {
+        return sender;
 	}
 
-	public void setIdSender(UtilisateurDTO sender) {
-		this.sender = sender;
+    public void setIdSender(Utilisateur sender) {
+        this.sender = sender;
 	}
 
-	public UtilisateurDTO getReceiver() {
-		return receiver;
+    public Utilisateur getReceiver() {
+        return receiver;
 	}
 
-	public void setIdReceiver(UtilisateurDTO receiver) {
-		this.receiver = receiver;
+    public void setIdReceiver(Utilisateur receiver) {
+        this.receiver = receiver;
 	}
 
 	public String getMessage() {
@@ -59,6 +59,6 @@ public class MessageDTO {
 	public void setDateMessage(Long dateMessage) {
 		this.dateMessage = dateMessage;
 	}
-	
-	
+
+
 }

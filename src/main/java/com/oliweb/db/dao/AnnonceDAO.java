@@ -2,7 +2,7 @@ package com.oliweb.db.dao;
 
 import com.oliweb.db.contract.AnnonceContract;
 import com.oliweb.db.contract.PhotoContract;
-import com.oliweb.db.dto.AnnonceDTO;
+import com.oliweb.db.dto.Annonce;
 import com.oliweb.utility.Proprietes;
 
 import java.sql.*;
@@ -15,20 +15,20 @@ import java.util.logging.Level;
 import static com.oliweb.db.contract.AnnonceContract.*;
 
 
-public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
+public class AnnonceDAO extends AbstractDAO<Annonce> {
 
     public AnnonceDAO(Connection dbConn) {
         super(dbConn);
     }
 
-    public List<AnnonceDTO> getByIdCategory(Integer idCategory) {
-        List<AnnonceDTO> myList = new ArrayList<>();
+    public List<Annonce> getByIdCategory(Integer idCategory) {
+        List<Annonce> myList = new ArrayList<>();
 
         String query = "SELECT * "
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_ID_CATEGORY + " = ?"
-                + " AND " + COL_STATUT_ANNONCE + " = ?"
-                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
+            + " FROM " + TABLE_NAME
+            + " WHERE " + COL_ID_CATEGORY + " = ?"
+            + " AND " + COL_STATUT_ANNONCE + " = ?"
+            + " ORDER BY " + COL_DATE_PUBLICATION + " DESC";
 
         try {
             PreparedStatement pstmt = dbConn.prepareStatement(query);
@@ -46,15 +46,15 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return myList;
     }
 
-    public List<AnnonceDTO> getByIdUser(Integer idUser, Integer page) {
-        List<AnnonceDTO> myList = new ArrayList<>();
+    public List<Annonce> getByIdUser(Integer idUser, Integer page) {
+        List<Annonce> myList = new ArrayList<>();
         Integer pagination = Integer.valueOf(Proprietes.getProperty(Proprietes.PAGINATION));
 
         String query = "SELECT * "
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_ID_UTILISATEUR + " = ?"
-                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                + " LIMIT ? , ?";
+            + " FROM " + TABLE_NAME
+            + " WHERE " + COL_ID_UTILISATEUR + " = ?"
+            + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
+            + " LIMIT ? , ?";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
@@ -73,16 +73,16 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return myList;
     }
 
-    public List<AnnonceDTO> getByIdCategoryWithPage(Integer idCategory, Integer page) {
-        List<AnnonceDTO> myList = new ArrayList<>();
+    public List<Annonce> getByIdCategoryWithPage(Integer idCategory, Integer page) {
+        List<Annonce> myList = new ArrayList<>();
         Integer pagination = Integer.valueOf(Proprietes.getProperty(Proprietes.PAGINATION));
 
         String query = "SELECT * "
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_ID_CATEGORY + " = ? "
-                + " AND " + COL_STATUT_ANNONCE + " = ? "
-                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                + " LIMIT ?,?";
+            + " FROM " + TABLE_NAME
+            + " WHERE " + COL_ID_CATEGORY + " = ? "
+            + " AND " + COL_STATUT_ANNONCE + " = ? "
+            + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
+            + " LIMIT ?,?";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
@@ -102,15 +102,15 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return myList;
     }
 
-    public List<AnnonceDTO> getListAnnonce(Integer page) {
-        List<AnnonceDTO> myList = new ArrayList<>();
+    public List<Annonce> getListAnnonce(Integer page) {
+        List<Annonce> myList = new ArrayList<>();
         Integer pagination = Integer.valueOf(Proprietes.getProperty(Proprietes.PAGINATION));
 
         String query = "SELECT * "
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_STATUT_ANNONCE + " = ? "
-                + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
-                + " LIMIT ?, ?";
+            + " FROM " + TABLE_NAME
+            + " WHERE " + COL_STATUT_ANNONCE + " = ? "
+            + " ORDER BY " + COL_DATE_PUBLICATION + " DESC"
+            + " LIMIT ?, ?";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
@@ -131,9 +131,9 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
 
     public Integer getNbAnnonceByCategorie(Integer idCategorie) {
         String query = "SELECT count(" + AnnonceContract.COL_ID_ANNONCE +
-                ") FROM " + AnnonceContract.TABLE_NAME +
-                " WHERE " + AnnonceContract.COL_ID_CATEGORY + " = " + String.valueOf(idCategorie) +
-                " AND " + AnnonceContract.COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'";
+            ") FROM " + AnnonceContract.TABLE_NAME +
+            " WHERE " + AnnonceContract.COL_ID_CATEGORY + " = " + String.valueOf(idCategorie) +
+            " AND " + AnnonceContract.COL_STATUT_ANNONCE + " = '" + enumStatutAnnonce.VALID.valeur() + "'";
         Integer retour = 0;
         try {
             Statement stmt = dbConn.createStatement();
@@ -149,9 +149,9 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         return retour;
     }
 
-    private AnnonceDTO transfertAnnonce(ResultSet rs) {
+    private Annonce transfertAnnonce(ResultSet rs) {
         // Création d'une nouvelle annonce
-        AnnonceDTO annonce = new AnnonceDTO();
+        Annonce annonce = new Annonce();
 
         // Renseignement des champs de l'annonce
         try {
@@ -162,13 +162,12 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
             // On formate la date Timestamp en String
             String dateAsText = new SimpleDateFormat("yyyyMMddHHmm").format(rs.getTimestamp(COL_DATE_PUBLICATION));
 
-            CategorieDAO categorieDAO = new CategorieDAO(dbConn);
             UtilisateurDAO utilisateurDAO = new UtilisateurDAO(dbConn);
             PhotoDAO photoDAO = new PhotoDAO(dbConn);
 
             annonce.setDatePublished(Long.valueOf(dateAsText));
             annonce.setPriceANO(rs.getInt(COL_PRIX_ANNONCE));
-            annonce.setCategorieANO(categorieDAO.get(rs.getInt(COL_ID_CATEGORY)));
+            annonce.setIdCategorieANO(rs.getInt(COL_ID_CATEGORY));
             annonce.setUtilisateurANO(utilisateurDAO.get(rs.getInt(COL_ID_UTILISATEUR)));
             annonce.setPhotos(photoDAO.getByIdAnnonce(annonce.getIdANO()));
         } catch (Exception e) {
@@ -267,21 +266,21 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
         }
     }
 
-    public List<AnnonceDTO> getMultiParam(Integer idCat, String keyword, Integer minPrice, Integer maxPrice, boolean photo, Integer page) {
-        List<AnnonceDTO> myList = new ArrayList<>();
+    public List<Annonce> getMultiParam(Integer idCat, String keyword, Integer minPrice, Integer maxPrice, boolean photo, Integer page) {
+        List<Annonce> myList = new ArrayList<>();
         List<String> conditions = new ArrayList<>();
         Integer pagination = Integer.valueOf(Proprietes.getProperty(Proprietes.PAGINATION));
         Integer id_all_categorie = Integer.valueOf(Proprietes.getProperty(Proprietes.ID_ALL_CATEGORIE));
 
         // On va récupérer toutes les annonces pour la catégorie demandée
         String select = "SELECT " + COL_ID_ANNONCE + ", " +
-                COL_TITRE_ANNONCE + ", " +
-                COL_DESCRIPTION_ANNONCE + ", " +
-                COL_DATE_PUBLICATION + ", " +
-                COL_PRIX_ANNONCE + ", " +
-                COL_ID_CATEGORY + ", " +
-                COL_ID_UTILISATEUR +
-                " FROM " + TABLE_NAME;
+            COL_TITRE_ANNONCE + ", " +
+            COL_DESCRIPTION_ANNONCE + ", " +
+            COL_DATE_PUBLICATION + ", " +
+            COL_PRIX_ANNONCE + ", " +
+            COL_ID_CATEGORY + ", " +
+            COL_ID_UTILISATEUR +
+            " FROM " + TABLE_NAME;
 
         String where = " WHERE ";
 
@@ -363,23 +362,23 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
     }
 
     @Override
-    public boolean update(AnnonceDTO annonce) {
+    public boolean update(Annonce annonce) {
         boolean insertStatus = false;
         int records;
         String query = "UPDATE " + TABLE_NAME + " SET "
-                + COL_TITRE_ANNONCE + " = ?, "
-                + COL_DESCRIPTION_ANNONCE + " = ?, "
-                + COL_PRIX_ANNONCE + " = ?, "
-                + COL_ID_CATEGORY + " = ?, "
-                + COL_DATE_PUBLICATION + " = ? "
-                + " WHERE " + COL_ID_ANNONCE + " = ?";
+            + COL_TITRE_ANNONCE + " = ?, "
+            + COL_DESCRIPTION_ANNONCE + " = ?, "
+            + COL_PRIX_ANNONCE + " = ?, "
+            + COL_ID_CATEGORY + " = ?, "
+            + COL_DATE_PUBLICATION + " = ? "
+            + " WHERE " + COL_ID_ANNONCE + " = ?";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
             stmt.setString(1, annonce.getTitreANO());
             stmt.setString(2, annonce.getDescriptionANO());
             stmt.setInt(3, annonce.getPriceANO());
-            stmt.setInt(4, annonce.getCategorieANO().getIdCAT());
+            stmt.setInt(4, annonce.getIdCategorieANO());
             stmt.setString(5, "CURRENT_TIME()");
             stmt.setInt(6, annonce.getIdANO());
             records = stmt.executeUpdate();
@@ -394,28 +393,28 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
     }
 
     @Override
-    public boolean save(AnnonceDTO annonce) {
+    public boolean save(Annonce annonce) {
         boolean insertStatus = false;
         int newId;
 
         String query = "INSERT INTO " + TABLE_NAME + " (" + COL_TITRE_ANNONCE + ", "
-                + COL_DESCRIPTION_ANNONCE + ", "
-                + COL_PRIX_ANNONCE + ", "
-                + COL_ID_UTILISATEUR + ", "
-                + COL_ID_CATEGORY + ", "
-                + COL_DATE_PUBLICATION + ", "
-                + COL_STATUT_ANNONCE + ")"
-                + " VALUES( ?, ?, ?, ?, ?, CURRENT_TIME(), ?)";
+            + COL_DESCRIPTION_ANNONCE + ", "
+            + COL_PRIX_ANNONCE + ", "
+            + COL_ID_UTILISATEUR + ", "
+            + COL_ID_CATEGORY + ", "
+            + COL_DATE_PUBLICATION + ", "
+            + COL_STATUT_ANNONCE + ")"
+            + " VALUES( ?, ?, ?, ?, ?, CURRENT_TIME(), ?)";
 
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+                Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, annonce.getTitreANO());
             stmt.setString(2, annonce.getDescriptionANO());
             stmt.setInt(3, annonce.getPriceANO());
             stmt.setInt(4, annonce.getUtilisateurANO().getIdUTI());
-            stmt.setInt(5, annonce.getCategorieANO().getIdCAT());
+            stmt.setInt(5, annonce.getIdCategorieANO());
             stmt.setString(6, enumStatutAnnonce.VALID.valeur());
 
             if (stmt.executeUpdate() != 0) {
@@ -462,29 +461,29 @@ public class AnnonceDAO extends AbstractDAO<AnnonceDTO> {
     }
 
     @Override
-    public AnnonceDTO get(int idAnnonce) {
-        AnnonceDTO annonceDTO = null;
+    public Annonce get(int idAnnonce) {
+        Annonce annonce = null;
         String query = "SELECT " + COL_ID_ANNONCE + ", "
-                + COL_TITRE_ANNONCE + ", "
-                + COL_DESCRIPTION_ANNONCE + ", "
-                + COL_DATE_PUBLICATION + ", "
-                + COL_PRIX_ANNONCE + ", "
-                + COL_ID_CATEGORY + ", "
-                + COL_ID_UTILISATEUR
-                + " FROM " + TABLE_NAME
-                + " WHERE " + COL_ID_ANNONCE + " = ?";
+            + COL_TITRE_ANNONCE + ", "
+            + COL_DESCRIPTION_ANNONCE + ", "
+            + COL_DATE_PUBLICATION + ", "
+            + COL_PRIX_ANNONCE + ", "
+            + COL_ID_CATEGORY + ", "
+            + COL_ID_UTILISATEUR
+            + " FROM " + TABLE_NAME
+            + " WHERE " + COL_ID_ANNONCE + " = ?";
         try {
             PreparedStatement stmt = dbConn.prepareStatement(query);
             stmt.setInt(1, idAnnonce);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                annonceDTO = transfertAnnonce(rs);
+                annonce = transfertAnnonce(rs);
             }
             stmt.close();
             rs.close();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "getById", e);
         }
-        return annonceDTO;
+        return annonce;
     }
 }
