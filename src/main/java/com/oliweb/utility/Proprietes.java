@@ -28,6 +28,9 @@ public final class Proprietes {
     public static final String DIFFRENT_NAME = "DIFFRENT_NAME";
     public static final String SAME_NAME = "SAME_NAME";
     public static final String PHOTO_ALREADY_EXIST = "PHOTO_ALREADY_EXIST";
+    public static final String JWT_ISSUER = "JWT_ISSUER";
+    public static final String JWT_SUBJECT_LOGIN = "JWT_SUBJECT_LOGIN";
+
     public static final String FICHIER_CONF = "conf.properties";
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static volatile java.util.Properties properties = null;

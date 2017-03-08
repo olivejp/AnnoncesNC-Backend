@@ -11,6 +11,7 @@ import com.oliweb.db.dto.Utilisateur;
 import com.oliweb.mail.PropertiesMail;
 import com.oliweb.mail.SendMail;
 import com.oliweb.utility.Crypto;
+import com.oliweb.utility.JwtGenerator;
 import com.oliweb.utility.Proprietes;
 import com.oliweb.utility.Utility;
 
@@ -160,6 +161,45 @@ public class UtilisateurRestService {
         return gson.toJson(rs);
     }
 
+    /**
+     * Méthode identique à login() sauf qu'on ne renvoie pas un json avec une classe utilisateur,
+     * mais un JWT.
+     *
+     * @param email
+     * @param encryptedPwd
+     * @return a JWT object
+     */
+    @POST
+    @Path("/login-jwt")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String loginJwt(@QueryParam("email") String email,
+                           @QueryParam("password") String encryptedPwd) {
+        boolean result;
+        ReturnWS rs = new ReturnWS("login", false, null, null);
+
+        // On décrypte le mot de passe
+        String decryptPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
+
+        // Vérification du mot de passe dans la base de données
+        result = Utility.isNotNull(email) && Utility.isNotNull(decryptPwd) && utilisateurDAO.checkLogin(email, decryptPwd);
+
+        if (result) {
+            Utilisateur utilisateur = utilisateurDAO.getByEmail(email);
+            rs.setStatus(true);
+            String subject = Proprietes.getProperty(Proprietes.JWT_SUBJECT_LOGIN);
+            String audience = utilisateur.getEmailUTI();
+            String id = String.valueOf(utilisateur.getIdUTI());
+            String jwt = JwtGenerator.generateJwt(subject, audience, id);
+            rs.setMsg(jwt);
+
+            // Mise à jour de la date de dernière connexion de l'utilisateur
+            utilisateurDAO.updateDateLastConnexion(utilisateur.getIdUTI());
+        } else {
+            rs.setMsg("Email ou Mot de passe incorrect");
+        }
+        return gson.toJson(rs);
+    }
+
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -171,6 +211,7 @@ public class UtilisateurRestService {
         // On décrypte le mot de passe
         String decryptPwd = (encryptedPwd != null) ? Crypto.desDecryptIt(encryptedPwd) : null;
 
+        // Vérification du mot de passe dans la base de données
         result = Utility.isNotNull(email) && Utility.isNotNull(decryptPwd) && utilisateurDAO.checkLogin(email, decryptPwd);
 
         if (result) {
