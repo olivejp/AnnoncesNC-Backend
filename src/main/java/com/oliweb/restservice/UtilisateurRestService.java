@@ -8,6 +8,7 @@ import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
 import com.oliweb.db.dto.Annonce;
 import com.oliweb.db.dto.Utilisateur;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.mail.PropertiesMail;
 import com.oliweb.mail.SendMail;
 import com.oliweb.utility.Crypto;

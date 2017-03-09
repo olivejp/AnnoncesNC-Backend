@@ -6,6 +6,7 @@ import com.oliweb.db.dao.AnnonceDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.PhotoDAO;
 import com.oliweb.db.dto.Photo;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.utility.Proprietes;
 import org.apache.commons.io.FilenameUtils;
 

@@ -4,8 +4,8 @@ import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dto.Categorie;
 import com.oliweb.db.dto.Utilisateur;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.restservice.CategorieRestService;
-import com.oliweb.restservice.ReturnWS;
 import org.junit.Test;
 import org.mockito.Mock;
 

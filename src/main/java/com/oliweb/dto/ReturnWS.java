@@ -1,4 +1,4 @@
-package com.oliweb.restservice;
+package com.oliweb.dto;
 
 public class ReturnWS {
 

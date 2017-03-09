@@ -7,6 +7,7 @@ import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dto.Annonce;
 import com.oliweb.db.dto.Categorie;
+import com.oliweb.dto.ReturnWS;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

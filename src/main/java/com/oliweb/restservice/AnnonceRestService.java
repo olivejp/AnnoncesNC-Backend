@@ -3,6 +3,7 @@ package com.oliweb.restservice;
 import com.google.gson.Gson;
 import com.oliweb.db.dao.*;
 import com.oliweb.db.dto.Annonce;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.utility.Proprietes;
 
 import javax.ws.rs.*;

@@ -45,6 +45,7 @@
     <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mailapi:1.4.3" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.3" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:smtp:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-servlet:1.19.3" level="project" />

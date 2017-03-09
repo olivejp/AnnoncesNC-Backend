@@ -1,4 +1,4 @@
-package com.oliweb.restservice;
+package com.oliweb.dto;
 
 import java.util.HashMap;
 

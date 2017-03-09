@@ -6,6 +6,8 @@ import com.oliweb.db.dao.CategorieDAO;
 import com.oliweb.db.dao.MyConnection;
 import com.oliweb.db.dao.UtilisateurDAO;
 import com.oliweb.db.dto.Categorie;
+import com.oliweb.dto.InfoServer;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.sms.SendSms;
 import com.oliweb.utility.Proprietes;
 import com.oliweb.utility.Utility;
@@ -29,6 +31,14 @@ public class ServiceRestService {
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO(MyConnection.getInstance());
     private AnnonceDAO annonceDAO = new AnnonceDAO(MyConnection.getInstance());
     private CategorieDAO categorieDAO = new CategorieDAO(MyConnection.getInstance());
+
+    @POST
+    @Path("/jwt-test")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String jwtTest() {
+        ReturnWS rs = new ReturnWS("jwtTest", true, null, null);
+        return gson.toJson(rs);
+    }
 
     @POST
     @Path("/checkconnection")

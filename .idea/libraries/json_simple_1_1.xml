@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="json-simple-1.1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/json-simple-1.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/mysql-connector-java-5.1.40-bin.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

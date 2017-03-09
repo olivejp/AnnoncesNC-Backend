@@ -7,8 +7,8 @@ import com.oliweb.db.dao.UtilisateurDAO;
 import com.oliweb.db.dto.Annonce;
 import com.oliweb.db.dto.Categorie;
 import com.oliweb.db.dto.Utilisateur;
+import com.oliweb.dto.ReturnWS;
 import com.oliweb.restservice.AnnonceRestService;
-import com.oliweb.restservice.ReturnWS;
 import org.junit.Test;
 import org.mockito.Mock;
 
